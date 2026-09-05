@@ -1,0 +1,1 @@
+# yakubjorkie70-ai.github.io
