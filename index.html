@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>My Sierra Leone Story</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -20,81 +21,302 @@
             background: #f4f7f5;
             color: #222;
             line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+/* ==============================
+   SCHOOL PHOTO GALLERY
+   ============================== */
+
+.school-gallery {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 20px;
+    margin: 25px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.school-gallery img {
+    width: 280px;
+    height: 220px;
+    object-fit: cover;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.30);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.school-gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+
+    .school-gallery img {
+        width: 240px;
+        height: 190px;
+    }
+
+    .school-gallery {
+        gap: 12px;
+        padding: 15px;
+    }
+}
+        body.large-text {
+            font-size: 19px;
+        }
+
+        body.no-animations *,
+        body.no-animations *::before,
+        body.no-animations *::after {
+            animation: none !important;
+            transition: none !important;
+            scroll-behavior: auto !important;
         }
 
         /* HEADER */
-
         header {
-            background: linear-gradient(135deg, #1b8f3a, #f4c542, #d62828);
+            background:
+                linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,.42)),
+                url("yakub.png") center/cover no-repeat;
             color: white;
             padding: 45px 20px;
             text-align: center;
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        header h1,
+        header p {
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,.8);
         }
 
         header h1 {
             font-size: 40px;
-            margin-bottom: 10px;
+            margin: 12px 0 8px;
         }
 
         header p {
             font-size: 18px;
         }
 
-        /* NAVIGATION */
-
-        nav {
-            background: #111;
-            text-align: center;
-            padding: 15px;
-            position: sticky;
-            top: 0;
+        .site-logo {
+            display: inline-block;
+            background: linear-gradient(135deg, #00843D, #FCD116, #CE1126);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         }
 
-        nav a {
+        .sticker {
+            position: absolute;
+            font-size: 30px;
+            opacity: .9;
+            animation: floatSticker 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .sticker.one { left: 8%; top: 25%; }
+        .sticker.two { right: 9%; top: 25%; animation-delay: 1s; }
+        .sticker.three { left: 15%; bottom: 15%; animation-delay: 2s; }
+        .sticker.four { right: 15%; bottom: 15%; animation-delay: 3s; }
+
+        @keyframes floatSticker {
+            0%,100% { transform: translateY(0) rotate(-4deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+
+        /* SETTINGS */
+        .settings {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            z-index: 50;
+        }
+
+        .settings-button {
+            background: rgba(0,0,0,.45);
+            border: 2px solid rgba(255,255,255,.7);
             color: white;
-            text-decoration: none;
-            margin: 0 12px;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        #settingsMenu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 58px;
+            width: 230px;
+            background: white;
+            color: #222;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.3);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        #settingsMenu.open {
+            display: block;
+            animation: popIn .2s ease;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translateY(-8px) scale(.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .setting-title {
+            background: #111;
+            color: white;
+            padding: 12px 15px;
             font-weight: bold;
         }
 
-        nav a:hover {
-            color: #f4c542;
+        .setting-row {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .setting-row:hover {
+            background: #f2f2f2;
+        }
+
+        .setting-row button {
+            float: right;
+            border: 0;
+            background: #16833a;
+            color: white;
+            border-radius: 15px;
+            padding: 4px 9px;
+            cursor: pointer;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: #111;
+            text-align: center;
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            box-shadow: 0 2px 8px rgba(0,0,0,.25);
+        }
+
+        nav button {
+            color: white;
+            background: transparent;
+            border: 0;
+            padding: 10px 14px;
+            margin: 3px;
+            font-weight: bold;
+            font-size: 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        nav button:hover,
+        nav button.active {
+            background: #16833a;
+            transform: translateY(-2px);
         }
 
         /* MAIN */
-
         .container {
             max-width: 1000px;
             margin: auto;
             padding: 30px 20px;
         }
 
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn .35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .welcome {
             background: white;
             padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.1);
         }
 
-        .welcome h2 {
+        .welcome h2,
+        .section-title {
             color: #16833a;
             margin-bottom: 10px;
         }
 
-        /* SECTIONS */
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
 
+        .action-btn {
+            border: 0;
+            border-radius: 25px;
+            padding: 12px 18px;
+            background: #16833a;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .action-btn.secondary {
+            background: #b21f1f;
+        }
+
+        /* CARDS */
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
         }
 
         .card {
             background: white;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.1);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.14);
         }
 
         .card h3 {
@@ -102,19 +324,83 @@
             color: #16833a;
         }
 
-        /* POSTS */
-
-        .posts {
-            margin-top: 40px;
+        .card h4 {
+            margin-top: 16px;
+            color: #b21f1f;
         }
 
+        details summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #16833a;
+            margin-bottom: 10px;
+        }
+
+        /* SCHOOL PHOTO */
+        .school-photo {
+            width: 100%;
+            max-height: 330px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        /* FAMILY GALLERY */
+        .family-gallery,
+        .photo-slider {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 15px 5px 20px;
+            margin-top: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .family-gallery img {
+            width: 250px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex: 0 0 auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,.2);
+            cursor: pointer;
+            transition: transform .2s;
+        }
+
+        .family-gallery img:hover {
+            transform: scale(1.03);
+        }
+
+        .slider-wrap {
+            position: relative;
+        }
+
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+            margin: 8px 0;
+        }
+
+        .slider-controls button {
+            border: 0;
+            background: #16833a;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* POSTS */
         .post {
             background: white;
             padding: 25px;
             margin-top: 20px;
             border-left: 5px solid #16833a;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.08);
         }
 
         .post h3 {
@@ -128,58 +414,252 @@
             margin-bottom: 12px;
         }
 
-        /* FOOTER */
+        /* LIGHTBOX */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.9);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
+        #lightbox.open {
+            display: flex;
+        }
+
+        #lightbox img {
+            max-width: 92vw;
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.6);
+        }
+
+        .lightbox-close,
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            border: 0;
+            background: rgba(255,255,255,.15);
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 25px;
+        }
+
+        .lightbox-close { right: 20px; top: 20px; }
+        .lightbox-prev { left: 20px; top: 50%; }
+        .lightbox-next { right: 20px; top: 50%; }
+
+        /* NOTIFICATION */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 25px;
+            transform: translate(-50%, 100px);
+            background: #111;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 25px;
+            z-index: 120;
+            opacity: 0;
+            transition: .3s;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        #toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+
+        /* BACK TO TOP */
+        #topButton {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 80px;
+            width: 45px;
+            height: 45px;
+            border: 0;
+            border-radius: 50%;
+            background: #16833a;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 60;
+        }
+
+        /* FOOTER */
         footer {
             background: #111;
             color: white;
             text-align: center;
             padding: 25px;
             margin-top: 40px;
-       .site-logo {
-    display: inline-block;
-    background: linear-gradient(135deg, #00843D, #FCD116, #CE1126);
-    color: white;
-    padding: 10px 18px;
-    border-radius: 25px;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
- }
+        }
 
+        .footer-buttons {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .footer-buttons button {
+            border: 1px solid #777;
+            background: #222;
+            color: white;
+            border-radius: 18px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            background: #101414;
+            color: #eee;
+        }
+
+        body.dark-mode .welcome,
+        body.dark-mode .card,
+        body.dark-mode .post {
+            background: #1c2525;
+            color: #eee;
+        }
+
+        body.dark-mode .welcome h2,
+        body.dark-mode .section-title,
+        body.dark-mode .card h3 {
+            color: #6ee59a;
+        }
+
+        body.dark-mode #settingsMenu {
+            background: #1c2525;
+            color: white;
+        }
+
+        body.dark-mode .setting-row {
+            border-color: #333;
+        }
+
+        body.dark-mode .setting-row:hover {
+            background: #263131;
+        }
+
+        /* MOBILE */
+        @media (max-width: 650px) {
+            header {
+                min-height: 220px;
+                padding: 35px 15px;
+            }
+
+            header h1 {
+                font-size: 29px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .sticker {
+                font-size: 24px;
+            }
+
+            nav button {
+                font-size: 13px;
+                padding: 8px 9px;
+            }
+
+            .container {
+                padding: 20px 12px;
+            }
+
+            .card,
+            .welcome,
+            .post {
+                padding: 20px;
+            }
+
+            .family-gallery img {
+                width: 220px;
+                height: 175px;
+            }
+
+            #settingsMenu {
+                width: 210px;
+            }
+        }
     </style>
 </head>
 
-
 <body>
 
-    <header>
+<header>
+    <div class="site-logo">🇸🇱 Yakub Jorkie</div>
 
-       <div class="site-logo">🇸🇱 Yakub Jorkie</div>
+    <h1>SL My Sierra Leone Story</h1>
+    <p>My stories • My history • My journey</p>
 
-<h1>SL My Sierra Leone Story</h1>
-       
-        </p>
+    <div class="sticker one">🇸🇱</div>
+    <div class="sticker two">⭐</div>
+    <div class="sticker three">📚</div>
+    <div class="sticker four">❤️</div>
 
-    </header>
+    <div class="settings">
+        <button class="settings-button" onclick="toggleSettings()" aria-label="Open settings">⋮</button>
 
+        <div id="settingsMenu">
+            <div class="setting-title">⚙️ Website Settings</div>
 
-    <nav>
+            <div class="setting-row" onclick="toggleDarkMode()">
+                🌙 Dark / Light Mode
+                <button id="darkStatus">OFF</button>
+            </div>
 
-        <a href="#home">Home</a>
-        <a href="#school">School</a>
-        <a href="#family">Family</a>
-        <a href="#history">History</a>
-        <a href="#posts">Posts</a>
+            <div class="setting-row" onclick="toggleLargeText()">
+                🔤 Large Text
+                <button id="textStatus">OFF</button>
+            </div>
 
-    </nav>
+            <div class="setting-row" onclick="toggleAnimations()">
+                ✨ Animations
+                <button id="animationStatus">ON</button>
+            </div>
 
+            <div class="setting-row" onclick="showToast('🖼️ Use the photo galleries to explore the pictures.')">
+                🖼️ Images
+            </div>
 
-    <main class="container">
+            <div class="setting-row" onclick="showToast('🎥 Video section can be added later.')">
+                🎥 Videos
+            </div>
 
+            <div class="setting-row" onclick="resetSettings()">
+                🔄 Reset Settings
+            </div>
+        </div>
+    </div>
+</header>
 
-        <section id="home" class="welcome">
+<nav>
+    <button class="tab-btn active" onclick="showTab('home', this)">🏠 Home</button>
+    <button class="tab-btn" onclick="showTab('school', this)">🏫 School</button>
+    <button class="tab-btn" onclick="showTab('family', this)">👨‍👩‍👧‍👦 Family</button>
+    <button class="tab-btn" onclick="showTab('history', this)">📖 History</button>
+    <button class="tab-btn" onclick="showTab('posts', this)">📝 Posts</button>
+</nav>
 
+<main class="container">
+
+    <!-- HOME -->
+    <section id="home" class="tab-content active">
+        <section class="welcome">
             <h2>Welcome to My Website</h2>
 
             <p>
@@ -188,144 +668,515 @@
                 history, culture and things I learn every day.
             </p>
 
+            <div class="hero-actions">
+                <button class="action-btn" onclick="showTab('school')">🏫 Visit My School</button>
+                <button class="action-btn" onclick="showTab('family')">👨‍👩‍👧 Explore Family</button>
+                <button class="action-btn secondary" onclick="showTab('history')">🇸🇱 Explore History</button>
+            </div>
         </section>
 
+        <div class="cards">
+            <div class="card">
+                <h3>🇸🇱 Sierra Leone</h3>
+                <p>Explore stories, history, culture and important moments from Sierra Leone.</p>
+            </div>
 
-        <section class="cards">
+            <div class="card">
+                <h3>🎓 Education</h3>
+                <p>Read about my school, teachers, prefects, friends and school experiences.</p>
+            </div>
 
+            <div class="card">
+                <h3>❤️ Family</h3>
+                <p>Discover family memories, stories, traditions and important moments.</p>
+            </div>
+        </div>
+    </section>
 
-           <div class="card" id="school">
+    <!-- SCHOOL -->
+    <section id="school" class="tab-content">
+        <div class="card">
+            <details open>
+                <summary>🏫 Dorin Deen School of Excellence</summary>
 
-    <h3>🏫 Dorin Deen School of Excellence</h3>
+                <p>
+                    Welcome to the school section of my website.
+                    Here I share information about my school, its leadership,
+                    teachers and prefects.
+                </p>
+<h3>📸 Our School Gallery</h3>
 
-    <p>
-        Welcome to the school section of my website.
-        Here I share information about my school, its leadership,
-        teachers and prefects.
-    </p>
+<div class="school-gallery">
 
-    <h4>📍 Location</h4>
-    <p>Kossoh Town, Freetown, Sierra Leone.</p>
+    <img src="school1.jpg" alt="Dorin Deen School students">
 
-    <h4>👨‍👩‍👧‍👦 School Owners</h4>
-    <p>Mr and Mrs Dumbuya</p>
+    <img src="school2.jpg" alt="Dorin Deen School classroom">
 
-    <h4>🎓 Principal</h4>
-    <p>Mr Boima</p>
+    <img src="school3.jpg" alt="Dorin Deen School students">
 
-    <h4>⭐ School Prefects</h4>
-    <ul>
-        <li>SP Tafseratu Jalloh</li>
-        <li>ASP Yakub Jumma Jorkie</li>
-    </ul>
+    <img src="school4.jpg" alt="Dorin Deen School">
 
-    <h4>👨‍🏫 Some of Our Teachers</h4>
-    <ul>
-        <li>Mr Smith</li>
-        <li>Mr Sar</li>
-        <li>Mr ML</li>
-        <li>Mr Serrie</li>
-        <li>Miss Kailondo</li>
-        <li>Mr Manseray</li>
-        <li>Mr Sesay</li>
-    </ul>
+    <img src="school5.jpg" alt="Dorin Deen School classroom">
+
+    <img src="school6.jpg" alt="Dorin Deen School students">
+
+    <img src="school7.jpg" alt="Dorin Deen School">
+
+    <img src="school8.jpg" alt="Dorin Deen School">
 
 </div>
+                <h4>📍 Location</h4>
+                <p>Kossoh Town, Freetown, Sierra Leone.</p>
 
-                <h3>🎓 My School</h3>
+                <h4>👨‍👩‍👧‍👦 School Owners</h4>
+                <p>Mr and Mrs Dumbuya</p>
 
+                <h4>🎓 Principal</h4>
+                <p>Mr Boima</p>
+
+                <h4>⭐ School Prefects</h4>
+                <ul>
+                    <li>SP Tafseratu Jalloh</li>
+                    <li>ASP Yakub Jumma Jorkie</li>
+                </ul>
+
+                <h4>👨‍🏫 Some of Our Teachers</h4>
+                <ul>
+                    <li>Mr Smith</li>
+                    <li>Mr Sar</li>
+                    <li>Mr ML</li>
+                    <li>Mr Serrie</li>
+                    <li>Miss Kailondo</li>
+                    <li>Mr Manseray</li>
+                    <li>Mr Sesay</li>
+                </ul>
+            </details>
+
+            <h3>🎓 My School</h3>
+            <p>
+                Stories about my school, teachers, friends,
+                activities, lessons and experiences.
+            </p>
+
+            <img src="images/school.jpg" alt="My School" class="school-photo"
+                 onclick="openSingleImage(this.src, this.alt)">
+        </div>
+    </section>
+
+    <!-- FAMILY -->
+    <section id="family" class="tab-content">
+        <div class="card">
+            <details open>
+                <summary>👨‍👩‍👧‍👦 The Jorkie Family</summary>
+
+                <h4>🏠 Family Name</h4>
+                <p><strong>The Jorkie Family</strong></p>
+
+                <h4>👨 Father</h4>
                 <p>
-                    Stories about my school, teachers, friends,
-                    activities, lessons and experiences.
-
-             </p>
-     <img src="images/school.jpg" alt="My School" class="school-photo">
-
-            </div>
-
-
-            <div class="card" id="family">
-
-                <h3>👨‍👩‍👧 My Family</h3>
-
-                <p>
-                    Family memories, stories, traditions and
-                    important moments.
+                    <strong>Moses Baimba Jorkie</strong> is the father of the Jorkie family.
                 </p>
 
-            </div>
+                <h4>👩 His Three Wives</h4>
 
+                <p><strong>First Wife:</strong> Mary Jello Jorkie</p>
+                <p>Mary Jello Jorkie has 7 children. She lives in Madina Bum, Bonthe District.</p>
 
-            <div class="card" id="history">
-
-                <h3>🇸🇱 Sierra Leone History</h3>
-
+                <p><strong>Second Wife:</strong> Zainab Jabbie Jorkie</p>
                 <p>
-                    Historical stories about Sierra Leone,
-                    important people, places and events.
+                    Zainab Jabbie Jorkie has 6 children.
+                    Sadly, one child died at a very young age.
+                    She lives in Hastings, Freetown.
                 </p>
 
-            </div>
+                <p><strong>Third Wife:</strong> Esther Jorkie</p>
+                <p>Esther Jorkie has 1 child. She lives in Congo Water, Freetown.</p>
 
+                <h4>👨‍⚕️ Moses Baimba Jorkie's Career</h4>
+                <p>
+                    Moses Baimba Jorkie first worked as a teacher and later became a doctor.
+                    He also served as an Honourable Member representing Constituency 080
+                    for 5 years and Constituency 091 for another 5 years.
+                    He lost his political position in 2023.
+                </p>
 
-        </section>
+                <p>He is now the Regent Chief of Jong Chiefdom.</p>
+                <p>He loves his family and the people he serves.</p>
 
+                <h4>🚗 Family Life</h4>
+                <p>Moses Baimba Jorkie has 7 cars.</p>
 
-        <section class="posts" id="posts">
+                <h4>🌍 Family Background</h4>
+                <p>
+                    The Jorkie family are from the Sherbro and Mande communities
+                    and live in Bonthe District, Sierra Leone.
+                </p>
 
-            <h2>📰 My Latest Posts</h2>
+                <h4>🚘 Current Driver</h4>
+                <p>
+                    The current driver of Moses Baimba Jorkie is
+                    <strong>Shaku Koroma</strong>, who is popularly known as
+                    <strong>Papane</strong>.
+                </p>
 
+                <p>
+                    Papane is a Temne man from another district.
+                    He is married to Kadiatu, who is from Madina Bum,
+                    and they have three children.
+                </p>
 
-            <article class="post">
+                <h4>📸 Jorkie Family Memories</h4>
 
-                <h3>🇸🇱 Today's History</h3>
-
-                <div class="date">
-                    September 5, 2026
+                <div class="slider-controls">
+                    <button onclick="scrollGallery(-1)">⬅️ Previous</button>
+                    <button onclick="scrollGallery(1)">Next ➡️</button>
                 </div>
 
-                <p>
-On September 5, 1997, Sierra Leone was going through a very difficult period in its history. In Freetown, thousands of people took part in demonstrations during the country's political and military crisis. The day also included funeral activities for people who had lost their lives during the violence.
-</p>
-
-<p>
-September 5, 1997 reminds us of the importance of peace, unity, justice and protecting ordinary people during times of conflict. Learning about difficult moments in our history can help us understand Sierra Leone's journey and build a better future.
-</p>
-
-            </article>
-
-
-            <article class="post">
-
-                <h3>🎓 My School Story</h3>
-
-                <div class="date">
-                    My first post
+                <div class="family-gallery" id="familyGallery">
+                    <img src="family1.jpg" alt="Jorkie Family" onclick="openGalleryImage(0)">
+                    <img src="family2.jpg" alt="Jorkie Family" onclick="openGalleryImage(1)">
+                    <img src="family3.jpg" alt="Jorkie Family" onclick="openGalleryImage(2)">
+                    <img src="family4.jpg" alt="Jorkie Family" onclick="openGalleryImage(3)">
+                    <img src="family5.jpg" alt="Jorkie Family" onclick="openGalleryImage(4)">
+                    <img src="family6.jpg" alt="Jorkie Family" onclick="openGalleryImage(5)">
+                    <img src="family7.jpg" alt="Jorkie Family" onclick="openGalleryImage(6)">
                 </div>
 
+                <p>Family memories, stories, traditions and important moments.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="history" class="tab-content">
+        <div class="card">
+            <h2 class="section-title">🇸🇱 Sierra Leone History</h2>
+            <p>
+                Historical stories about Sierra Leone,
+                important people, places and events.
+            </p>
+
+            <article class="post">
+                <h3>📅 September 5, 1997</h3>
+                <div class="date">Today in Sierra Leone History</div>
+
                 <p>
-                    This is where I will write about my school,
-                    my teachers, my friends and the things I learn.
+                    On September 5, 1997, Sierra Leone was going through a very
+                    difficult period in its history. In Freetown, thousands of
+                    people took part in demonstrations during the country's
+                    political and military crisis. The day also included funeral
+                    activities for people who had lost their lives during the violence.
                 </p>
 
+                <p>
+                    September 5, 1997 reminds us of the importance of peace,
+                    unity, justice and protecting ordinary people during times
+                    of conflict. Learning about difficult moments in our history
+                    can help us understand Sierra Leone's journey and build a better future.
+                </p>
             </article>
+        </div>
+    </section>
 
+    <!-- POSTS -->
+    <section id="posts" class="tab-content">
+        <h2 class="section-title">📰 My Latest Posts</h2>
 
-        </section>
+        <article class="post">
+            <h3>🇸🇱 Today's History</h3>
+            <div class="date">September 5, 2026</div>
 
+            <p>
+                On September 5, 1997, Sierra Leone was going through a very difficult
+                period in its history. In Freetown, thousands of people took part in
+                demonstrations during the country's political and military crisis.
+                The day also included funeral activities for people who had lost
+                their lives during the violence.
+            </p>
 
-    </main>
+            <p>
+                September 5, 1997 reminds us of the importance of peace, unity,
+                justice and protecting ordinary people during times of conflict.
+            </p>
+        </article>
 
+        <article class="post">
+            <h3>🎓 My School Story</h3>
+            <div class="date">My first post</div>
 
-    <footer>
+            <p>
+                This is where I will write about my school,
+                my teachers, my friends and the things I learn.
+            </p>
+        </article>
 
-        <p>🇸🇱 My Sierra Leone Story</p>
+        <article class="post">
+            <h3>⭐ Coming Soon</h3>
+            <div class="date">New stories will appear here</div>
+            <p>
+                More stories, pictures and Sierra Leone history posts will be added here.
+            </p>
+        </article>
+    </section>
 
-        <p>My stories • My history • My journey</p>
+</main>
 
-    </footer>
+<footer>
+    <p>🇸🇱 My Sierra Leone Story</p>
+    <p>My stories • My history • My journey</p>
 
+    <div class="footer-buttons">
+        <button onclick="shareWebsite()">📤 Share</button>
+        <button onclick="copyWebsiteLink()">📋 Copy Link</button>
+        <button onclick="showToast('❤️ Thanks for visiting SL My Sierra Leone Story!')">❤️ Like</button>
+    </div>
+</footer>
+
+<button id="topButton" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<div id="toast"></div>
+
+<div id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-prev" onclick="changeLightbox(-1)">‹</button>
+    <img id="lightboxImage" src="" alt="Expanded photo">
+    <button class="lightbox-next" onclick="changeLightbox(1)">›</button>
+</div>
+
+<script>
+    /* ---------------- TAB SYSTEM ---------------- */
+    function showTab(tabName, button) {
+        document.querySelectorAll(".tab-content").forEach(function(item) {
+            item.classList.remove("active");
+        });
+
+        var selected = document.getElementById(tabName);
+
+        if (selected) {
+            selected.classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        document.querySelectorAll(".tab-btn").forEach(function(btn) {
+            btn.classList.remove("active");
+        });
+
+        if (button) {
+            button.classList.add("active");
+        } else {
+            document.querySelectorAll(".tab-btn").forEach(function(btn) {
+                if (btn.textContent.toLowerCase().includes(tabName)) {
+                    btn.classList.add("active");
+                }
+            });
+        }
+    }
+
+    /* ---------------- SETTINGS ---------------- */
+    function toggleSettings() {
+        document.getElementById("settingsMenu").classList.toggle("open");
+    }
+
+    document.addEventListener("click", function(event) {
+        var settings = document.querySelector(".settings");
+
+        if (settings && !settings.contains(event.target)) {
+            document.getElementById("settingsMenu").classList.remove("open");
+        }
+    });
+
+    function updateSettingButtons() {
+        document.getElementById("darkStatus").textContent =
+            document.body.classList.contains("dark-mode") ? "ON" : "OFF";
+
+        document.getElementById("textStatus").textContent =
+            document.body.classList.contains("large-text") ? "ON" : "OFF";
+
+        document.getElementById("animationStatus").textContent =
+            document.body.classList.contains("no-animations") ? "OFF" : "ON";
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem("darkMode",
+            document.body.classList.contains("dark-mode"));
+        updateSettingButtons();
+    }
+
+    function toggleLargeText() {
+        document.body.classList.toggle("large-text");
+        localStorage.setItem("largeText",
+            document.body.classList.contains("large-text"));
+        updateSettingButtons();
+    }
+
+    function toggleAnimations() {
+        document.body.classList.toggle("no-animations");
+        localStorage.setItem("noAnimations",
+            document.body.classList.contains("no-animations"));
+        updateSettingButtons();
+    }
+
+    function resetSettings() {
+        localStorage.removeItem("darkMode");
+        localStorage.removeItem("largeText");
+        localStorage.removeItem("noAnimations");
+
+        document.body.classList.remove("dark-mode", "large-text", "no-animations");
+        updateSettingButtons();
+        showToast("🔄 Settings have been reset.");
+    }
+
+    function loadSettings() {
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+        }
+
+        if (localStorage.getItem("largeText") === "true") {
+            document.body.classList.add("large-text");
+        }
+
+        if (localStorage.getItem("noAnimations") === "true") {
+            document.body.classList.add("no-animations");
+        }
+
+        updateSettingButtons();
+    }
+
+    /* ---------------- PHOTO LIGHTBOX ---------------- */
+    var galleryImages = [
+        "family1.jpg",
+        "family2.jpg",
+        "family3.jpg",
+        "family4.jpg",
+        "family5.jpg",
+        "family6.jpg",
+        "family7.jpg"
+    ];
+
+    var currentImage = 0;
+
+    function openGalleryImage(index) {
+        currentImage = index;
+        document.getElementById("lightboxImage").src = galleryImages[currentImage];
+        document.getElementById("lightbox").classList.add("open");
+    }
+
+    function openSingleImage(src, alt) {
+        currentImage = -1;
+        document.getElementById("lightboxImage").src = src;
+        document.getElementById("lightboxImage").alt = alt;
+        document.getElementById("lightbox").classList.add("open");
+    }
+
+    function changeLightbox(direction) {
+        if (currentImage < 0) {
+            return;
+        }
+
+        currentImage += direction;
+
+        if (currentImage < 0) {
+            currentImage = galleryImages.length - 1;
+        }
+
+        if (currentImage >= galleryImages.length) {
+            currentImage = 0;
+        }
+
+        document.getElementById("lightboxImage").src = galleryImages[currentImage];
+    }
+
+    function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("open");
+    }
+
+    document.getElementById("lightbox").addEventListener("click", function(event) {
+        if (event.target === this) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+
+        if (document.getElementById("lightbox").classList.contains("open")) {
+            if (event.key === "ArrowLeft") changeLightbox(-1);
+            if (event.key === "ArrowRight") changeLightbox(1);
+        }
+    });
+
+    /* ---------------- GALLERY SCROLL ---------------- */
+    function scrollGallery(direction) {
+        var gallery = document.getElementById("familyGallery");
+
+        gallery.scrollBy({
+            left: direction * 285,
+            behavior: "smooth"
+        });
+    }
+
+    /* ---------------- TOAST MESSAGE ---------------- */
+    var toastTimer;
+
+    function showToast(message) {
+        var toast = document.getElementById("toast");
+
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function() {
+            toast.classList.remove("show");
+        }, 2500);
+    }
+
+    /* ---------------- SHARE / COPY ---------------- */
+    function copyWebsiteLink() {
+        var link = "https://yakubjorkie.github.io/";
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(link).then(function() {
+                showToast("📋 Website link copied!");
+            }).catch(function() {
+                showToast(link);
+            });
+        } else {
+            showToast(link);
+        }
+    }
+
+    function shareWebsite() {
+        var link = "https://yakubjorkie.github.io/";
+
+        if (navigator.share) {
+            navigator.share({
+                title: "SL My Sierra Leone Story",
+                text: "Visit Yakub Jorkie's Sierra Leone Story website.",
+                url: link
+            });
+        } else {
+            copyWebsiteLink();
+        }
+    }
+
+    /* ---------------- BACK TO TOP ---------------- */
+    window.addEventListener("scroll", function() {
+        var button = document.getElementById("topButton");
+
+        if (window.scrollY > 300) {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    });
+
+    /* ---------------- START ---------------- */
+    loadSettings();
+</script>
 
 </body>
-
 </html>
