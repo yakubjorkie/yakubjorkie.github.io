@@ -923,38 +923,6 @@
         </article>
     </section>
 
-    <!-- VIDEOS -->
-    <section id="videos" class="tab-content">
-        <h2 class="section-title">🎬 My YouTube Videos</h2>
-
-        <div class="videos-intro" style="text-align:center;margin-bottom:20px;">
-            <p>Watch my videos here and visit my YouTube channel for more.</p>
-            <a href="https://www.youtube.com/@yakubjorkie" target="_blank" rel="noopener" class="btn">▶️ Visit My YouTube Channel</a>
-        </div>
-
-        <div class="video-feature" style="margin:20px auto;max-width:900px;">
-            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,.25);">
-                <iframe id="featuredYouTube"
-                    src="https://www.youtube.com/embed?listType=user&list=YakubJorkie"
-                    title="Yakub Jorkie YouTube videos"
-                    style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-
-        <div class="video-actions" style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0;">
-            <a href="https://www.youtube.com/@yakubjorkie" target="_blank" rel="noopener" class="btn">🔔 Subscribe on YouTube</a>
-            <button class="btn" onclick="shareVideosPage()">🔗 Share Videos</button>
-        </div>
-
-        <div class="video-note" style="text-align:center;margin:20px auto;max-width:760px;padding:15px;border-radius:12px;background:rgba(128,128,128,.12);">
-            <strong>📺 More videos coming here</strong>
-            <p style="margin:8px 0 0;">Your YouTube channel remains the place for your official likes, comments and subscribers.</p>
-        </div>
-    </section>
-
 </main>
 
 <footer>
@@ -1211,17 +1179,6 @@
     });
 
     /* ---------------- START ---------------- */
-    function shareVideosPage() {
-        const url = window.location.href.split('#')[0] + '#videos';
-        if (navigator.share) {
-            navigator.share({title: 'Yakub Jorkie Videos', text: 'Watch my videos', url}).catch(() => {});
-        } else if (navigator.clipboard) {
-            navigator.clipboard.writeText(url).then(() => showToast('🔗 Videos link copied!'));
-        } else {
-            showToast('🔗 Open the Videos tab and copy the page link.');
-        }
-    }
-
     loadSettings();
 </script>
 
