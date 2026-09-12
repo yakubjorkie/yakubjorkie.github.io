@@ -1,1 +1,1 @@
-# yakubjorkie70-ai.github.io
+# yakubjorkie.github.io
