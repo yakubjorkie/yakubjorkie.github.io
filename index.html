@@ -615,47 +615,7 @@ nav a {
         }
 
 
-        
-/* PROFESSIONAL HOME DASHBOARD */
-.home-dashboard{display:grid;gap:22px}
-.dashboard-search{background:linear-gradient(135deg,#063b2d,#16833a);padding:22px;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.14)}
-.dashboard-search label{display:block;color:#fff;font-weight:800;margin-bottom:9px}
-.dashboard-search-row{display:flex;gap:10px}
-.dashboard-search-row input{flex:1;min-width:0;border:0;border-radius:14px;padding:14px 16px;font-size:16px;outline:none}
-.dashboard-search-row button{border:0;border-radius:14px;padding:0 18px;background:#ffd54a;color:#063b2d;font-weight:800;cursor:pointer}
-.dashboard-search-results{display:none;margin-top:12px;background:#fff;color:#222;border-radius:14px;padding:10px;max-height:250px;overflow:auto}
-.dashboard-search-results.show{display:block}
-.dashboard-result{display:block;width:100%;text-align:left;border:0;background:transparent;padding:11px;border-radius:10px;cursor:pointer;color:#174d38;font-weight:700}
-.dashboard-result:hover{background:#eef7f1}
-.dashboard-featured{background:linear-gradient(135deg,rgba(0,60,45,.97),rgba(22,131,58,.92));color:#fff;padding:30px;border-radius:22px;box-shadow:0 10px 28px rgba(0,0,0,.16)}
-.featured-badge{display:inline-block;background:#ffd54a;color:#063b2d;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:900;margin-bottom:12px}
-.dashboard-featured h2{font-size:30px;margin-bottom:10px;color:#fff}
-.dashboard-featured p{max-width:760px;opacity:.95}
-.dashboard-featured button{margin-top:18px;border:0;border-radius:24px;padding:12px 19px;background:#fff;color:#063b2d;font-weight:800;cursor:pointer}
-.dashboard-heading{color:#16833a;margin-bottom:12px;font-size:23px}
-.dashboard-latest{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.dashboard-story{background:#fff;border-radius:17px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.09);border-top:4px solid #16833a;display:flex;flex-direction:column}
-.dashboard-story .story-icon{font-size:28px;margin-bottom:8px}
-.dashboard-story h3{color:#16833a;margin-bottom:7px;font-size:18px}
-.dashboard-story p{color:#555;font-size:14px;flex:1}
-.dashboard-story button{margin-top:13px;align-self:flex-start;border:0;background:#16833a;color:#fff;border-radius:18px;padding:8px 13px;font-weight:700;cursor:pointer}
-.dashboard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.dashboard-stat{background:#fff;border-radius:16px;padding:18px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.stat-number{display:block;color:#16833a;font-size:27px;font-weight:900}
-.stat-label{display:block;color:#666;font-size:12px;margin-top:2px}
-.dashboard-quick{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.dashboard-quick button{border:1px solid #dce9df;background:#fff;color:#174d38;border-radius:15px;padding:14px 8px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.06)}
-.dashboard-quick button:hover{background:#eef7f1;transform:translateY(-2px)}
-.dashboard-welcome-note{background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
-body.dark-mode .dashboard-story,body.dark-mode .dashboard-stat,body.dark-mode .dashboard-quick button,body.dark-mode .dashboard-welcome-note{background:#1c2525;color:#eee}
-body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
-@media(max-width:700px){
-.dashboard-featured{padding:23px}.dashboard-featured h2{font-size:24px}
-.dashboard-stats{grid-template-columns:repeat(2,1fr)}.dashboard-quick{grid-template-columns:repeat(2,1fr)}
-.dashboard-search-row{flex-direction:column}.dashboard-search-row button{padding:11px 16px}
-}
-
-/* ---------------- PROFESSIONAL FREE TEXT-TO-SPEECH ---------------- */
+        /* ---------------- PROFESSIONAL FREE TEXT-TO-SPEECH ---------------- */
         #yakubTTSPanel {
             position: fixed;
             right: 16px;
@@ -794,57 +754,36 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
 
     <!-- HOME -->
     <section id="home" class="tab-content active">
-        <div class="home-dashboard">
-            <div class="dashboard-search">
-                <label for="dashboardSearch">🔎 Search my website</label>
-                <div class="dashboard-search-row">
-                    <input id="dashboardSearch" type="search" placeholder="Search school, family, history, posts..." autocomplete="off">
-                    <button type="button" onclick="runDashboardSearch()">Search</button>
-                </div>
-                <div id="dashboardSearchResults" class="dashboard-search-results"></div>
+        <section class="welcome">
+            <h2>Welcome to My Website</h2>
+
+            <p>
+                Welcome to my personal website. Here I will share
+                my school experiences, family stories, Sierra Leone
+                history, culture and things I learn every day.
+            </p>
+
+            <div class="hero-actions">
+                <button class="action-btn" onclick="showTab('school')">🏫 Visit My School</button>
+                <button class="action-btn" onclick="showTab('family')">👨‍👩‍👧 Explore Family</button>
+                <button class="action-btn secondary" onclick="showTab('history')">🇸🇱 Explore History</button>
+            </div>
+        </section>
+
+        <div class="cards">
+            <div class="card">
+                <h3>🇸🇱 Sierra Leone</h3>
+                <p>Explore stories, history, culture and important moments from Sierra Leone.</p>
             </div>
 
-            <section class="dashboard-featured">
-                <div class="featured-badge">⭐ FEATURED STORY • SEPTEMBER 2026</div>
-                <h2>🇸🇱 Kush Crisis in Sierra Leone: The Fight Continues in 2026</h2>
-                <p>Explore an educational overview of the Kush crisis, the response from authorities and the role families, schools and communities can play in protecting young people.</p>
-                <button type="button" onclick="showTab('posts')">📖 Read Featured Story →</button>
-            </section>
+            <div class="card">
+                <h3>🎓 Education</h3>
+                <p>Read about my school, teachers, prefects, friends and school experiences.</p>
+            </div>
 
-            <section>
-                <h2 class="dashboard-heading">📰 Latest Stories</h2>
-                <div class="dashboard-latest">
-                    <article class="dashboard-story"><div class="story-icon">🏫</div><h3>Dorin Deen Reopening</h3><p>School reopening information for JSS and SSS students, including the 14 September 2026 date.</p><button type="button" onclick="showTab('school')">Read →</button></article>
-                    <article class="dashboard-story"><div class="story-icon">🇸🇱</div><h3>Today in Sierra Leone History</h3><p>Learn about an important moment in Sierra Leone's history and the lessons it can teach us today.</p><button type="button" onclick="showTab('history')">Read →</button></article>
-                    <article class="dashboard-story"><div class="story-icon">👨‍👩‍👧‍👦</div><h3>The Jorkie Family</h3><p>Discover family stories, memories, background and important people in the Jorkie family.</p><button type="button" onclick="showTab('family')">Explore →</button></article>
-                    <article class="dashboard-story"><div class="story-icon">🎬</div><h3>Latest Videos</h3><p>Watch videos from the Yakub Jorkie YouTube channel and explore new uploads.</p><button type="button" onclick="showTab('videos')">Watch →</button></article>
-                </div>
-            </section>
-
-            <section>
-                <h2 class="dashboard-heading">📊 Website at a Glance</h2>
-                <div class="dashboard-stats">
-                    <div class="dashboard-stat"><span class="stat-number">6</span><span class="stat-label">Main Sections</span></div>
-                    <div class="dashboard-stat"><span class="stat-number">4</span><span class="stat-label">Story Areas</span></div>
-                    <div class="dashboard-stat"><span class="stat-number">19+</span><span class="stat-label">Photos & Memories</span></div>
-                    <div class="dashboard-stat"><span id="dashboardVisitCount" class="stat-number">1</span><span class="stat-label">Visits on this device</span></div>
-                </div>
-            </section>
-
-            <section>
-                <h2 class="dashboard-heading">⚡ Quick Links</h2>
-                <div class="dashboard-quick">
-                    <button type="button" onclick="showTab('school')">🏫 School</button>
-                    <button type="button" onclick="showTab('family')">👨‍👩‍👧 Family</button>
-                    <button type="button" onclick="showTab('history')">📖 History</button>
-                    <button type="button" onclick="showTab('posts')">📝 Posts</button>
-                    <button type="button" onclick="showTab('videos')">🎬 Videos</button>
-                </div>
-            </section>
-
-            <div class="dashboard-welcome-note">
-                <h2 class="dashboard-heading">🌍 Welcome</h2>
-                <p>Welcome to my personal website. Here I share my school experiences, family stories, Sierra Leone history, culture and things I learn every day.</p>
+            <div class="card">
+                <h3>❤️ Family</h3>
+                <p>Discover family memories, stories, traditions and important moments.</p>
             </div>
         </div>
     </section>
@@ -1238,91 +1177,32 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
 
     <!-- VIDEOS -->
     <section id="videos" class="tab-content">
-    <h2 class="section-title">🎬 My YouTube Videos</h2>
+        <h2 class="section-title">🎬 My YouTube Videos</h2>
 
-    <div style="text-align:center;max-width:900px;margin:20px auto;">
+        <div style="text-align:center;max-width:850px;margin:20px auto;">
+            <p>Watch my latest videos and visit my YouTube channel for new uploads.</p>
 
-        <p>
-            Watch my latest videos below. You can like, comment, share,
-            and subscribe directly on YouTube.
-        </p>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,.25);margin:20px 0;">
+                <iframe
+                    src="https://www.youtube.com/embed?listType=user_uploads&list=YakubJorkie"
+                    title="Yakub Jorkie YouTube videos"
+                    style="position:absolute;inset:0;width:100%;height:100%;border:0;"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
 
-        <!-- YouTube Uploads Playlist -->
-        <div style="
-            position:relative;
-            padding-bottom:56.25%;
-            height:0;
-            overflow:hidden;
-            border-radius:16px;
-            box-shadow:0 8px 25px rgba(0,0,0,.25);
-            margin:25px 0;
-            background:#000;
-        ">
+            <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0;">
+                <a href="https://www.youtube.com/@yakubjorkie" target="_blank" rel="noopener" class="btn">▶️ Open My YouTube Channel</a>
+                <button class="btn" onclick="shareVideosPage()">🔗 Share Videos</button>
+            </div>
 
-            <iframe
-                src="https://www.youtube-nocookie.com/embed/videoseries?list=UUomt_VpIalkv4Ytcgya808w&origin=https%3A%2F%2Fyakubjorkie.github.io&widget_referrer=https%3A%2F%2Fyakubjorkie.github.io"
-                title="Yakub Jorkie YouTube Videos"
-                style="
-                    position:absolute;
-                    top:0;
-                    left:0;
-                    width:100%;
-                    height:100%;
-                    border:0;
-                "
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-
+            <div style="margin:20px auto;max-width:760px;padding:15px;border-radius:12px;background:rgba(128,128,128,.12);">
+                <strong>📺 New videos</strong>
+                <p style="margin:8px 0 0;">Your YouTube channel is the official place for likes, comments and subscribers.</p>
+            </div>
         </div>
-
-        <!-- YouTube Channel Button -->
-        <div style="
-            display:flex;
-            justify-content:center;
-            gap:10px;
-            flex-wrap:wrap;
-            margin:20px 0;
-        ">
-
-            <a
-                href="https://www.youtube.com/@yakubjorkie"
-                target="_blank"
-                rel="noopener"
-                class="btn">
-                ▶️ Open My YouTube Channel
-            </a>
-
-            <button
-                type="button"
-                class="btn"
-                onclick="shareVideosPage()">
-                🔗 Share Videos
-            </button>
-
-        </div>
-
-        <div style="
-            margin:20px auto;
-            max-width:760px;
-            padding:18px;
-            border-radius:12px;
-            background:rgba(128,128,128,.12);
-        ">
-
-            <strong>📺 Latest YouTube Videos</strong>
-
-            <p style="margin:8px 0 0;">
-                New videos uploaded to my YouTube channel will appear
-                in this Videos section.
-            </p>
-
-        </div>
-
-    </div>
-</section>
+    </section>
 
 </main>
 
@@ -1609,44 +1489,6 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
     updateHashNav();
 
 
-
-    /* ---------------- HOME DASHBOARD ---------------- */
-    var dashboardSearchItems = [
-        {title:"🏫 Dorin Deen School of Excellence",tab:"school",keywords:"school dorin deen excellence kossoh town freetown jss sss teachers prefects reopening"},
-        {title:"🇸🇱 Sierra Leone History",tab:"history",keywords:"history sierra leone september 5 1997 freetown peace unity justice"},
-        {title:"👨‍👩‍👧‍👦 The Jorkie Family",tab:"family",keywords:"jorkie family moses baimba mary jello zainab jabbie esther sherbro mande"},
-        {title:"📝 Kush Crisis in Sierra Leone",tab:"posts",keywords:"kush crisis sierra leone 2026 youth health security community"},
-        {title:"🎬 Yakub Jorkie Videos",tab:"videos",keywords:"youtube videos latest uploads subscribe"}
-    ];
-
-    function runDashboardSearch(){
-        var input=document.getElementById("dashboardSearch"),results=document.getElementById("dashboardSearchResults");
-        if(!input||!results)return;
-        var q=input.value.toLowerCase().trim(); results.innerHTML="";
-        if(!q){results.classList.remove("show");return;}
-        var matches=dashboardSearchItems.filter(function(item){return (item.title+" "+item.keywords).toLowerCase().includes(q);});
-        if(!matches.length){results.innerHTML="<div style='padding:10px;'>No matching section found. Try another word.</div>";results.classList.add("show");return;}
-        matches.forEach(function(item){
-            var b=document.createElement("button");b.type="button";b.className="dashboard-result";b.textContent=item.title;
-            b.onclick=function(){showTab(item.tab);results.classList.remove("show");input.value="";};results.appendChild(b);
-        });
-        results.classList.add("show");
-    }
-
-    document.addEventListener("DOMContentLoaded",function(){
-        var search=document.getElementById("dashboardSearch");
-        if(search){
-            search.addEventListener("keydown",function(e){if(e.key==="Enter")runDashboardSearch();});
-            search.addEventListener("input",function(){if(!search.value.trim()){var r=document.getElementById("dashboardSearchResults");if(r)r.classList.remove("show");}});
-        }
-        var key="yakubJorkieDashboardVisits";
-        var visits=parseInt(localStorage.getItem(key)||"0",10)+1;
-        localStorage.setItem(key,String(visits));
-        var display=document.getElementById("dashboardVisitCount");
-        if(display)display.textContent=visits.toLocaleString();
-    });
-
-
     loadSettings();
 
 
@@ -1655,12 +1497,59 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
     (function () {
         var yakubTTSChunks = [];
         var yakubTTSIndex = 0;
-        var yakubTTSRate = 1;
+        var yakubTTSRate = 0.9;
         var yakubTTSRunning = false;
+        var yakubTTSVoice = null;
 
         function yakubTTSStatus(message) {
             var box = document.getElementById("yakubTTSStatus");
             if (box) box.textContent = message;
+        }
+
+        /* Pick a clear English voice already available on the visitor's device.
+           UK English is preferred for Sierra Leone English, then US English. */
+        function yakubTTSChooseVoice() {
+            if (!("speechSynthesis" in window)) return null;
+            var voices = window.speechSynthesis.getVoices() || [];
+            if (!voices.length) return null;
+
+            var english = voices.filter(function (v) {
+                return /^en(-|_)/i.test(v.lang || "");
+            });
+
+            var preferredNames = [
+                "Google UK English Female",
+                "Google UK English Male",
+                "Microsoft Libby",
+                "Microsoft Sonia",
+                "Microsoft Ryan",
+                "Microsoft Jenny",
+                "Google US English"
+            ];
+
+            for (var i = 0; i < preferredNames.length; i++) {
+                var preferred = english.find(function (v) {
+                    return (v.name || "").toLowerCase().indexOf(preferredNames[i].toLowerCase()) !== -1;
+                });
+                if (preferred) return preferred;
+            }
+
+            var gb = english.find(function (v) { return /^en(-|_)gb/i.test(v.lang || ""); });
+            if (gb) return gb;
+
+            var us = english.find(function (v) { return /^en(-|_)us/i.test(v.lang || ""); });
+            if (us) return us;
+
+            return english[0] || null;
+        }
+
+        function yakubTTSLoadVoices() {
+            yakubTTSVoice = yakubTTSChooseVoice();
+        }
+
+        if ("speechSynthesis" in window) {
+            yakubTTSLoadVoices();
+            window.speechSynthesis.addEventListener("voiceschanged", yakubTTSLoadVoices);
         }
 
         function yakubTTSSplitText(text) {
@@ -1675,7 +1564,7 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
                 var part = sentences[i].trim();
                 if (!part) continue;
 
-                if ((current + " " + part).trim().length <= 1400) {
+                if ((current + " " + part).trim().length <= 900) {
                     current = (current + " " + part).trim();
                 } else {
                     if (current) chunks.push(current);
@@ -1700,15 +1589,16 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
             utterance.rate = yakubTTSRate;
             utterance.pitch = 1;
             utterance.volume = 1;
-            utterance.lang = "en-US";
+            utterance.lang = yakubTTSVoice ? yakubTTSVoice.lang : "en-GB";
+            if (yakubTTSVoice) utterance.voice = yakubTTSVoice;
 
             utterance.onstart = function () {
-                yakubTTSStatus("🔊 Reading selected text…");
+                yakubTTSStatus("🔊 Reading with clear English voice…");
             };
 
             utterance.onend = function () {
                 yakubTTSIndex++;
-                yakubTTSReadChunk();
+                setTimeout(yakubTTSReadChunk, 80);
             };
 
             utterance.onerror = function () {
@@ -1786,8 +1676,8 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
     <div id="yakubTTSStatus" class="yakub-tts-status">Highlight text, then press Read.</div>
     <div class="yakub-tts-speed">
         <span>Speed</span>
-        <input id="yakubTTSSpeed" type="range" min="0.7" max="1.4" step="0.1" value="1" aria-label="Reading speed">
-        <span id="yakubTTSSpeedValue">1.0×</span>
+        <input id="yakubTTSSpeed" type="range" min="0.7" max="1.2" step="0.1" value="0.9" aria-label="Reading speed">
+        <span id="yakubTTSSpeedValue">0.9×</span>
     </div>
     <div class="yakub-tts-buttons">
         <button type="button" class="yakub-tts-read" onclick="yakubTTSReadSelected()">🔊 Read</button>
