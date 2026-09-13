@@ -1238,32 +1238,91 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
 
     <!-- VIDEOS -->
     <section id="videos" class="tab-content">
-        <h2 class="section-title">🎬 My YouTube Videos</h2>
+    <h2 class="section-title">🎬 My YouTube Videos</h2>
 
-        <div style="text-align:center;max-width:850px;margin:20px auto;">
-            <p>Watch my latest videos and visit my YouTube channel for new uploads.</p>
+    <div style="text-align:center;max-width:900px;margin:20px auto;">
 
-            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,.25);margin:20px 0;">
-                <iframe
-                    src="https://www.youtube.com/embed?listType=user_uploads&list=YakubJorkie"
-                    title="Yakub Jorkie YouTube videos"
-                    style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
-            </div>
+        <p>
+            Watch my latest videos below. You can like, comment, share,
+            and subscribe directly on YouTube.
+        </p>
 
-            <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0;">
-                <a href="https://www.youtube.com/@yakubjorkie" target="_blank" rel="noopener" class="btn">▶️ Open My YouTube Channel</a>
-                <button class="btn" onclick="shareVideosPage()">🔗 Share Videos</button>
-            </div>
+        <!-- YouTube Uploads Playlist -->
+        <div style="
+            position:relative;
+            padding-bottom:56.25%;
+            height:0;
+            overflow:hidden;
+            border-radius:16px;
+            box-shadow:0 8px 25px rgba(0,0,0,.25);
+            margin:25px 0;
+            background:#000;
+        ">
 
-            <div style="margin:20px auto;max-width:760px;padding:15px;border-radius:12px;background:rgba(128,128,128,.12);">
-                <strong>📺 New videos</strong>
-                <p style="margin:8px 0 0;">Your YouTube channel is the official place for likes, comments and subscribers.</p>
-            </div>
+            <iframe
+                src="https://www.youtube-nocookie.com/embed/videoseries?list=UUomt_VpIalkv4Ytcgya808w&origin=https%3A%2F%2Fyakubjorkie.github.io&widget_referrer=https%3A%2F%2Fyakubjorkie.github.io"
+                title="Yakub Jorkie YouTube Videos"
+                style="
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    width:100%;
+                    height:100%;
+                    border:0;
+                "
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+
         </div>
-    </section>
+
+        <!-- YouTube Channel Button -->
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin:20px 0;
+        ">
+
+            <a
+                href="https://www.youtube.com/@yakubjorkie"
+                target="_blank"
+                rel="noopener"
+                class="btn">
+                ▶️ Open My YouTube Channel
+            </a>
+
+            <button
+                type="button"
+                class="btn"
+                onclick="shareVideosPage()">
+                🔗 Share Videos
+            </button>
+
+        </div>
+
+        <div style="
+            margin:20px auto;
+            max-width:760px;
+            padding:18px;
+            border-radius:12px;
+            background:rgba(128,128,128,.12);
+        ">
+
+            <strong>📺 Latest YouTube Videos</strong>
+
+            <p style="margin:8px 0 0;">
+                New videos uploaded to my YouTube channel will appear
+                in this Videos section.
+            </p>
+
+        </div>
+
+    </div>
+</section>
 
 </main>
 
