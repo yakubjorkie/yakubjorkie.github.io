@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorin Deen school_Sierra Leone story</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            color: #222;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+/* ==============================
+   SCHOOL PHOTO GALLERY
+   ============================== */
+
+.school-gallery {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 20px;
+    margin: 25px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.school-gallery img {
+    width: 280px;
+    height: 220px;
+    object-fit: cover;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.30);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.school-gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+
+    .school-gallery img {
+        width: 240px;
+        height: 190px;
+    }
+
+    .school-gallery {
+        gap: 12px;
+        padding: 15px;
+    }
+}
+        body.large-text {
+            font-size: 19px;
+        }
+
+        body.no-animations *,
+        body.no-animations *::before,
+        body.no-animations *::after {
+            animation: none !important;
+            transition: none !important;
+            scroll-behavior: auto !important;
+        }
+
+        /* HEADER */
+        header {
+            background:
+                linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,.42)),
+                url("yakub.png") center/cover no-repeat;
+            color: white;
+            padding: 45px 20px;
+            text-align: center;
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        header h1,
+        header p {
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,.8);
+        }
+
+        header h1 {
+            font-size: 40px;
+            margin: 12px 0 8px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        .site-logo {
+            display: inline-block;
+            background: linear-gradient(135deg, #00843D, #FCD116, #CE1126);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 30px;
+            opacity: .9;
+            animation: floatSticker 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .sticker.one { left: 8%; top: 25%; }
+        .sticker.two { right: 9%; top: 25%; animation-delay: 1s; }
+        .sticker.three { left: 15%; bottom: 15%; animation-delay: 2s; }
+        .sticker.four { right: 15%; bottom: 15%; animation-delay: 3s; }
+
+        @keyframes floatSticker {
+            0%,100% { transform: translateY(0) rotate(-4deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+
+        /* SETTINGS */
+        .settings {
+            position: absolute;
+            right: 18px;
+            top: 18px;
+            z-index: 50;
+        }
+
+        .settings-button {
+            background: rgba(0,0,0,.45);
+            border: 2px solid rgba(255,255,255,.7);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        #settingsMenu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 58px;
+            width: 230px;
+            background: white;
+            color: #222;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.3);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        #settingsMenu.open {
+            display: block;
+            animation: popIn .2s ease;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translateY(-8px) scale(.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .setting-title {
+            background: #111;
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+        }
+
+        .setting-row {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .setting-row:hover {
+            background: #f2f2f2;
+        }
+
+        .setting-row button {
+            float: right;
+            border: 0;
+            background: #16833a;
+            color: white;
+            border-radius: 15px;
+            padding: 4px 9px;
+            cursor: pointer;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: #111;
+            text-align: center;
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            box-shadow: 0 2px 8px rgba(0,0,0,.25);
+        }
+
+        nav button,
+nav a {
+            color: white;
+            background: transparent;
+            border: 0;
+            padding: 10px 14px;
+            margin: 3px;
+            font-weight: bold;
+            font-size: 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        nav button:hover,
+        nav button.active,
+nav a.active {
+            background: #16833a;
+            transform: translateY(-2px);
+        }
+
+        /* MAIN */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn .35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.1);
+        }
+
+        .welcome h2,
+        .section-title {
+            color: #16833a;
+            margin-bottom: 10px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            border: 0;
+            border-radius: 25px;
+            padding: 12px 18px;
+            background: #16833a;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .action-btn.secondary {
+            background: #b21f1f;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.1);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.14);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #16833a;
+        }
+
+        .card h4 {
+            margin-top: 16px;
+            color: #b21f1f;
+        }
+
+        details summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #16833a;
+            margin-bottom: 10px;
+        }
+
+        /* SCHOOL PHOTO */
+        .school-photo {
+            width: 100%;
+            max-height: 330px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        /* FAMILY GALLERY */
+        .family-gallery,
+        .photo-slider {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 15px 5px 20px;
+            margin-top: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .family-gallery img {
+            width: 250px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex: 0 0 auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,.2);
+            cursor: pointer;
+            transition: transform .2s;
+        }
+
+        .family-gallery img:hover {
+            transform: scale(1.03);
+        }
+
+        .slider-wrap {
+            position: relative;
+        }
+
+        .slider-controls {
+            display: flex;
+            gap: 10px;
+            margin: 8px 0;
+        }
+
+        .slider-controls button {
+            border: 0;
+            background: #16833a;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* POSTS */
+        .post {
+            background: white;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 5px solid #16833a;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.08);
+        }
+
+        .post h3 {
+            color: #b21f1f;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        /* LIGHTBOX */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.9);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #lightbox.open {
+            display: flex;
+        }
+
+        #lightbox img {
+            max-width: 92vw;
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,.6);
+        }
+
+        .lightbox-close,
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            border: 0;
+            background: rgba(255,255,255,.15);
+            color: white;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 25px;
+        }
+
+        .lightbox-close { right: 20px; top: 20px; }
+        .lightbox-prev { left: 20px; top: 50%; }
+        .lightbox-next { right: 20px; top: 50%; }
+
+        /* NOTIFICATION */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 25px;
+            transform: translate(-50%, 100px);
+            background: #111;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 25px;
+            z-index: 120;
+            opacity: 0;
+            transition: .3s;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        #toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+
+        /* BACK TO TOP */
+        #topButton {
+            display: none;
+            position: fixed;
+            right: 20px;
+            bottom: 80px;
+            width: 45px;
+            height: 45px;
+            border: 0;
+            border-radius: 50%;
+            background: #16833a;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 60;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .footer-buttons {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .footer-buttons button {
+            border: 1px solid #777;
+            background: #222;
+            color: white;
+            border-radius: 18px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            background: #101414;
+            color: #eee;
+        }
+
+        body.dark-mode .welcome,
+        body.dark-mode .card,
+        body.dark-mode .post {
+            background: #1c2525;
+            color: #eee;
+        }
+
+        body.dark-mode .welcome h2,
+        body.dark-mode .section-title,
+        body.dark-mode .card h3 {
+            color: #6ee59a;
+        }
+
+        body.dark-mode #settingsMenu {
+            background: #1c2525;
+            color: white;
+        }
+
+        body.dark-mode .setting-row {
+            border-color: #333;
+        }
+
+        body.dark-mode .setting-row:hover {
+            background: #263131;
+        }
+
+        /* FAIL-SAFE NAVIGATION: works even if JavaScript is unavailable */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-content:target { display: block; }
+        body:has(.tab-content:target) .tab-content.active { display: none; }
+        body:has(#home:target) #home,
+        body:has(#school:target) #school,
+        body:has(#family:target) #family,
+        body:has(#history:target) #history,
+        body:has(#posts:target) #posts,
+        body:has(#videos:target) #videos { display: block; }
+
+        nav a { text-decoration: none; color: inherit; display: inline-block; }
+        nav a:visited { color: inherit; }
+
+        /* MOBILE */
+        @media (max-width: 650px) {
+            header {
+                min-height: 220px;
+                padding: 35px 15px;
+            }
+
+            header h1 {
+                font-size: 29px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .sticker {
+                font-size: 24px;
+            }
+
+            nav button,
+nav a {
+                font-size: 13px;
+                padding: 8px 9px;
+            }
+
+            .container {
+                padding: 20px 12px;
+            }
+
+            .card,
+            .welcome,
+            .post {
+                padding: 20px;
+            }
+
+            .family-gallery img {
+                width: 220px;
+                height: 175px;
+            }
+
+            #settingsMenu {
+                width: 210px;
+            }
+        }
+
+
+        
+/* PROFESSIONAL HOME DASHBOARD */
+.home-dashboard{display:grid;gap:22px}
+.dashboard-search{background:linear-gradient(135deg,#063b2d,#16833a);padding:22px;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.dashboard-search label{display:block;color:#fff;font-weight:800;margin-bottom:9px}
+.dashboard-search-row{display:flex;gap:10px}
+.dashboard-search-row input{flex:1;min-width:0;border:0;border-radius:14px;padding:14px 16px;font-size:16px;outline:none}
+.dashboard-search-row button{border:0;border-radius:14px;padding:0 18px;background:#ffd54a;color:#063b2d;font-weight:800;cursor:pointer}
+.dashboard-search-results{display:none;margin-top:12px;background:#fff;color:#222;border-radius:14px;padding:10px;max-height:250px;overflow:auto}
+.dashboard-search-results.show{display:block}
+.dashboard-result{display:block;width:100%;text-align:left;border:0;background:transparent;padding:11px;border-radius:10px;cursor:pointer;color:#174d38;font-weight:700}
+.dashboard-result:hover{background:#eef7f1}
+.dashboard-featured{background:linear-gradient(135deg,rgba(0,60,45,.97),rgba(22,131,58,.92));color:#fff;padding:30px;border-radius:22px;box-shadow:0 10px 28px rgba(0,0,0,.16)}
+.featured-badge{display:inline-block;background:#ffd54a;color:#063b2d;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:900;margin-bottom:12px}
+.dashboard-featured h2{font-size:30px;margin-bottom:10px;color:#fff}
+.dashboard-featured p{max-width:760px;opacity:.95}
+.dashboard-featured button{margin-top:18px;border:0;border-radius:24px;padding:12px 19px;background:#fff;color:#063b2d;font-weight:800;cursor:pointer}
+.dashboard-heading{color:#16833a;margin-bottom:12px;font-size:23px}
+.dashboard-latest{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.dashboard-story{background:#fff;border-radius:17px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.09);border-top:4px solid #16833a;display:flex;flex-direction:column}
+.dashboard-story .story-icon{font-size:28px;margin-bottom:8px}
+.dashboard-story h3{color:#16833a;margin-bottom:7px;font-size:18px}
+.dashboard-story p{color:#555;font-size:14px;flex:1}
+.dashboard-story button{margin-top:13px;align-self:flex-start;border:0;background:#16833a;color:#fff;border-radius:18px;padding:8px 13px;font-weight:700;cursor:pointer}
+.dashboard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.dashboard-stat{background:#fff;border-radius:16px;padding:18px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.stat-number{display:block;color:#16833a;font-size:27px;font-weight:900}
+.stat-label{display:block;color:#666;font-size:12px;margin-top:2px}
+.dashboard-quick{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.dashboard-quick button{border:1px solid #dce9df;background:#fff;color:#174d38;border-radius:15px;padding:14px 8px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.06)}
+.dashboard-quick button:hover{background:#eef7f1;transform:translateY(-2px)}
+.dashboard-welcome-note{background:#fff;border-radius:18px;padding:22px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+body.dark-mode .dashboard-story,body.dark-mode .dashboard-stat,body.dark-mode .dashboard-quick button,body.dark-mode .dashboard-welcome-note{background:#1c2525;color:#eee}
+body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
+@media(max-width:700px){
+.dashboard-featured{padding:23px}.dashboard-featured h2{font-size:24px}
+.dashboard-stats{grid-template-columns:repeat(2,1fr)}.dashboard-quick{grid-template-columns:repeat(2,1fr)}
+.dashboard-search-row{flex-direction:column}.dashboard-search-row button{padding:11px 16px}
+}
+
+/* ---------------- PROFESSIONAL FREE TEXT-TO-SPEECH ---------------- */
+        #yakubTTSPanel {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 9999;
+            width: min(330px, calc(100vw - 32px));
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(0, 60, 45, 0.96);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,.30);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,.18);
+        }
+        #yakubTTSPanel .yakub-tts-title {
+            font-weight: 800;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        #yakubTTSPanel .yakub-tts-status {
+            font-size: 12px;
+            opacity: .88;
+            min-height: 17px;
+            margin-bottom: 9px;
+        }
+        #yakubTTSPanel .yakub-tts-speed {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        #yakubTTSPanel .yakub-tts-speed input {
+            flex: 1;
+            min-width: 0;
+        }
+        #yakubTTSPanel .yakub-tts-buttons {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 7px;
+        }
+        #yakubTTSPanel button {
+            border: 0;
+            border-radius: 10px;
+            padding: 9px 7px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+            color: #063b2d;
+            background: #fff;
+            touch-action: manipulation;
+        }
+        #yakubTTSPanel button:active { transform: scale(.97); }
+        #yakubTTSPanel .yakub-tts-read {
+            background: #ffd54a;
+        }
+        #yakubTTSPanel .yakub-tts-stop {
+            background: #ff8a80;
+        }
+        @media (max-width: 650px) {
+            #yakubTTSPanel {
+                right: 10px;
+                bottom: 10px;
+                width: calc(100vw - 20px);
+            }
+            #yakubTTSPanel .yakub-tts-buttons {
+                grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            }
+        }
+
+    </style>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1779994035323879"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header>
+    <div class="site-logo">🇸🇱 Yakub Jorkie</div>
+
+    <h1>SL Dorin Deen school of Excellence, Sierra Leone Story & Jorkie Family history</h1>
+    <p>My stories • My history • My journey</p>
+
+    <div class="sticker one">🇸🇱</div>
+    <div class="sticker two">⭐</div>
+    <div class="sticker three">📚</div>
+    <div class="sticker four">❤️</div>
+
+    <div class="settings">
+        <button class="settings-button" onclick="toggleSettings()" aria-label="Open settings">⋮</button>
+
+        <div id="settingsMenu">
+            <div class="setting-title">⚙️ Website Settings</div>
+
+            <div class="setting-row" onclick="toggleDarkMode()">
+                🌙 Dark / Light Mode
+                <button id="darkStatus">OFF</button>
+            </div>
+
+            <div class="setting-row" onclick="toggleLargeText()">
+                🔤 Large Text
+                <button id="textStatus">OFF</button>
+            </div>
+
+            <div class="setting-row" onclick="toggleAnimations()">
+                ✨ Animations
+                <button id="animationStatus">ON</button>
+            </div>
+
+            <div class="setting-row" onclick="showToast('🖼️ Use the photo galleries to explore the pictures.')">
+                🖼️ Images
+            </div>
+
+            <div class="setting-row" onclick="showToast('🎥 YouTube videos update automatically here.')">
+                🎥 Videos
+            </div>
+
+            <div class="setting-row" onclick="resetSettings()">
+                🔄 Reset Settings
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <a class="tab-btn active" href="#home">🏠 Home</a>
+    <a class="tab-btn" href="#school">🏫 School</a>
+    <a class="tab-btn" href="#family">👨‍👩‍👧‍👦 Family</a>
+    <a class="tab-btn" href="#history">📖 History</a>
+    <a class="tab-btn" href="#posts">📝 Posts</a>
+    <a class="tab-btn" href="#videos">🎬 Videos</a>
+</nav>
+
+<main class="container">
+
+    <!-- HOME -->
+    <section id="home" class="tab-content active">
+        <div class="home-dashboard">
+            <div class="dashboard-search">
+                <label for="dashboardSearch">🔎 Search my website</label>
+                <div class="dashboard-search-row">
+                    <input id="dashboardSearch" type="search" placeholder="Search school, family, history, posts..." autocomplete="off">
+                    <button type="button" onclick="runDashboardSearch()">Search</button>
+                </div>
+                <div id="dashboardSearchResults" class="dashboard-search-results"></div>
+            </div>
+
+            <section class="dashboard-featured">
+                <div class="featured-badge">⭐ FEATURED STORY • SEPTEMBER 2026</div>
+                <h2>🇸🇱 Kush Crisis in Sierra Leone: The Fight Continues in 2026</h2>
+                <p>Explore an educational overview of the Kush crisis, the response from authorities and the role families, schools and communities can play in protecting young people.</p>
+                <button type="button" onclick="showTab('posts')">📖 Read Featured Story →</button>
+            </section>
+
+            <section>
+                <h2 class="dashboard-heading">📰 Latest Stories</h2>
+                <div class="dashboard-latest">
+                    <article class="dashboard-story"><div class="story-icon">🏫</div><h3>Dorin Deen Reopening</h3><p>School reopening information for JSS and SSS students, including the 14 September 2026 date.</p><button type="button" onclick="showTab('school')">Read →</button></article>
+                    <article class="dashboard-story"><div class="story-icon">🇸🇱</div><h3>Today in Sierra Leone History</h3><p>Learn about an important moment in Sierra Leone's history and the lessons it can teach us today.</p><button type="button" onclick="showTab('history')">Read →</button></article>
+                    <article class="dashboard-story"><div class="story-icon">👨‍👩‍👧‍👦</div><h3>The Jorkie Family</h3><p>Discover family stories, memories, background and important people in the Jorkie family.</p><button type="button" onclick="showTab('family')">Explore →</button></article>
+                    <article class="dashboard-story"><div class="story-icon">🎬</div><h3>Latest Videos</h3><p>Watch videos from the Yakub Jorkie YouTube channel and explore new uploads.</p><button type="button" onclick="showTab('videos')">Watch →</button></article>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="dashboard-heading">📊 Website at a Glance</h2>
+                <div class="dashboard-stats">
+                    <div class="dashboard-stat"><span class="stat-number">6</span><span class="stat-label">Main Sections</span></div>
+                    <div class="dashboard-stat"><span class="stat-number">4</span><span class="stat-label">Story Areas</span></div>
+                    <div class="dashboard-stat"><span class="stat-number">19+</span><span class="stat-label">Photos & Memories</span></div>
+                    <div class="dashboard-stat"><span id="dashboardVisitCount" class="stat-number">1</span><span class="stat-label">Visits on this device</span></div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="dashboard-heading">⚡ Quick Links</h2>
+                <div class="dashboard-quick">
+                    <button type="button" onclick="showTab('school')">🏫 School</button>
+                    <button type="button" onclick="showTab('family')">👨‍👩‍👧 Family</button>
+                    <button type="button" onclick="showTab('history')">📖 History</button>
+                    <button type="button" onclick="showTab('posts')">📝 Posts</button>
+                    <button type="button" onclick="showTab('videos')">🎬 Videos</button>
+                </div>
+            </section>
+
+            <div class="dashboard-welcome-note">
+                <h2 class="dashboard-heading">🌍 Welcome</h2>
+                <p>Welcome to my personal website. Here I share my school experiences, family stories, Sierra Leone history, culture and things I learn every day.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHOOL -->
+    <section id="school" class="tab-content">
+  <!-- SCHOOL NEWS - SEPTEMBER 2026 -->
+<article class="post-card" style="margin:30px auto;max-width:900px;padding:25px;border-radius:16px;background:rgba(0,80,60,0.10);box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+
+    <div style="text-align:center;margin-bottom:20px;">
+        <div style="font-size:14px;opacity:0.75;">
+            🏫 SCHOOL NEWS • SEPTEMBER 2026
+        </div>
+
+        <h2 style="margin:8px 0;font-size:28px;">
+            📚 Dorin Deen School of Excellence Announces Reopening Date
+        </h2>
+
+        <p style="margin:0;font-size:14px;opacity:0.75;">
+            Published September 2026
+        </p>
+    </div>
+
+    <p>
+        Dorin Deen School of Excellence has announced that the school will
+        officially reopen on <strong>Monday, 14 September 2026</strong>,
+        for both <strong>Junior Secondary School (JSS)</strong> and
+        <strong>Senior Secondary School (SSS)</strong> students.
+    </p>
+
+    <p>
+        The announcement was made by the proprietors,
+        <strong>Mr. and Mrs. Dumbuya</strong>, as the school prepares to
+        welcome students back for the new academic session.
+    </p>
+
+    <h3>📖 Important information for SSS 3 students</h3>
+
+    <p>
+        The school has also announced that <strong>SSS 3 students will be
+        using long sheets</strong> for their academic work.
+    </p>
+<!-- SCHOOL NEWS IMAGE -->
+<div style="margin:30px auto;text-align:center;max-width:850px;position:relative;">
+
+    <img src="school_reopening_2026.png"
+         alt="Dorin Deen School of Excellence reopening announcement September 2026"
+         style="width:100%;max-width:850px;height:auto;border-radius:20px;
+         display:block;margin:auto;
+         box-shadow:0 12px 35px rgba(0,0,0,0.30);
+         border:4px solid rgba(255,215,0,0.75);">
+
+    <div style="margin-top:-35px;position:relative;
+         display:inline-block;padding:10px 22px;border-radius:30px;
+         background:linear-gradient(90deg,#006b3c,#0057b8);
+         color:white;font-weight:bold;
+         box-shadow:0 6px 18px rgba(0,0,0,0.25);">
+        🏫 BACK TO SCHOOL • 14 SEPTEMBER 2026 📚
+    </div>
+
+</div>
+<!-- END SCHOOL NEWS IMAGE -->
+
+    <p>
+        Students and parents are encouraged to take note of the reopening
+        date and make the necessary preparations ahead of the new school
+        session.
+    </p>
+
+    <div style="margin-top:25px;padding:18px;border-radius:12px;background:rgba(0,120,80,0.15);">
+        <p><strong>📅 Reopening Date:</strong> 14 September 2026</p>
+        <p><strong>🏫 School:</strong> Dorin Deen School of Excellence</p>
+        <p><strong>📍 Location:</strong> Kossoh Town, Freetown, Sierra Leone</p>
+        <p><strong>👥 Classes:</strong> JSS &amp; SSS</p>
+        <p><strong>📖 SSS 3:</strong> Long sheets</p>
+    </div>
+
+    <p style="margin-top:20px;text-align:center;font-weight:bold;">
+        🇸🇱📚 We wish all students a successful and productive new academic year!
+    </p>
+
+</article>
+<!-- END SCHOOL NEWS -->      
+<div class="card">
+            <details open>
+                <summary>🏫 Dorin Deen School of Excellence</summary>
+
+                <p>
+                    Welcome to the school section of my website.
+                    Here I share information about my school, its leadership,
+                    teachers and prefects.
+                </p>
+<h3>📸 Our School Gallery</h3>
+
+<div class="school-gallery">
+
+    <img src="school1.jpg" alt="Dorin Deen School students">
+
+    <img src="school2.jpg" alt="Dorin Deen School classroom">
+
+    <img src="school3.jpg" alt="Dorin Deen School students">
+
+    <img src="school4.jpg" alt="Dorin Deen School">
+
+    <img src="school5.jpg" alt="Dorin Deen School classroom">
+
+    <img src="school6.jpg" alt="Dorin Deen School students">
+
+    <img src="school7.jpg" alt="Dorin Deen School">
+
+    <img src="school8.jpg" alt="Dorin Deen School">
+
+</div>
+                <h4>📍 Location</h4>
+                <p>Kossoh Town, Freetown, Sierra Leone.</p>
+
+                <h4>👨‍👩‍👧‍👦 School Owners</h4>
+                <p>Mr and Mrs Dumbuya</p>
+
+                <h4>🎓 Principal</h4>
+                <p>Mr Boima</p>
+
+                <h4>⭐ School Prefects</h4>
+                <ul>
+                    <li>SP Tafseratu Jalloh</li>
+                    <li>ASP Yakub Jumma Jorkie</li>
+                </ul>
+
+                <h4>👨‍🏫 Some of Our Teachers</h4>
+                <ul>
+                    <li>Mr Smith</li>
+                    <li>Mr Sar</li>
+                    <li>Mr ML</li>
+                    <li>Mr Serrie</li>
+                    <li>Miss Kailondo</li>
+                    <li>Mr Manseray</li>
+                    <li>Mr Sesay</li>
+                </ul>
+            </details>
+
+            <h3>🎓 My School</h3>
+            <p>
+                Stories about my school, teachers, friends,
+                activities, lessons and experiences.
+            </p>
+
+            <img src="images/school.jpg" alt="My School" class="school-photo"
+                 onclick="openSingleImage(this.src, this.alt)">
+        </div>
+    </section>
+
+    <!-- FAMILY -->
+    <section id="family" class="tab-content">
+        <div class="card">
+            <details open>
+                <summary>👨‍👩‍👧‍👦 The Jorkie Family</summary>
+
+                <h4>🏠 Family Name</h4>
+                <p><strong>The Jorkie Family</strong></p>
+
+                <h4>👨 Father</h4>
+                <p>
+                    <strong>Moses Baimba Jorkie</strong> is the father of the Jorkie family.
+                </p>
+
+                <h4>👩 His Three Wives</h4>
+
+                <p><strong>First Wife:</strong> Mary Jello Jorkie</p>
+                <p>Mary Jello Jorkie has 7 children. She lives in Madina Bum, Bonthe District.</p>
+
+                <p><strong>Second Wife:</strong> Zainab Jabbie Jorkie</p>
+                <p>
+                    Zainab Jabbie Jorkie has 6 children.
+                    Sadly, one child died at a very young age.
+                    She lives in Hastings, Freetown.
+                </p>
+
+                <p><strong>Third Wife:</strong> Esther Jorkie</p>
+                <p>Esther Jorkie has 1 child. She lives in Congo Water, Freetown.</p>
+
+                <h4>👨‍⚕️ Moses Baimba Jorkie's Career</h4>
+                <p>
+                    Moses Baimba Jorkie first worked as a teacher and later became a doctor.
+                    He also served as an Honourable Member representing Constituency 080
+                    for 5 years and Constituency 091 for another 5 years.
+                    He lost his political position in 2023.
+                </p>
+
+                <p>He is now the Regent Chief of Jong Chiefdom.</p>
+                <p>He loves his family and the people he serves.</p>
+
+                <h4>🚗 Family Life</h4>
+                <p>Moses Baimba Jorkie has 7 cars.</p>
+
+                <h4>🌍 Family Background</h4>
+                <p>
+                    The Jorkie family are from the Sherbro and Mande communities
+                    and live in Bonthe District, Sierra Leone.
+                </p>
+
+                <h4>🚘 Current Driver</h4>
+                <p>
+                    The current driver of Moses Baimba Jorkie is
+                    <strong>Shaku Koroma</strong>, who is popularly known as
+                    <strong>Papane</strong>.
+                </p>
+
+                <p>
+                    Papane is a Temne man from another district.
+                    He is married to Kadiatu, who is from Madina Bum,
+                    and they have three children.
+                </p>
+
+                <h4>📸 Jorkie Family Memories</h4>
+
+                <div class="slider-controls">
+                    <button onclick="scrollGallery(-1)">⬅️ Previous</button>
+                    <button onclick="scrollGallery(1)">Next ➡️</button>
+                </div>
+
+                <div class="family-gallery" id="familyGallery">
+                    <img src="family1.jpg" alt="Jorkie Family" onclick="openGalleryImage(0)">
+                    <img src="family2.jpg" alt="Jorkie Family" onclick="openGalleryImage(1)">
+                    <img src="family3.jpg" alt="Jorkie Family" onclick="openGalleryImage(2)">
+                    <img src="family4.jpg" alt="Jorkie Family" onclick="openGalleryImage(3)">
+                    <img src="family5.jpg" alt="Jorkie Family" onclick="openGalleryImage(4)">
+                    <img src="family6.jpg" alt="Jorkie Family" onclick="openGalleryImage(5)">
+                    <img src="family7.jpg" alt="Jorkie Family" onclick="openGalleryImage(6)">
+                </div>
+
+                <p>Family memories, stories, traditions and important moments.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section id="history" class="tab-content">
+        <div class="card">
+            <h2 class="section-title">🇸🇱 Sierra Leone History</h2>
+            <p>
+                Historical stories about Sierra Leone,
+                important people, places and events.
+            </p>
+
+            <article class="post">
+                <h3>📅 September 5, 1997</h3>
+                <div class="date">Today in Sierra Leone History</div>
+
+                <p>
+                    On September 5, 1997, Sierra Leone was going through a very
+                    difficult period in its history. In Freetown, thousands of
+                    people took part in demonstrations during the country's
+                    political and military crisis. The day also included funeral
+                    activities for people who had lost their lives during the violence.
+                </p>
+
+                <p>
+                    September 5, 1997 reminds us of the importance of peace,
+                    unity, justice and protecting ordinary people during times
+                    of conflict. Learning about difficult moments in our history
+                    can help us understand Sierra Leone's journey and build a better future.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- POSTS -->
+    <section id="posts" class="tab-content">
+<!-- 🇸🇱 SIERRA LEONE GOOD NEWS — 14 SEPTEMBER 2026 -->
+<section class="salone-good-news">
+  <div class="salone-news-glow glow-one"></div>
+  <div class="salone-news-glow glow-two"></div>
+
+  <article class="salone-news-card">
+
+    <div class="salone-news-top">
+      <span class="salone-breaking">🇸🇱 GOOD NEWS FROM SALONE</span>
+      <span class="salone-date">14 September 2026</span>
+    </div>
+
+    <div class="salone-news-icon">💚</div>
+
+    <h2>
+      60 Former Drug Abuse Victims Begin a New Chapter After Rehabilitation
+    </h2>
+
+    <p class="salone-news-lead">
+      A message of hope is coming from Makeni today as 60 people who completed
+      a drug-abuse rehabilitation programme have been discharged and given
+      another opportunity to rebuild their lives.
+    </p>
+
+    <div class="salone-highlight">
+      <div class="highlight-number">60</div>
+      <div>
+        <strong>Lives Moving Forward</strong>
+        <p>
+          The rehabilitation programme represents an important step toward
+          recovery, family support and a healthier future.
+        </p>
+      </div>
+    </div>
+
+    <p class="salone-news-text">
+      Drug abuse has affected many families and communities in Sierra Leone.
+      Stories of successful rehabilitation are therefore important reminders
+      that recovery is possible and that people struggling with addiction can
+      receive support and work toward a better future.
+    </p>
+
+    <p class="salone-news-text">
+      The development also highlights the importance of rehabilitation,
+      community support and continued efforts to help young people stay away
+      from harmful substances.
+    </p>
+
+    <div class="salone-message">
+      <span>🌱</span>
+      <div>
+        <strong>Hope for a Better Salone</strong>
+        <p>
+          Every person who recovers is a family strengthened and a community
+          given another reason to hope.
+        </p>
+      </div>
+    </div>
+
+    <div class="salone-news-footer">
+      <span>📰 Sierra Leone News</span>
+      <span>❤️ Recovery • Hope • Community</span>
+    </div>
+
+  </article>
+</section>
+
+
+<style>
+/* ================================
+   SALONE GOOD NEWS CARD
+   ================================ */
+
+.salone-good-news {
+  position: relative;
+  width: 100%;
+  max-width: 1050px;
+  margin: 35px auto;
+  padding: 25px 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #064e3b,
+      #087f5b,
+      #0b7285,
+      #2563eb,
+      #14532d
+    );
+
+  background-size: 300% 300%;
+  animation: saloneBackground 12s ease infinite;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.30);
+}
+
+@keyframes saloneBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* Floating glow effects */
+
+.salone-news-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  filter: blur(35px);
+  opacity: 0.45;
+  pointer-events: none;
+  animation: saloneFloat 7s ease-in-out infinite;
+}
+
+.glow-one {
+  background: #facc15;
+  top: -60px;
+  left: -40px;
+}
+
+.glow-two {
+  background: #22c55e;
+  bottom: -70px;
+  right: -40px;
+  animation-delay: 2s;
+}
+
+@keyframes saloneFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-25px) scale(1.12);
+  }
+}
+
+
+/* Main glass card */
+
+.salone-news-card {
+  position: relative;
+  z-index: 2;
+
+  padding: 35px;
+
+  border-radius: 25px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  border: 1px solid rgba(255, 255, 255, 0.30);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  color: white;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.30),
+    0 20px 45px rgba(0,0,0,0.20);
+
+  animation: saloneCardFloat 5s ease-in-out infinite;
+}
+
+@keyframes saloneCardFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+
+/* Top information */
+
+.salone-news-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.salone-breaking {
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  border-radius: 50px;
+
+  background: rgba(250, 204, 21, 0.95);
+
+  color: #123c2b;
+
+  font-size: 0.78rem;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+
+  box-shadow:
+    0 5px 20px rgba(0,0,0,0.20);
+}
+
+.salone-date {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.90;
+}
+
+
+/* Icon */
+
+.salone-news-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 10px 0 20px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.18);
+
+  font-size: 2.1rem;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.20);
+
+  animation: heartPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+
+/* Headline */
+
+.salone-news-card h2 {
+  margin: 0 0 18px;
+
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+
+  line-height: 1.15;
+
+  font-weight: 900;
+
+  letter-spacing: -0.5px;
+
+  text-shadow:
+    0 4px 15px rgba(0,0,0,0.25);
+}
+
+
+/* Lead */
+
+.salone-news-lead {
+  font-size: 1.08rem;
+
+  line-height: 1.8;
+
+  margin-bottom: 25px;
+
+  color: rgba(255,255,255,0.95);
+}
+
+
+/* 60 people highlight */
+
+.salone-highlight {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  margin: 25px 0;
+
+  padding: 22px;
+
+  border-radius: 20px;
+
+  background: rgba(0,0,0,0.18);
+
+  border-left: 5px solid #facc15;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.15);
+}
+
+.highlight-number {
+  font-size: 3.3rem;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  color: #facc15;
+
+  text-shadow:
+    0 3px 15px rgba(0,0,0,0.25);
+}
+
+.salone-highlight strong {
+  font-size: 1.15rem;
+}
+
+.salone-highlight p {
+  margin: 6px 0 0;
+
+  line-height: 1.6;
+
+  opacity: 0.92;
+}
+
+
+/* Story paragraphs */
+
+.salone-news-text {
+  font-size: 1rem;
+
+  line-height: 1.8;
+
+  margin: 18px 0;
+
+  color: rgba(255,255,255,0.94);
+}
+
+
+/* Hope message */
+
+.salone-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+
+  margin-top: 28px;
+  padding: 20px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34,197,94,0.30),
+      rgba(250,204,21,0.18)
+    );
+
+  border: 1px solid rgba(255,255,255,0.20);
+}
+
+.salone-message > span {
+  font-size: 2rem;
+}
+
+.salone-message strong {
+  font-size: 1.15rem;
+}
+
+.salone-message p {
+  margin: 6px 0 0;
+
+  line-height: 1.6;
+
+  opacity: 0.92;
+}
+
+
+/* Footer */
+
+.salone-news-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+  margin-top: 28px;
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255,255,255,0.20);
+
+  font-size: 0.82rem;
+
+  opacity: 0.88;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .salone-good-news {
+    padding: 15px 10px;
+    border-radius: 22px;
+  }
+
+  .salone-news-card {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  .salone-news-card h2 {
+    font-size: 1.65rem;
+  }
+
+  .salone-news-lead,
+  .salone-news-text {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .salone-highlight {
+    gap: 15px;
+    padding: 17px;
+  }
+
+  .highlight-number {
+    font-size: 2.6rem;
+  }
+
+  .salone-news-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+</style>
+  <!-- KUSH NEWS POST 2026 -->
+<article class="post-card" style="margin:25px auto;max-width:900px;padding:25px;border-radius:16px;background:rgba(0,80,60,0.10);box-shadow:0 6px 20px rgba(0,0,0,0.15);">
+
+    <div style="text-align:center;margin-bottom:18px;">
+        <div style="font-size:14px;opacity:0.75;">
+            🇸🇱 SIERRA LEONE NEWS • SEPTEMBER 2026
+        </div>
+
+        <h2 style="margin:8px 0;font-size:28px;">
+            🇸🇱 Kush Crisis in Sierra Leone: The Fight Continues in 2026
+        </h2>
+
+        <p style="margin:0;font-size:14px;opacity:0.75;">
+            Published September 10, 2026
+        </p>
+    </div>
+
+    <p>
+        The fight against Kush continues to be one of the major public-health
+        and security challenges facing Sierra Leone in 2026. The issue has
+        raised serious concerns about young people, families and communities,
+        particularly in Freetown.
+    </p>
+
+    <p>
+        Kush is a dangerous and highly addictive drug. Because its contents
+        can vary, its effects can be unpredictable and harmful. The crisis
+        has raised concerns about mental health, physical health, drug-related
+        crime and the future of young people.
+    </p>
+
+    <h3>🚨 Government and security response</h3>
+
+    <p>
+        Sierra Leone's security agencies continue efforts to stop the
+        trafficking and distribution of Kush and other illegal drugs.
+        Authorities have also continued pursuing drug-related cases and
+        strengthening the national response to organised crime.
+    </p>
+
+    <h3>🧠 A public-health and social challenge</h3>
+
+    <p>
+        The Kush problem is not only a law-enforcement issue. It is also a
+        major health and social challenge. Research and community programmes
+        have highlighted the serious effects associated with Kush use and the
+        importance of prevention, treatment and recovery.
+    </p>
+
+    <h3>🤝 Communities must be part of the solution</h3>
+
+    <p>
+        Fighting Kush requires more than arrests and seizures. Families,
+        schools, religious organisations, community leaders, health workers,
+        young people and government institutions all have important roles
+        to play.
+    </p>
+
+    <p>
+        Young people need access to education, employment opportunities,
+        sports, counselling, mental-health support and safe community spaces.
+    </p>
+
+    <h3>🇸🇱 A message to Sierra Leone's young people</h3>
+
+    <p>
+        Kush can have devastating consequences for individuals, families and
+        communities. Anyone struggling with substance use should be encouraged
+        to seek professional medical, mental-health or rehabilitation support.
+    </p>
+
+    <div style="margin-top:25px;padding:18px;border-radius:12px;text-align:center;background:rgba(0,120,80,0.15);">
+        <strong style="font-size:20px;">
+            📢 SAY NO TO KUSH. PROTECT OUR YOUTH. BUILD A HEALTHIER SIERRA LEONE. 🇸🇱
+        </strong>
+    </div>
+
+    <p style="margin-top:20px;font-size:13px;opacity:0.7;text-align:center;">
+        This article is for public education and awareness. It does not replace
+        professional medical or rehabilitation advice.
+    </p>
+
+</article>
+<!-- END KUSH NEWS POST 2026 -->
+      <h2 class="section-title">📰 My Latest Posts</h2>
+
+        <article class="post">
+            <h3>🇸🇱 Today's History</h3>
+            <div class="date">September 5, 2026</div>
+
+            <p>
+                On September 5, 1997, Sierra Leone was going through a very difficult
+                period in its history. In Freetown, thousands of people took part in
+                demonstrations during the country's political and military crisis.
+                The day also included funeral activities for people who had lost
+                their lives during the violence.
+            </p>
+
+            <p>
+                September 5, 1997 reminds us of the importance of peace, unity,
+                justice and protecting ordinary people during times of conflict.
+            </p>
+        </article>
+
+        <article class="post">
+            <h3>🎓 My School Story</h3>
+            <div class="date">My first post</div>
+
+            <p>
+                This is where I will write about my school,
+                my teachers, my friends and the things I learn.
+            </p>
+        </article>
+
+        <article class="post">
+            <h3>⭐ Coming Soon</h3>
+            <div class="date">New stories will appear here</div>
+            <p>
+                More stories, pictures and Sierra Leone history posts will be added here.
+            </p>
+        </article>
+    </section>
+
+    <!-- VIDEOS -->
+    <section id="videos" class="tab-content">
+    <h2 class="section-title">🎬 My YouTube Videos</h2>
+
+    <div style="text-align:center;max-width:900px;margin:20px auto;">
+
+        <p>
+            Watch my latest videos below. You can like, comment, share,
+            and subscribe directly on YouTube.
+        </p>
+
+        <!-- YouTube Uploads Playlist -->
+        <div style="
+            position:relative;
+            padding-bottom:56.25%;
+            height:0;
+            overflow:hidden;
+            border-radius:16px;
+            box-shadow:0 8px 25px rgba(0,0,0,.25);
+            margin:25px 0;
+            background:#000;
+        ">
+
+            <iframe
+                src="https://www.youtube-nocookie.com/embed/videoseries?list=UUomt_VpIalkv4Ytcgya808w&origin=https%3A%2F%2Fyakubjorkie.github.io&widget_referrer=https%3A%2F%2Fyakubjorkie.github.io"
+                title="Yakub Jorkie YouTube Videos"
+                style="
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    width:100%;
+                    height:100%;
+                    border:0;
+                "
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+        <!-- YouTube Channel Button -->
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin:20px 0;
+        ">
+
+            <a
+                href="https://www.youtube.com/@yakubjorkie"
+                target="_blank"
+                rel="noopener"
+                class="btn">
+                ▶️ Open My YouTube Channel
+            </a>
+
+            <button
+                type="button"
+                class="btn"
+                onclick="shareVideosPage()">
+                🔗 Share Videos
+            </button>
+
+        </div>
+
+        <div style="
+            margin:20px auto;
+            max-width:760px;
+            padding:18px;
+            border-radius:12px;
+            background:rgba(128,128,128,.12);
+        ">
+
+            <strong>📺 Latest YouTube Videos</strong>
+
+            <p style="margin:8px 0 0;">
+                New videos uploaded to my YouTube channel will appear
+                in this Videos section.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>🇸🇱 My Sierra Leone Story</p>
+    <p>My stories • My history • My journey</p>
+
+    <div class="footer-buttons">
+        <button onclick="shareWebsite()">📤 Share</button>
+        <button onclick="copyWebsiteLink()">📋 Copy Link</button>
+        <button onclick="showToast('❤️ Thanks for visiting SL My Sierra Leone Story!')">❤️ Like</button>
+    </div>
+</footer>
+
+<button id="topButton" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<div id="toast"></div>
+
+<div id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-prev" onclick="changeLightbox(-1)">‹</button>
+    <img id="lightboxImage" src="" alt="Expanded photo">
+    <button class="lightbox-next" onclick="changeLightbox(1)">›</button>
+</div>
+
+<script>
+    /* ---------------- TAB SYSTEM ---------------- */
+    function showTab(tabName, button) {
+        document.querySelectorAll(".tab-content").forEach(function(item) {
+            item.classList.remove("active");
+        });
+
+        var selected = document.getElementById(tabName);
+
+        if (selected) {
+            selected.classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        document.querySelectorAll(".tab-btn").forEach(function(btn) {
+            btn.classList.remove("active");
+        });
+
+        if (button) {
+            button.classList.add("active");
+        } else {
+            document.querySelectorAll(".tab-btn").forEach(function(btn) {
+                if (btn.textContent.toLowerCase().includes(tabName)) {
+                    btn.classList.add("active");
+                }
+            });
+        }
+    }
+
+    /* ---------------- SETTINGS ---------------- */
+    function toggleSettings() {
+        document.getElementById("settingsMenu").classList.toggle("open");
+    }
+
+    document.addEventListener("click", function(event) {
+        var settings = document.querySelector(".settings");
+
+        if (settings && !settings.contains(event.target)) {
+            document.getElementById("settingsMenu").classList.remove("open");
+        }
+    });
+
+    function updateSettingButtons() {
+        document.getElementById("darkStatus").textContent =
+            document.body.classList.contains("dark-mode") ? "ON" : "OFF";
+
+        document.getElementById("textStatus").textContent =
+            document.body.classList.contains("large-text") ? "ON" : "OFF";
+
+        document.getElementById("animationStatus").textContent =
+            document.body.classList.contains("no-animations") ? "OFF" : "ON";
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem("darkMode",
+            document.body.classList.contains("dark-mode"));
+        updateSettingButtons();
+    }
+
+    function toggleLargeText() {
+        document.body.classList.toggle("large-text");
+        localStorage.setItem("largeText",
+            document.body.classList.contains("large-text"));
+        updateSettingButtons();
+    }
+
+    function toggleAnimations() {
+        document.body.classList.toggle("no-animations");
+        localStorage.setItem("noAnimations",
+            document.body.classList.contains("no-animations"));
+        updateSettingButtons();
+    }
+
+    function resetSettings() {
+        localStorage.removeItem("darkMode");
+        localStorage.removeItem("largeText");
+        localStorage.removeItem("noAnimations");
+
+        document.body.classList.remove("dark-mode", "large-text", "no-animations");
+        updateSettingButtons();
+        showToast("🔄 Settings have been reset.");
+    }
+
+    function loadSettings() {
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+        }
+
+        if (localStorage.getItem("largeText") === "true") {
+            document.body.classList.add("large-text");
+        }
+
+        if (localStorage.getItem("noAnimations") === "true") {
+            document.body.classList.add("no-animations");
+        }
+
+        updateSettingButtons();
+    }
+
+    /* ---------------- PHOTO LIGHTBOX ---------------- */
+    var galleryImages = [
+        "family1.jpg",
+        "family2.jpg",
+        "family3.jpg",
+        "family4.jpg",
+        "family5.jpg",
+        "family6.jpg",
+        "family7.jpg"
+    ];
+
+    var currentImage = 0;
+
+    function openGalleryImage(index) {
+        currentImage = index;
+        document.getElementById("lightboxImage").src = galleryImages[currentImage];
+        document.getElementById("lightbox").classList.add("open");
+    }
+
+    function openSingleImage(src, alt) {
+        currentImage = -1;
+        document.getElementById("lightboxImage").src = src;
+        document.getElementById("lightboxImage").alt = alt;
+        document.getElementById("lightbox").classList.add("open");
+    }
+
+    function changeLightbox(direction) {
+        if (currentImage < 0) {
+            return;
+        }
+
+        currentImage += direction;
+
+        if (currentImage < 0) {
+            currentImage = galleryImages.length - 1;
+        }
+
+        if (currentImage >= galleryImages.length) {
+            currentImage = 0;
+        }
+
+        document.getElementById("lightboxImage").src = galleryImages[currentImage];
+    }
+
+    function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("open");
+    }
+
+    document.getElementById("lightbox").addEventListener("click", function(event) {
+        if (event.target === this) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+
+        if (document.getElementById("lightbox").classList.contains("open")) {
+            if (event.key === "ArrowLeft") changeLightbox(-1);
+            if (event.key === "ArrowRight") changeLightbox(1);
+        }
+    });
+
+    /* ---------------- GALLERY SCROLL ---------------- */
+    function scrollGallery(direction) {
+        var gallery = document.getElementById("familyGallery");
+
+        gallery.scrollBy({
+            left: direction * 285,
+            behavior: "smooth"
+        });
+    }
+
+    /* ---------------- TOAST MESSAGE ---------------- */
+    var toastTimer;
+
+    function showToast(message) {
+        var toast = document.getElementById("toast");
+
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+
+        toastTimer = setTimeout(function() {
+            toast.classList.remove("show");
+        }, 2500);
+    }
+
+    /* ---------------- SHARE / COPY ---------------- */
+    function copyWebsiteLink() {
+        var link = "https://yakubjorkie.github.io/";
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(link).then(function() {
+                showToast("📋 Website link copied!");
+            }).catch(function() {
+                showToast(link);
+            });
+        } else {
+            showToast(link);
+        }
+    }
+
+    function shareWebsite() {
+        var link = "https://yakubjorkie.github.io/";
+
+        if (navigator.share) {
+            navigator.share({
+                title: "SL My Sierra Leone Story",
+                text: "Visit Yakub Jorkie's Sierra Leone Story website.",
+                url: link
+            });
+        } else {
+            copyWebsiteLink();
+        }
+    }
+
+    /* ---------------- BACK TO TOP ---------------- */
+    window.addEventListener("scroll", function() {
+        var button = document.getElementById("topButton");
+
+        if (window.scrollY > 300) {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    });
+
+    /* ---------------- YOUTUBE ---------------- */
+    /*
+       The navigation no longer depends on the YouTube API.
+       This keeps the site stable on phones and computers.
+       The Videos tab itself contains the YouTube channel link.
+    */
+
+    /* ---------------- SHARE ---------------- */
+    function shareVideosPage() {
+        const url = window.location.href.split('#')[0] + '#videos';
+        if (navigator.share) {
+            navigator.share({title: 'Yakub Jorkie Videos', text: 'Watch my videos', url}).catch(() => {});
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).then(() => showToast('🔗 Videos link copied!'));
+        } else {
+            showToast('🔗 Open the Videos tab and copy the page link.');
+        }
+    }
+
+    /* Highlight the current navigation link. */
+    function updateHashNav() {
+        var hash = window.location.hash || "#home";
+        document.querySelectorAll("nav a.tab-btn").forEach(function(link) {
+            link.classList.toggle("active", link.getAttribute("href") === hash);
+        });
+    }
+    window.addEventListener("hashchange", updateHashNav);
+    updateHashNav();
+
+
+
+    /* ---------------- HOME DASHBOARD ---------------- */
+    var dashboardSearchItems = [
+        {title:"🏫 Dorin Deen School of Excellence",tab:"school",keywords:"school dorin deen excellence kossoh town freetown jss sss teachers prefects reopening"},
+        {title:"🇸🇱 Sierra Leone History",tab:"history",keywords:"history sierra leone september 5 1997 freetown peace unity justice"},
+        {title:"👨‍👩‍👧‍👦 The Jorkie Family",tab:"family",keywords:"jorkie family moses baimba mary jello zainab jabbie esther sherbro mande"},
+        {title:"📝 Kush Crisis in Sierra Leone",tab:"posts",keywords:"kush crisis sierra leone 2026 youth health security community"},
+        {title:"🎬 Yakub Jorkie Videos",tab:"videos",keywords:"youtube videos latest uploads subscribe"}
+    ];
+
+    function runDashboardSearch(){
+        var input=document.getElementById("dashboardSearch"),results=document.getElementById("dashboardSearchResults");
+        if(!input||!results)return;
+        var q=input.value.toLowerCase().trim(); results.innerHTML="";
+        if(!q){results.classList.remove("show");return;}
+        var matches=dashboardSearchItems.filter(function(item){return (item.title+" "+item.keywords).toLowerCase().includes(q);});
+        if(!matches.length){results.innerHTML="<div style='padding:10px;'>No matching section found. Try another word.</div>";results.classList.add("show");return;}
+        matches.forEach(function(item){
+            var b=document.createElement("button");b.type="button";b.className="dashboard-result";b.textContent=item.title;
+            b.onclick=function(){showTab(item.tab);results.classList.remove("show");input.value="";};results.appendChild(b);
+        });
+        results.classList.add("show");
+    }
+
+    document.addEventListener("DOMContentLoaded",function(){
+        var search=document.getElementById("dashboardSearch");
+        if(search){
+            search.addEventListener("keydown",function(e){if(e.key==="Enter")runDashboardSearch();});
+            search.addEventListener("input",function(){if(!search.value.trim()){var r=document.getElementById("dashboardSearchResults");if(r)r.classList.remove("show");}});
+        }
+        var key="yakubJorkieDashboardVisits";
+        var visits=parseInt(localStorage.getItem(key)||"0",10)+1;
+        localStorage.setItem(key,String(visits));
+        var display=document.getElementById("dashboardVisitCount");
+        if(display)display.textContent=visits.toLocaleString();
+    });
+
+
+    loadSettings();
+
+
+
+    /* ---------------- PROFESSIONAL FREE TEXT-TO-SPEECH ---------------- */
+    (function () {
+        var yakubTTSChunks = [];
+        var yakubTTSIndex = 0;
+        var yakubTTSRate = 1;
+        var yakubTTSRunning = false;
+
+        function yakubTTSStatus(message) {
+            var box = document.getElementById("yakubTTSStatus");
+            if (box) box.textContent = message;
+        }
+
+        function yakubTTSSplitText(text) {
+            var clean = text.replace(/\s+/g, " ").trim();
+            if (!clean) return [];
+
+            var sentences = clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [clean];
+            var chunks = [];
+            var current = "";
+
+            for (var i = 0; i < sentences.length; i++) {
+                var part = sentences[i].trim();
+                if (!part) continue;
+
+                if ((current + " " + part).trim().length <= 1400) {
+                    current = (current + " " + part).trim();
+                } else {
+                    if (current) chunks.push(current);
+                    current = part;
+                }
+            }
+
+            if (current) chunks.push(current);
+            return chunks;
+        }
+
+        function yakubTTSReadChunk() {
+            if (!yakubTTSRunning) return;
+
+            if (yakubTTSIndex >= yakubTTSChunks.length) {
+                yakubTTSRunning = false;
+                yakubTTSStatus("✅ Finished reading.");
+                return;
+            }
+
+            var utterance = new SpeechSynthesisUtterance(yakubTTSChunks[yakubTTSIndex]);
+            utterance.rate = yakubTTSRate;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            utterance.lang = "en-US";
+
+            utterance.onstart = function () {
+                yakubTTSStatus("🔊 Reading selected text…");
+            };
+
+            utterance.onend = function () {
+                yakubTTSIndex++;
+                yakubTTSReadChunk();
+            };
+
+            utterance.onerror = function () {
+                yakubTTSRunning = false;
+                yakubTTSStatus("⚠️ Your device could not continue the reading.");
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        window.yakubTTSReadSelected = function () {
+            if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+                yakubTTSStatus("❌ Text-to-speech is not supported here.");
+                return;
+            }
+
+            var selectedText = window.getSelection ? window.getSelection().toString().trim() : "";
+
+            if (!selectedText) {
+                yakubTTSStatus("⚠️ Highlight some text first, then press Read.");
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            yakubTTSChunks = yakubTTSSplitText(selectedText);
+            yakubTTSIndex = 0;
+            yakubTTSRunning = true;
+            yakubTTSStatus("⏳ Starting…");
+            yakubTTSReadChunk();
+        };
+
+        window.yakubTTSPause = function () {
+            if (!("speechSynthesis" in window)) return;
+            if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+                window.speechSynthesis.pause();
+                yakubTTSStatus("⏸ Reading paused.");
+            }
+        };
+
+        window.yakubTTSResume = function () {
+            if (!("speechSynthesis" in window)) return;
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+                yakubTTSStatus("🔊 Reading resumed…");
+            }
+        };
+
+        window.yakubTTSStop = function () {
+            if (!("speechSynthesis" in window)) return;
+            window.speechSynthesis.cancel();
+            yakubTTSRunning = false;
+            yakubTTSChunks = [];
+            yakubTTSIndex = 0;
+            yakubTTSStatus("⏹ Reading stopped.");
+        };
+
+        var speedControl = document.getElementById("yakubTTSSpeed");
+        var speedValue = document.getElementById("yakubTTSSpeedValue");
+
+        if (speedControl) {
+            speedControl.addEventListener("input", function () {
+                yakubTTSRate = parseFloat(speedControl.value) || 1;
+                if (speedValue) speedValue.textContent = yakubTTSRate.toFixed(1) + "×";
+            });
+        }
+    })();
+
+</script>
+
+
+
+<!-- ---------------- PROFESSIONAL FREE TEXT-TO-SPEECH ---------------- -->
+<div id="yakubTTSPanel" aria-label="Text to speech controls">
+    <div class="yakub-tts-title">🔊 Read Selected Text</div>
+    <div id="yakubTTSStatus" class="yakub-tts-status">Highlight text, then press Read.</div>
+    <div class="yakub-tts-speed">
+        <span>Speed</span>
+        <input id="yakubTTSSpeed" type="range" min="0.7" max="1.4" step="0.1" value="1" aria-label="Reading speed">
+        <span id="yakubTTSSpeedValue">1.0×</span>
+    </div>
+    <div class="yakub-tts-buttons">
+        <button type="button" class="yakub-tts-read" onclick="yakubTTSReadSelected()">🔊 Read</button>
+        <button type="button" onclick="yakubTTSPause()">⏸ Pause</button>
+        <button type="button" onclick="yakubTTSResume()">▶ Resume</button>
+        <button type="button" class="yakub-tts-stop" onclick="yakubTTSStop()">⏹ Stop</button>
+    </div>
+</div>
+
+</body>
+</html>
