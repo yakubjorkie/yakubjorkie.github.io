@@ -1113,6 +1113,457 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
 
     <!-- POSTS -->
     <section id="posts" class="tab-content">
+<!-- 🇸🇱 SIERRA LEONE GOOD NEWS — 14 SEPTEMBER 2026 -->
+<section class="salone-good-news">
+  <div class="salone-news-glow glow-one"></div>
+  <div class="salone-news-glow glow-two"></div>
+
+  <article class="salone-news-card">
+
+    <div class="salone-news-top">
+      <span class="salone-breaking">🇸🇱 GOOD NEWS FROM SALONE</span>
+      <span class="salone-date">14 September 2026</span>
+    </div>
+
+    <div class="salone-news-icon">💚</div>
+
+    <h2>
+      60 Former Drug Abuse Victims Begin a New Chapter After Rehabilitation
+    </h2>
+
+    <p class="salone-news-lead">
+      A message of hope is coming from Makeni today as 60 people who completed
+      a drug-abuse rehabilitation programme have been discharged and given
+      another opportunity to rebuild their lives.
+    </p>
+
+    <div class="salone-highlight">
+      <div class="highlight-number">60</div>
+      <div>
+        <strong>Lives Moving Forward</strong>
+        <p>
+          The rehabilitation programme represents an important step toward
+          recovery, family support and a healthier future.
+        </p>
+      </div>
+    </div>
+
+    <p class="salone-news-text">
+      Drug abuse has affected many families and communities in Sierra Leone.
+      Stories of successful rehabilitation are therefore important reminders
+      that recovery is possible and that people struggling with addiction can
+      receive support and work toward a better future.
+    </p>
+
+    <p class="salone-news-text">
+      The development also highlights the importance of rehabilitation,
+      community support and continued efforts to help young people stay away
+      from harmful substances.
+    </p>
+
+    <div class="salone-message">
+      <span>🌱</span>
+      <div>
+        <strong>Hope for a Better Salone</strong>
+        <p>
+          Every person who recovers is a family strengthened and a community
+          given another reason to hope.
+        </p>
+      </div>
+    </div>
+
+    <div class="salone-news-footer">
+      <span>📰 Sierra Leone News</span>
+      <span>❤️ Recovery • Hope • Community</span>
+    </div>
+
+  </article>
+</section>
+
+
+<style>
+/* ================================
+   SALONE GOOD NEWS CARD
+   ================================ */
+
+.salone-good-news {
+  position: relative;
+  width: 100%;
+  max-width: 1050px;
+  margin: 35px auto;
+  padding: 25px 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #064e3b,
+      #087f5b,
+      #0b7285,
+      #2563eb,
+      #14532d
+    );
+
+  background-size: 300% 300%;
+  animation: saloneBackground 12s ease infinite;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.30);
+}
+
+@keyframes saloneBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* Floating glow effects */
+
+.salone-news-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  filter: blur(35px);
+  opacity: 0.45;
+  pointer-events: none;
+  animation: saloneFloat 7s ease-in-out infinite;
+}
+
+.glow-one {
+  background: #facc15;
+  top: -60px;
+  left: -40px;
+}
+
+.glow-two {
+  background: #22c55e;
+  bottom: -70px;
+  right: -40px;
+  animation-delay: 2s;
+}
+
+@keyframes saloneFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-25px) scale(1.12);
+  }
+}
+
+
+/* Main glass card */
+
+.salone-news-card {
+  position: relative;
+  z-index: 2;
+
+  padding: 35px;
+
+  border-radius: 25px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  border: 1px solid rgba(255, 255, 255, 0.30);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  color: white;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.30),
+    0 20px 45px rgba(0,0,0,0.20);
+
+  animation: saloneCardFloat 5s ease-in-out infinite;
+}
+
+@keyframes saloneCardFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+
+/* Top information */
+
+.salone-news-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.salone-breaking {
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  border-radius: 50px;
+
+  background: rgba(250, 204, 21, 0.95);
+
+  color: #123c2b;
+
+  font-size: 0.78rem;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+
+  box-shadow:
+    0 5px 20px rgba(0,0,0,0.20);
+}
+
+.salone-date {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.90;
+}
+
+
+/* Icon */
+
+.salone-news-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 10px 0 20px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.18);
+
+  font-size: 2.1rem;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.20);
+
+  animation: heartPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+
+/* Headline */
+
+.salone-news-card h2 {
+  margin: 0 0 18px;
+
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+
+  line-height: 1.15;
+
+  font-weight: 900;
+
+  letter-spacing: -0.5px;
+
+  text-shadow:
+    0 4px 15px rgba(0,0,0,0.25);
+}
+
+
+/* Lead */
+
+.salone-news-lead {
+  font-size: 1.08rem;
+
+  line-height: 1.8;
+
+  margin-bottom: 25px;
+
+  color: rgba(255,255,255,0.95);
+}
+
+
+/* 60 people highlight */
+
+.salone-highlight {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  margin: 25px 0;
+
+  padding: 22px;
+
+  border-radius: 20px;
+
+  background: rgba(0,0,0,0.18);
+
+  border-left: 5px solid #facc15;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.15);
+}
+
+.highlight-number {
+  font-size: 3.3rem;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  color: #facc15;
+
+  text-shadow:
+    0 3px 15px rgba(0,0,0,0.25);
+}
+
+.salone-highlight strong {
+  font-size: 1.15rem;
+}
+
+.salone-highlight p {
+  margin: 6px 0 0;
+
+  line-height: 1.6;
+
+  opacity: 0.92;
+}
+
+
+/* Story paragraphs */
+
+.salone-news-text {
+  font-size: 1rem;
+
+  line-height: 1.8;
+
+  margin: 18px 0;
+
+  color: rgba(255,255,255,0.94);
+}
+
+
+/* Hope message */
+
+.salone-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+
+  margin-top: 28px;
+  padding: 20px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34,197,94,0.30),
+      rgba(250,204,21,0.18)
+    );
+
+  border: 1px solid rgba(255,255,255,0.20);
+}
+
+.salone-message > span {
+  font-size: 2rem;
+}
+
+.salone-message strong {
+  font-size: 1.15rem;
+}
+
+.salone-message p {
+  margin: 6px 0 0;
+
+  line-height: 1.6;
+
+  opacity: 0.92;
+}
+
+
+/* Footer */
+
+.salone-news-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+  margin-top: 28px;
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255,255,255,0.20);
+
+  font-size: 0.82rem;
+
+  opacity: 0.88;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .salone-good-news {
+    padding: 15px 10px;
+    border-radius: 22px;
+  }
+
+  .salone-news-card {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  .salone-news-card h2 {
+    font-size: 1.65rem;
+  }
+
+  .salone-news-lead,
+  .salone-news-text {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .salone-highlight {
+    gap: 15px;
+    padding: 17px;
+  }
+
+  .highlight-number {
+    font-size: 2.6rem;
+  }
+
+  .salone-news-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+</style>
   <!-- KUSH NEWS POST 2026 -->
 <article class="post-card" style="margin:25px auto;max-width:900px;padding:25px;border-radius:16px;background:rgba(0,80,60,0.10);box-shadow:0 6px 20px rgba(0,0,0,0.15);">
 
