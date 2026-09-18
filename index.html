@@ -851,81 +851,105 @@ body.dark-mode .dashboard-story p,body.dark-mode .stat-label{color:#ccc}
 
     <!-- SCHOOL -->
     <section id="school" class="tab-content">
-<article class="post">
-    <div class="post-header">
-        <span class="post-category">School Life</span>
-        <h2>Our First Day in SSS3</h2>
-        <p class="post-meta">Dorin Deen School of Excellence</p>
-    </div>
+<!-- SSS3 First Day Gallery - Safe Code -->
+<style>
+.sss3-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.sss3-card {
+  position: relative;
+  width: 32%;
+  min-width: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  float: left; /* standard floating */
+}
+.sss3-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.sss3-card:hover img {
+  transform: scale(1.05);
+}
+.sss3-save-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: #ffffff;
+  color: #111;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 2;
+}
+.sss3-lightbox {
+  display: none;
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+.sss3-lightbox img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+}
+.sss3-lightbox.active { display: flex; }
+</style>
 
-    <div class="post-gallery">
-        <img src="images/our-first-day-ss3-1.jpg"
-             alt="Student at Dorin Deen School of Excellence"
-             loading="lazy">
-style="max-waith:  150px; height: auto; border-radius: 8px;">
+<div class="sss3-gallery">
+  <!-- Picture 1 -->
+  <div class="sss3-card" onclick="openSSS3(this)">
+    <img src="sss3-1.jpg" alt="Our first day SSS3 1">
+    <button class="sss3-save-btn" onclick="event.stopPropagation(); saveSSS3('sss3-1.jpg')">⬇ Save</button>
+  </div>
+  <!-- Picture 2 -->
+  <div class="sss3-card" onclick="openSSS3(this)">
+    <img src="sss3-2.jpg" alt="Our first day SSS3 2">
+    <button class="sss3-save-btn" onclick="event.stopPropagation(); saveSSS3('sss3-2.jpg')">⬇ Save</button>
+  </div>
+  <!-- Picture 3 -->
+  <div class="sss3-card" onclick="openSSS3(this)">
+    <img src="sss3-3.jpg" alt="Our first day SSS3 3">
+    <button class="sss3-save-btn" onclick="event.stopPropagation(); saveSSS3('sss3-3.jpg')">⬇ Save</button>
+  </div>
+</div>
 
-        <img src="images/our-first-day-ss3-2.jpg"
-             alt="SSS3 student at Dorin Deen School of Excellence"
-             loading="lazy">
-style="max-waith:  150px; height: auto; border-radius: 8px;">
+<!-- Click to view big -->
+<div class="sss3-lightbox" id="sss3-lightbox" onclick="this.classList.remove('active')">
+  <img id="sss3-lightbox-img" src="">
+</div>
 
-        <img src="images/our-first-day-ss3-3.jpg"
-             alt="SSS3 student at Dorin Deen School of Excellence"
-             loading="lazy">
-style="max-waith:  150px; height: auto; border-radius: 8px;">
-    </div>
-
-    <div class="post-content">
-        <p>
-            Our first day as <strong>SSS3 students</strong> at
-            <strong>Dorin Deen School of Excellence</strong> was a memorable
-            and exciting experience. We spent time playing, interacting,
-            and getting to know one another as we began this important stage
-            of our academic journey.
-        </p>
-
-        <p>
-            The day was also special because two of our classmates were
-            entrusted with new responsibilities as
-            <strong>student prefects</strong>.
-        </p>
-
-        <p>
-            The young man pictured standing has now been appointed as the
-            prefect responsible for helping to monitor and address issues
-            involving <strong>latecomers</strong>.
-        </p>
-
-        <p>
-            The young woman pictured has been appointed as a prefect
-            responsible for promoting communication and understanding among
-            students from different <strong>tribes and language backgrounds</strong>.
-        </p>
-
-        <p>
-            As part of our commitment to improving our communication skills,
-            we encourage ourselves to <strong>speak English only within the
-            school environment</strong>. This helps us develop confidence,
-            improve our spoken English, and communicate more effectively
-            with one another.
-        </p>
-
-        <p>
-            These responsibilities were entrusted to the students by
-            <strong>ASP Yakub Jumma Jorkie</strong>, who continues to encourage
-            discipline, leadership, unity, and personal development among
-            students.
-        </p>
-
-        <p>
-            Our first day in SSS3 was not just about entering a new class—it
-            was the beginning of a new chapter filled with
-            <strong>friendship, responsibility, leadership, learning,
-            and growth.</strong>
-        </p>
-    </div>
-</article>
-  <!-- SCHOOL NEWS - SEPTEMBER 2026 -->
+<script>
+function openSSS3(card){
+  var src = card.querySelector('img').src;
+  document.getElementById('sss3-lightbox-img').src = src;
+  document.getElementById('sss3-lightbox').classList.add('active');
+}
+function saveSSS3(url){
+  // This saves instantly to gallery / downloads folder
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = url.split('/').pop();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+</script>
+<!-- End Gallery -->
 <article class="post-card" style="margin:30px auto;max-width:900px;padding:25px;border-radius:16px;background:rgba(0,80,60,0.10);box-shadow:0 6px 20px rgba(0,0,0,0.15);">
 
     <div style="text-align:center;margin-bottom:20px;">
