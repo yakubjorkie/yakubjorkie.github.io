@@ -1,202 +1,247 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="manifest" href="./manifest.webmanifest">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07152d">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Y Jorkie 3D Bubble Shooter</title>
+<title>Y Jorkie Bubble Shooter</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07152d;font-family:Arial,sans-serif}
-#game{position:fixed;inset:0}
-canvas{display:block;width:100%;height:100%;touch-action:none}
-#hud{position:fixed;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none;color:#fff}
-.panel{padding:9px 13px;border:1px solid #b9e2ff55;border-radius:13px;background:#071b35bb;box-shadow:0 6px 18px #0005;font-weight:800;text-shadow:0 2px 5px #000}
-#brand{font-size:13px;letter-spacing:1px;color:#ffe18a}
-#controls{position:fixed;left:50%;bottom:48px;transform:translateX(-50%);display:flex;gap:8px;width:min(94vw,520px);z-index:5}
-#controls button{width:auto;flex:1;padding:12px 8px;font-size:13px;background:linear-gradient(120deg,#72e4ff,#478cff);color:#06152c;box-shadow:0 5px 15px #0006}
-#controls button:active{transform:scale(.96)}
-#hint{position:fixed;bottom:105px;left:50%;transform:translateX(-50%);background:#071b35cc;color:#e9f4ff;border:1px solid #b9e2ff44;border-radius:20px;padding:9px 13px;font-size:12px;white-space:nowrap}
-#overlay{position:fixed;inset:0;display:grid;place-items:center;background:#061329aa;padding:20px}
-.dialog{width:min(100%,390px);padding:28px 23px;text-align:center;border-radius:24px;background:linear-gradient(145deg,#315b91,#122c52);border:1px solid #ffffff55;color:white;box-shadow:0 20px 65px #0009}
-.dialog h1{font-size:34px;line-height:1.05;margin:0 0 12px}.dialog p{color:#dbeaff;line-height:1.5;font-size:14px}
-button{border:0;border-radius:28px;padding:14px 26px;background:linear-gradient(120deg,#ffe17a,#ff9c43);color:#35213a;font-size:17px;font-weight:900;cursor:pointer;width:100%}
-#toast{position:fixed;top:76px;left:50%;transform:translateX(-50%);background:#061329df;color:white;border-radius:20px;padding:9px 15px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+*{box-sizing:border-box}
+body{margin:0;background:#07152d;color:white;font-family:Arial,sans-serif}
+header{padding:18px;text-align:center;background:#102c52}
+h1{margin:0;color:#55d9ff;font-size:25px}
+h2{color:#55d9ff}
+nav{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:12px;background:#0b2040}
+button{border:0;border-radius:12px;padding:12px 16px;background:#168bd0;color:white;font-weight:bold;cursor:pointer}
+button:active{transform:scale(.97)}
+main{max-width:650px;margin:auto;padding:15px}
+.panel{background:#10294a;border:1px solid #24517c;border-radius:18px;padding:18px;margin:12px 0}
+.hidden{display:none}
+.big{font-size:34px;font-weight:bold;color:#ffd45a}
+.muted{color:#b8cce2}
+input{width:100%;padding:13px;margin:8px 0;border-radius:9px;border:1px solid #47749d;background:#071a32;color:white}
+canvas{width:100%;background:linear-gradient(#142f58,#07152d);border-radius:15px;touch-action:manipulation}
+.stats{display:flex;justify-content:space-around;text-align:center;gap:10px}
+.stat{background:#19395e;border-radius:12px;padding:12px;flex:1}
+.actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.reward{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #315071}
+footer{text-align:center;color:#8daac8;padding:25px;font-size:12px}
 </style>
 </head>
 <body>
-<div id="game"></div>
-<div id="hud">
- <div class="panel"><div id="brand">Y JORKIE</div>3D BUBBLE</div>
- <div class="panel">⭐ <span id="score">0</span></div>\n <div class="panel">🪙 <span id="coins">0</span></div>
- <div class="panel">LEVEL <span id="level">1</span></div>
+<header>
+<h1>🎯 Y JORKIE</h1>
+<p>3D BUBBLE SHOOTER</p>
+</header>
+
+<nav>
+<button onclick="show('home')">🏠 Home</button>
+<button onclick="show('game')">🎮 Play</button>
+<button onclick="show('rewards')">🎁 Rewards</button>
+<button onclick="show('profile')">👤 Profile</button>
+</nav>
+
+<main>
+<section id="home" class="page">
+<div class="panel" style="text-align:center">
+<h2>Welcome to Y Jorkie!</h2>
+<p class="muted">Aim, shoot and match colourful bubbles.</p>
+<div class="big">🪙 <span id="homeCoins">0</span></div>
+<p>Your coin balance</p>
+<button onclick="show('game')">▶ PLAY GAME</button>
 </div>
-<div id="toast"></div>
-<div id="controls">
- <button id="leftBtn">◀ AIM</button>
- <button id="shootBtn">🔵 SHOOT</button>
- <button id="rightBtn">AIM ▶</button>
- <button id="changeBtn">🎨 CHANGE (5)</button>
+<div class="stats">
+<div class="stat">🏆<br>Level<br><b id="homeLevel">1</b></div>
+<div class="stat">⭐<br>Best score<br><b id="homeScore">0</b></div>
 </div>
-<div id="hint">Drag or move to aim · Tap to shoot · Match 3 or more · Earn 2 coins per bubble</div>
-<div id="overlay"><div class="dialog"><h1>Y JORKIE<br><span style="color:#ffe18a">3D BUBBLE SHOOTER</span></h1><p>Aim the cannon, shoot shiny 3D bubbles and match three or more of the same colour. Clear the board to unlock the next level!</p><button id="play">PLAY NOW</button></div></div>
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-const host=document.getElementById('game');
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x07152d);scene.fog=new THREE.Fog(0x07152d,20,42);
-const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,100);camera.position.set(0,0,23);camera.lookAt(0,0,0);
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,1.85));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.appendChild(renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xbadfff,0x182343,2));
-const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-5,8,12);scene.add(key);
-const rim=new THREE.PointLight(0x4caeff,45,28);rim.position.set(7,-1,8);scene.add(rim);
-const colors=[0xff4f78,0x36cfff,0xffd34f,0x9a75ff,0x54df9a,0xff984b];
-const mats=colors.map(c=>new THREE.MeshPhysicalMaterial({color:c,roughness:.16,metalness:.04,clearcoat:1,clearcoatRoughness:.08}));
-const sphereGeo=new THREE.SphereGeometry(.48,36,28);
-const boardGroup=new THREE.Group();scene.add(boardGroup);
-// Soft glowing playfield frame and background stars.
-const frameMat=new THREE.MeshBasicMaterial({color:0x3974aa,transparent:true,opacity:.42});
-const frame=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(10.7,15.2,.08)),frameMat);
-frame.position.set(0,-.2,-1.2);scene.add(frame);
-const starMat=new THREE.PointsMaterial({color:0x9ccfff,size:.045,transparent:true,opacity:.65});
-const starPositions=[];
-for(let i=0;i<100;i++)starPositions.push((Math.random()-.5)*20,(Math.random()-.5)*18,-2.5);
-const starGeo=new THREE.BufferGeometry();
-starGeo.setAttribute('position',new THREE.Float32BufferAttribute(starPositions,3));
-scene.add(new THREE.Points(starGeo,starMat));
-const bubbles=[],shots=[],effects=[];
-const COLS=9,ROWS=9,DX=1.04,DY=.91;
-let level=1,score=0,coins=0,current=0,next=1,active=false,projectile=null,aim=new THREE.Vector3(0,6,0),shotCooldown=false;
-const shooter=new THREE.Group();scene.add(shooter);shooter.position.set(0,-7.05,0);
-const cannon=new THREE.Mesh(new THREE.CylinderGeometry(.25,.36,1.5,24),new THREE.MeshStandardMaterial({color:0x547ca9,metalness:.65,roughness:.25}));cannon.position.y=.55;cannon.rotation.z=0;shooter.add(cannon);
-const muzzle=new THREE.Mesh(new THREE.TorusGeometry(.27,.09,10,24),new THREE.MeshStandardMaterial({color:0xf6d47c,metalness:.7,roughness:.2}));muzzle.position.y=1.27;shooter.add(muzzle);
-const currentHolder=new THREE.Group();scene.add(currentHolder);
-const nextHolder=new THREE.Group();scene.add(nextHolder);
-const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
-const aimPlane=new THREE.Plane(new THREE.Vector3(0,0,1),0);
-const lineMat=new THREE.LineDashedMaterial({color:0xd7edff,dashSize:.18,gapSize:.13,transparent:true,opacity:.65});
-let guide;
-function pos(x,y){return new THREE.Vector3((x-(COLS-1)/2)*DX+(y%2?DX/2:0),5.9-y*DY,0)}
-function makeBubble(x,y,c,parent=boardGroup){
- const m=new THREE.Mesh(sphereGeo,mats[c]);m.position.copy(pos(x,y));m.userData={x,y,c};m.castShadow=true;parent.add(m);bubbles.push(m);return m;
+<div class="panel">
+<h3>How to play</h3>
+<p>Tap the game board to aim. Match three or more bubbles of the same colour to clear them.</p>
+</div>
+</section>
+
+<section id="game" class="page hidden">
+<div class="panel">
+<div class="stats">
+<div class="stat">Level<br><b id="level">1</b></div>
+<div class="stat">Score<br><b id="score">0</b></div>
+<div class="stat">Coins<br>🪙 <b id="gameCoins">0</b></div>
+</div>
+<canvas id="board" width="600" height="650"></canvas>
+<div class="actions">
+<button onclick="newGame()">New Game</button>
+<button onclick="show('home')">Home</button>
+</div>
+<p class="muted" style="text-align:center">Tap the board to aim and shoot.</p>
+</div>
+</section>
+
+<section id="rewards" class="page hidden">
+<div class="panel">
+<h2>🎁 Rewards Centre</h2>
+<div class="big">🪙 <span id="rewardCoins">0</span></div>
+<p class="muted">Your virtual game coins</p>
+<div class="reward">
+<div><b>Daily reward</b><br><small>Come back each day</small></div>
+<button id="dailyButton" onclick="dailyReward()">Collect 50 🪙</button>
+</div>
+<div class="reward">
+<div><b>Complete a level</b><br><small>Earn 20 coins</small></div>
+<span>🎯</span>
+</div>
+<div class="reward">
+<div><b>Play the game</b><br><small>Improve your score</small></div>
+<span>⭐</span>
+</div>
+</div>
+</section>
+
+<section id="profile" class="page hidden">
+<div class="panel">
+<h2>👤 Player Profile</h2>
+<div id="loggedOut">
+<p>Enter your email to create a local demo profile.</p>
+<input id="email" type="email" placeholder="Your email address">
+<button onclick="login()">Continue</button>
+</div>
+<div id="loggedIn" class="hidden">
+<p>Player email:</p>
+<b id="playerEmail"></b>
+<p>Coins: 🪙 <span id="profileCoins"></span></p>
+<button onclick="logout()">Log out</button>
+</div>
+</div>
+<div class="panel">
+<h2>🏆 Leaderboard</h2>
+<p class="muted">Your local demonstration score</p>
+<div id="leaderboard">No scores yet.</div>
+</div>
+</section>
+</main>
+
+<footer>© 2026 Y Jorkie Games · Play fair and have fun!</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let data=JSON.parse(localStorage.getItem("yjorkieData")||"{}");
+data.coins=data.coins||0;
+data.level=data.level||1;
+data.score=data.score||0;
+data.email=data.email||"";
+function save(){
+ localStorage.setItem("yjorkieData",JSON.stringify(data));
+ update();
 }
-function clearBoard(){for(const b of [...bubbles]){boardGroup.remove(b);const i=bubbles.indexOf(b);if(i>=0)bubbles.splice(i,1)}}
-function setup(){
- clearBoard();for(let y=0;y<Math.min(5+Math.floor(level/3),7);y++)for(let x=0;x<COLS;x++){
-  if(level>2&&Math.random()<.08)continue;
-  makeBubble(x,y,Math.floor(Math.random()*Math.min(4+Math.floor(level/4),6)));
+function update(){
+ ["homeCoins","gameCoins","rewardCoins","profileCoins"].forEach(id=>$(id).textContent=data.coins);
+ ["homeLevel","level"].forEach(id=>$(id).textContent=data.level);
+ $("homeScore").textContent=data.score;
+ $("playerEmail").textContent=data.email;
+ $("loggedOut").classList.toggle("hidden",!!data.email);
+ $("loggedIn").classList.toggle("hidden",!data.email);
+ $("leaderboard").textContent=data.score+" points — "+(data.email||"Guest player");
+ const today=new Date().toDateString();
+ $("dailyButton").disabled=data.daily===today;
+ $("dailyButton").textContent=data.daily===today?"Collected today":"Collect 50 🪙";
+}
+function show(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ $(id).classList.remove("hidden");
+ if(id==="game"&&!started)newGame();
+ update();
+}
+function login(){
+ let email=$("email").value.trim();
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert("Enter a valid email.");return}
+ data.email=email;save();alert("Local demo profile created!");
+}
+function logout(){data.email="";save()}
+function dailyReward(){
+ if(data.daily===new Date().toDateString())return;
+ data.daily=new Date().toDateString();
+ data.coins+=50;save();
+ alert("You received 50 game coins!");
+}
+
+const canvas=$("board"),ctx=canvas.getContext("2d");
+const colors=["#ff4d68","#ffd447","#39d5a1","#55aaff","#bd72ff"];
+let bubbles=[],shot=colors[0],score=0,started=false,projectile=null;
+const R=19;
+function newGame(){
+ bubbles=[];score=0;projectile=null;started=true;
+ for(let row=0;row<7;row++){
+  for(let col=0;col<13;col++){
+   if(Math.random()>.12)bubbles.push({x:30+col*45+(row%2)*22,y:30+row*42,c:colors[Math.floor(Math.random()*5)]});
+  }
  }
- current=randomRemainingColor();next=randomRemainingColor(current);
- setHolder(currentHolder,current,0,-7.0,.0);setHolder(nextHolder,next,2.0,-7.15,.0);
- score=level===1?0:score;updateHud();drawGuide();
+ shot=colors[Math.floor(Math.random()*5)];
+ draw();
 }
-function setHolder(holder,c,x,y,z){while(holder.children.length)holder.remove(holder.children[0]);const m=new THREE.Mesh(sphereGeo,mats[c]);m.scale.setScalar(.84);holder.add(m);holder.position.set(x,y,z)}
-function availableBoardColors(){
- const found=[...new Set(bubbles.map(b=>b.userData.c))];
- return found.length ? found : colors.map((_,i)=>i);
+function drawBubble(b){
+ ctx.beginPath();ctx.arc(b.x,b.y,R,0,Math.PI*2);
+ ctx.fillStyle=b.c;ctx.fill();
+ ctx.strokeStyle="rgba(255,255,255,.6)";ctx.lineWidth=2;ctx.stroke();
+ ctx.beginPath();ctx.arc(b.x-6,b.y-7,5,0,Math.PI*2);
+ ctx.fillStyle="rgba(255,255,255,.45)";ctx.fill();
 }
-function randomRemainingColor(exclude=-1){
- const choices=availableBoardColors().filter(c=>c!==exclude);
- const pool=choices.length ? choices : availableBoardColors();
- return pool[Math.floor(Math.random()*pool.length)];
+function draw(){
+ ctx.clearRect(0,0,600,650);
+ bubbles.forEach(drawBubble);
+ if(projectile)drawBubble(projectile);
+ drawBubble({x:300,y:610,c:shot});
+ $("score").textContent=score;
 }
-function updateHud(){document.getElementById('score').textContent=score;document.getElementById('level').textContent=level;document.getElementById('coins').textContent=coins}
-function setAim(e){
- const r=renderer.domElement.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
- raycaster.setFromCamera(pointer,camera);const p=new THREE.Vector3();raycaster.ray.intersectPlane(aimPlane,p);
- if(p){aim.copy(p);let d=aim.clone().sub(shooter.position);d.z=0;if(d.y<.35)d.y=.35;d.normalize();shooter.rotation.z=Math.atan2(d.x,d.y);drawGuide()}
+function shoot(event){
+ if(!started||projectile)return;
+ const rect=canvas.getBoundingClientRect();
+ const x=(event.clientX-rect.left)*600/rect.width;
+ const y=(event.clientY-rect.top)*650/rect.height;
+ const dx=x-300,dy=y-610;
+ if(dy>=-5)return;
+ let vx=dx/Math.hypot(dx,dy)*11;
+ let vy=dy/Math.hypot(dx,dy)*11;
+ projectile={x:300,y:610,c:shot,vx,vy};
+ animate();
 }
-function drawGuide(){
- if(guide){scene.remove(guide);guide.geometry.dispose()}
- const d=aim.clone().sub(shooter.position);d.z=0;if(d.y<.35)d.y=.35;d.normalize();
- const points=[];let p=shooter.position.clone().add(new THREE.Vector3(0,1.35,.1));
- for(let i=0;i<42;i++){p=p.clone().addScaledVector(d,.22);if(Math.abs(p.x)>5.1){d.x*=-1;p.x=Math.sign(p.x)*5.1}points.push(p.clone())}
- const geo=new THREE.BufferGeometry().setFromPoints(points);guide=new THREE.Line(geo,lineMat);scene.add(guide);guide.computeLineDistances();
-}
-function neighbours(x,y){const odd=y%2===1;return odd?[[x-1,y],[x,y-1],[x+1,y-1],[x+1,y],[x+1,y+1],[x,y+1]]:[[x-1,y],[x-1,y-1],[x,y-1],[x+1,y],[x,y+1],[x-1,y+1]]}
-function cluster(start,c){const stack=[start],seen=new Set(),out=[];while(stack.length){const b=stack.pop(),k=b.userData.x+','+b.userData.y;if(seen.has(k))continue;seen.add(k);out.push(b);for(const [x,y] of neighbours(b.userData.x,b.userData.y)){const n=bubbles.find(q=>q.userData.x===x&&q.userData.y===y&&q.userData.c===c);if(n&&!seen.has(x+','+y))stack.push(n)}}return out}
-function nearestSlot(p){
- let best=null,dist=1e9;
- for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
-  if(bubbles.some(b=>b.userData.x===x&&b.userData.y===y))continue;
-  const q=pos(x,y),d=q.distanceToSquared(p);if(d<dist){dist=d;best={x,y,p:q}}
- }
- return best;
-}
-function removeFloating(){
- const connected=new Set(),stack=bubbles.filter(b=>b.userData.y===0);
- while(stack.length){const b=stack.pop(),k=b.userData.x+','+b.userData.y;if(connected.has(k))continue;connected.add(k);for(const [x,y] of neighbours(b.userData.x,b.userData.y)){const n=bubbles.find(q=>q.userData.x===x&&q.userData.y===y);if(n&&!connected.has(x+','+y))stack.push(n)}}
- for(const b of [...bubbles])if(!connected.has(b.userData.x+','+b.userData.y))popBubble(b,0x9eeaff);
-}
-function popBubble(b,c){const idx=bubbles.indexOf(b);if(idx>=0)bubbles.splice(idx,1);boardGroup.remove(b);burst(b.position,c)}
-function burst(p,c){for(let i=0;i<8;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshBasicMaterial({color:c}));m.position.copy(p);scene.add(m);effects.push({m,v:new THREE.Vector3((Math.random()-.5)*3,Math.random()*3,Math.random()),life:.5})}}
-function landShot(){
- if(!projectile)return;
- const slot=nearestSlot(projectile.position);if(slot){
-  const b=makeBubble(slot.x,slot.y,projectile.userData.c);
-  const group=cluster(b,b.userData.c);
-  if(group.length>=3){group.forEach(q=>popBubble(q,colors[q.userData.c]));score+=group.length*10;coins+=group.length*2;removeFloating();updateHud();toast('+'+(group.length*2)+' coins! Great shot!')}
-  current=availableBoardColors().includes(next)?next:randomRemainingColor();next=randomRemainingColor(current);setHolder(currentHolder,current,0,-7,0);setHolder(nextHolder,next,2,-7.15,0);
-  if(bubbles.length===0){active=false;setTimeout(win,400)}
-  if(bubbles.some(q=>q.position.y<-5.7)){active=false;setTimeout(lose,400)}
-  updateHud();
- }
- scene.remove(projectile);projectile=null;shotCooldown=false;drawGuide();
-}
-function shoot(){
- if(!active||projectile||shotCooldown)return;shotCooldown=true;
- const d=aim.clone().sub(shooter.position);d.z=0;if(d.y<.35)d.y=.35;d.normalize();
- const m=new THREE.Mesh(sphereGeo,mats[current]);m.position.copy(shooter.position).add(new THREE.Vector3(0,1.35,.15));m.userData={c:current};scene.add(m);projectile=m;projectile.userData.v=d.multiplyScalar(.24);
-}
-renderer.domElement.addEventListener('pointermove',setAim);
-renderer.domElement.addEventListener('pointerdown',e=>{if(!active)return;setAim(e);shoot()});
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.style.opacity=1;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.style.opacity=0,1100)}
-function win(){showOverlay('LEVEL COMPLETE!','You cleared every bubble. Ready for the next challenge?','NEXT LEVEL')}
-function lose(){showOverlay('TRY AGAIN','The bubbles reached the danger line. Give it another shot!','RETRY')}
-function showOverlay(h,p,b){const o=document.getElementById('overlay');o.style.display='grid';o.querySelector('h1').innerHTML=h;o.querySelector('p').textContent=p;o.querySelector('button').textContent=b}
-function start(){const h=document.querySelector('.dialog h1').textContent;if(h.includes('COMPLETE'))level++;setup();active=true;document.getElementById('overlay').style.display='none';showDefaultTitle()}
-function showDefaultTitle(){const d=document.querySelector('.dialog');d.querySelector('h1').innerHTML='Y JORKIE<br><span style="color:#ffe18a">3D BUBBLE SHOOTER</span>';d.querySelector('p').textContent='Aim the cannon, shoot shiny 3D bubbles and match three or more of the same colour. Clear the board to unlock the next level!'}
-document.getElementById('play').onclick=start;
-function adjustAim(amount){
- if(!active)return;
- const d=aim.clone().sub(shooter.position);d.z=0;
- const angle=Math.atan2(d.x,d.y)+amount;
- const length=Math.max(4,d.length());
- d.set(Math.sin(angle)*length,Math.cos(angle)*length,0);
- if(d.y<.35)d.y=.35;
- d.normalize();aim.copy(shooter.position).add(d.clone().multiplyScalar(6));shooter.rotation.z=Math.atan2(d.x,d.y);drawGuide();
-}
-document.getElementById('leftBtn').onclick=()=>adjustAim(-.10);
-document.getElementById('rightBtn').onclick=()=>adjustAim(.10);
-document.getElementById('shootBtn').onclick=shoot;
-document.getElementById('changeBtn').onclick=()=>{
- if(!active||projectile)return;
- if(coins<5){toast('Match bubbles to earn 5 coins');return}
- const remaining=availableBoardColors();
- const options=remaining.filter(c=>c!==current);
- if(!options.length){toast('Only one bubble colour remains');return}
- coins-=5;current=options[Math.floor(Math.random()*options.length)];
- setHolder(currentHolder,current,0,-7,0);updateHud();toast('Bubble colour changed!');
-};
 function animate(){
- requestAnimationFrame(animate);
- if(projectile){projectile.position.add(projectile.userData.v);if(projectile.position.x<-5.2||projectile.position.x>5.2){projectile.userData.v.x*=-1;projectile.position.x=Math.max(-5.2,Math.min(5.2,projectile.position.x))}
-  let hit=projectile.position.y>7.1;
-  for(const b of bubbles)if(b.position.distanceTo(projectile.position)<.88){hit=true;break}
-  if(hit)landShot();
+ if(!projectile)return;
+ projectile.x+=projectile.vx;projectile.y+=projectile.vy;
+ if(projectile.x<R||projectile.x>600-R)projectile.vx*=-1;
+ let hit=projectile.y<R+15;
+ for(const b of bubbles){
+  if(Math.hypot(b.x-projectile.x,b.y-projectile.y)<R*2){hit=true;break}
  }
- for(let i=effects.length-1;i>=0;i--){const e=effects[i];e.life-=.016;e.m.position.addScaledVector(e.v,.016);e.v.y-=.06;e.m.scale.multiplyScalar(.97);if(e.life<=0){scene.remove(e.m);effects.splice(i,1)}}
- renderer.render(scene,camera);
+ if(hit){
+  projectile.x=Math.max(R,Math.min(600-R,projectile.x));
+  bubbles.push({x:projectile.x,y:Math.max(30,projectile.y),c:projectile.c});
+  let connected=[bubbles.length-1],group=new Set(connected);
+  for(let i=0;i<connected.length;i++){
+   const a=bubbles[connected[i]];
+   bubbles.forEach((b,j)=>{
+    if(!group.has(j)&&b.c===a.c&&Math.hypot(a.x-b.x,a.y-b.y)<R*2.25){
+     group.add(j);connected.push(j);
+    }
+   });
+  }
+  if(group.size>=3){
+   bubbles=bubbles.filter((b,i)=>!group.has(i));
+   score+=group.size*10;
+   data.score=Math.max(data.score,score);
+   if(bubbles.length===0){
+    data.level++;data.coins+=20;
+    save();alert("Level completed! You earned 20 coins.");
+    newGame();return;
+   }
+  }
+  projectile=null;shot=colors[Math.floor(Math.random()*5)];
+  draw();save();return;
+ }
+ draw();requestAnimationFrame(animate);
 }
-function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);drawGuide()}
-addEventListener('resize',resize);
-setup();animate();
-</script>
- <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js");
-  });
-}
+canvas.addEventListener("pointerdown",shoot);
+update();
+newGame();
 </script>
 </body>
 </html>
