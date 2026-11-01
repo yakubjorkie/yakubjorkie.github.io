@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+ <link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#07152d">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Y Jorkie 3D Bubble Shooter</title>
@@ -188,6 +190,13 @@ function animate(){
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);drawGuide()}
 addEventListener('resize',resize);
 setup();animate();
+</script>
+ <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
+  });
+}
 </script>
 </body>
 </html>
