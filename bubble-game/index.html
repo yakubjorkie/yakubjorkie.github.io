@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Y Jorkie 3D Bubble Shooter</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07152d;font-family:Arial,sans-serif}
+#game{position:fixed;inset:0}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+#hud{position:fixed;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none;color:#fff}
+.panel{padding:9px 13px;border:1px solid #b9e2ff55;border-radius:13px;background:#071b35bb;box-shadow:0 6px 18px #0005;font-weight:800;text-shadow:0 2px 5px #000}
+#brand{font-size:13px;letter-spacing:1px;color:#ffe18a}
+#controls{position:fixed;left:50%;bottom:48px;transform:translateX(-50%);display:flex;gap:8px;width:min(94vw,520px);z-index:5}
+#controls button{width:auto;flex:1;padding:12px 8px;font-size:13px;background:linear-gradient(120deg,#72e4ff,#478cff);color:#06152c;box-shadow:0 5px 15px #0006}
+#controls button:active{transform:scale(.96)}
+#hint{position:fixed;bottom:105px;left:50%;transform:translateX(-50%);background:#071b35cc;color:#e9f4ff;border:1px solid #b9e2ff44;border-radius:20px;padding:9px 13px;font-size:12px;white-space:nowrap}
+#overlay{position:fixed;inset:0;display:grid;place-items:center;background:#061329aa;padding:20px}
+.dialog{width:min(100%,390px);padding:28px 23px;text-align:center;border-radius:24px;background:linear-gradient(145deg,#315b91,#122c52);border:1px solid #ffffff55;color:white;box-shadow:0 20px 65px #0009}
+.dialog h1{font-size:34px;line-height:1.05;margin:0 0 12px}.dialog p{color:#dbeaff;line-height:1.5;font-size:14px}
+button{border:0;border-radius:28px;padding:14px 26px;background:linear-gradient(120deg,#ffe17a,#ff9c43);color:#35213a;font-size:17px;font-weight:900;cursor:pointer;width:100%}
+#toast{position:fixed;top:76px;left:50%;transform:translateX(-50%);background:#061329df;color:white;border-radius:20px;padding:9px 15px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="game"></div>
+<div id="hud">
+ <div class="panel"><div id="brand">Y JORKIE</div>3D BUBBLE</div>
+ <div class="panel">⭐ <span id="score">0</span></div>\n <div class="panel">🪙 <span id="coins">0</span></div>
+ <div class="panel">LEVEL <span id="level">1</span></div>
+</div>
+<div id="toast"></div>
+<div id="controls">
+ <button id="leftBtn">◀ AIM</button>
+ <button id="shootBtn">🔵 SHOOT</button>
+ <button id="rightBtn">AIM ▶</button>
+ <button id="changeBtn">🎨 CHANGE (5)</button>
+</div>
+<div id="hint">Drag or move to aim · Tap to shoot · Match 3 or more · Earn 2 coins per bubble</div>
+<div id="overlay"><div class="dialog"><h1>Y JORKIE<br><span style="color:#ffe18a">3D BUBBLE SHOOTER</span></h1><p>Aim the cannon, shoot shiny 3D bubbles and match three or more of the same colour. Clear the board to unlock the next level!</p><button id="play">PLAY NOW</button></div></div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+const host=document.getElementById('game');
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x07152d);scene.fog=new THREE.Fog(0x07152d,20,42);
+const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,100);camera.position.set(0,0,23);camera.lookAt(0,0,0);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,1.85));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xbadfff,0x182343,2));
+const key=new THREE.DirectionalLight(0xffffff,3.1);key.position.set(-5,8,12);scene.add(key);
+const rim=new THREE.PointLight(0x4caeff,45,28);rim.position.set(7,-1,8);scene.add(rim);
+const colors=[0xff4f78,0x36cfff,0xffd34f,0x9a75ff,0x54df9a,0xff984b];
+const mats=colors.map(c=>new THREE.MeshPhysicalMaterial({color:c,roughness:.16,metalness:.04,clearcoat:1,clearcoatRoughness:.08}));
+const sphereGeo=new THREE.SphereGeometry(.48,36,28);
+const boardGroup=new THREE.Group();scene.add(boardGroup);
+// Soft glowing playfield frame and background stars.
+const frameMat=new THREE.MeshBasicMaterial({color:0x3974aa,transparent:true,opacity:.42});
+const frame=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(10.7,15.2,.08)),frameMat);
+frame.position.set(0,-.2,-1.2);scene.add(frame);
+const starMat=new THREE.PointsMaterial({color:0x9ccfff,size:.045,transparent:true,opacity:.65});
+const starPositions=[];
+for(let i=0;i<100;i++)starPositions.push((Math.random()-.5)*20,(Math.random()-.5)*18,-2.5);
+const starGeo=new THREE.BufferGeometry();
+starGeo.setAttribute('position',new THREE.Float32BufferAttribute(starPositions,3));
+scene.add(new THREE.Points(starGeo,starMat));
+const bubbles=[],shots=[],effects=[];
+const COLS=9,ROWS=9,DX=1.04,DY=.91;
+let level=1,score=0,coins=0,current=0,next=1,active=false,projectile=null,aim=new THREE.Vector3(0,6,0),shotCooldown=false;
+const shooter=new THREE.Group();scene.add(shooter);shooter.position.set(0,-7.05,0);
+const cannon=new THREE.Mesh(new THREE.CylinderGeometry(.25,.36,1.5,24),new THREE.MeshStandardMaterial({color:0x547ca9,metalness:.65,roughness:.25}));cannon.position.y=.55;cannon.rotation.z=0;shooter.add(cannon);
+const muzzle=new THREE.Mesh(new THREE.TorusGeometry(.27,.09,10,24),new THREE.MeshStandardMaterial({color:0xf6d47c,metalness:.7,roughness:.2}));muzzle.position.y=1.27;shooter.add(muzzle);
+const currentHolder=new THREE.Group();scene.add(currentHolder);
+const nextHolder=new THREE.Group();scene.add(nextHolder);
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+const aimPlane=new THREE.Plane(new THREE.Vector3(0,0,1),0);
+const lineMat=new THREE.LineDashedMaterial({color:0xd7edff,dashSize:.18,gapSize:.13,transparent:true,opacity:.65});
+let guide;
+function pos(x,y){return new THREE.Vector3((x-(COLS-1)/2)*DX+(y%2?DX/2:0),5.9-y*DY,0)}
+function makeBubble(x,y,c,parent=boardGroup){
+ const m=new THREE.Mesh(sphereGeo,mats[c]);m.position.copy(pos(x,y));m.userData={x,y,c};m.castShadow=true;parent.add(m);bubbles.push(m);return m;
+}
+function clearBoard(){for(const b of [...bubbles]){boardGroup.remove(b);const i=bubbles.indexOf(b);if(i>=0)bubbles.splice(i,1)}}
+function setup(){
+ clearBoard();for(let y=0;y<Math.min(5+Math.floor(level/3),7);y++)for(let x=0;x<COLS;x++){
+  if(level>2&&Math.random()<.08)continue;
+  makeBubble(x,y,Math.floor(Math.random()*Math.min(4+Math.floor(level/4),6)));
+ }
+ current=randomRemainingColor();next=randomRemainingColor(current);
+ setHolder(currentHolder,current,0,-7.0,.0);setHolder(nextHolder,next,2.0,-7.15,.0);
+ score=level===1?0:score;updateHud();drawGuide();
+}
+function setHolder(holder,c,x,y,z){while(holder.children.length)holder.remove(holder.children[0]);const m=new THREE.Mesh(sphereGeo,mats[c]);m.scale.setScalar(.84);holder.add(m);holder.position.set(x,y,z)}
+function availableBoardColors(){
+ const found=[...new Set(bubbles.map(b=>b.userData.c))];
+ return found.length ? found : colors.map((_,i)=>i);
+}
+function randomRemainingColor(exclude=-1){
+ const choices=availableBoardColors().filter(c=>c!==exclude);
+ const pool=choices.length ? choices : availableBoardColors();
+ return pool[Math.floor(Math.random()*pool.length)];
+}
+function updateHud(){document.getElementById('score').textContent=score;document.getElementById('level').textContent=level;document.getElementById('coins').textContent=coins}
+function setAim(e){
+ const r=renderer.domElement.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
+ raycaster.setFromCamera(pointer,camera);const p=new THREE.Vector3();raycaster.ray.intersectPlane(aimPlane,p);
+ if(p){aim.copy(p);let d=aim.clone().sub(shooter.position);d.z=0;if(d.y<.35)d.y=.35;d.normalize();shooter.rotation.z=Math.atan2(d.x,d.y);drawGuide()}
+}
+function drawGuide(){
+ if(guide){scene.remove(guide);guide.geometry.dispose()}
+ const d=aim.clone().sub(shooter.position);d.z=0;if(d.y<.35)d.y=.35;d.normalize();
+ const points=[];let p=shooter.position.clone().add(new THREE.Vector3(0,1.35,.1));
+ for(let i=0;i<42;i++){p=p.clone().addScaledVector(d,.22);if(Math.abs(p.x)>5.1){d.x*=-1;p.x=Math.sign(p.x)*5.1}points.push(p.clone())}
+ const geo=new THREE.BufferGeometry().setFromPoints(points);guide=new THREE.Line(geo,lineMat);scene.add(guide);guide.computeLineDistances();
+}
+function neighbours(x,y){const odd=y%2===1;return odd?[[x-1,y],[x,y-1],[x+1,y-1],[x+1,y],[x+1,y+1],[x,y+1]]:[[x-1,y],[x-1,y-1],[x,y-1],[x+1,y],[x,y+1],[x-1,y+1]]}
+function cluster(start,c){const stack=[start],seen=new Set(),out=[];while(stack.length){const b=stack.pop(),k=b.userData.x+','+b.userData.y;if(seen.has(k))continue;seen.add(k);out.push(b);for(const [x,y] of neighbours(b.userData.x,b.userData.y)){const n=bubbles.find(q=>q.userData.x===x&&q.userData.y===y&&q.userData.c===c);if(n&&!seen.has(x+','+y))stack.push(n)}}return out}
+function nearestSlot(p){
+ let best=null,dist=1e9;
+ for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+  if(bubbles.some(b=>b.userData.x===x&&b.userData.y===y))continue;
+  const q=pos(x,y),d=q.distanceToSquared(p);if(d<dist){dist=d;best={x,y,p:q}}
+ }
+ return best;
+}
+function removeFloating(){
+ const connected=new Set(),stack=bubbles.filter(b=>b.userData.y===0);
+ while(stack.length){const b=stack.pop(),k=b.userData.x+','+b.userData.y;if(connected.has(k))continue;connected.add(k);for(const [x,y] of neighbours(b.userData.x,b.userData.y)){const n=bubbles.find(q=>q.userData.x===x&&q.userData.y===y);if(n&&!connected.has(x+','+y))stack.push(n)}}
+ for(const b of [...bubbles])if(!connected.has(b.userData.x+','+b.userData.y))popBubble(b,0x9eeaff);
+}
+function popBubble(b,c){const idx=bubbles.indexOf(b);if(idx>=0)bubbles.splice(idx,1);boardGroup.remove(b);burst(b.position,c)}
+function burst(p,c){for(let i=0;i<8;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshBasicMaterial({color:c}));m.position.copy(p);scene.add(m);effects.push({m,v:new THREE.Vector3((Math.random()-.5)*3,Math.random()*3,Math.random()),life:.5})}}
+function landShot(){
+ if(!projectile)return;
+ const slot=nearestSlot(projectile.position);if(slot){
+  const b=makeBubble(slot.x,slot.y,projectile.userData.c);
+  const group=cluster(b,b.userData.c);
+  if(group.length>=3){group.forEach(q=>popBubble(q,colors[q.userData.c]));score+=group.length*10;coins+=group.length*2;removeFloating();updateHud();toast('+'+(group.length*2)+' coins! Great shot!')}
+  current=availableBoardColors().includes(next)?next:randomRemainingColor();next=randomRemainingColor(current);setHolder(currentHolder,current,0,-7,0);setHolder(nextHolder,next,2,-7.15,0);
+  if(bubbles.length===0){active=false;setTimeout(win,400)}
+  if(bubbles.some(q=>q.position.y<-5.7)){active=false;setTimeout(lose,400)}
+  updateHud();
+ }
+ scene.remove(projectile);projectile=null;shotCooldown=false;drawGuide();
+}
+function shoot(){
+ if(!active||projectile||shotCooldown)return;shotCooldown=true;
+ const d=aim.clone().sub(shooter.position);d.z=0;if(d.y<.35)d.y=.35;d.normalize();
+ const m=new THREE.Mesh(sphereGeo,mats[current]);m.position.copy(shooter.position).add(new THREE.Vector3(0,1.35,.15));m.userData={c:current};scene.add(m);projectile=m;projectile.userData.v=d.multiplyScalar(.24);
+}
+renderer.domElement.addEventListener('pointermove',setAim);
+renderer.domElement.addEventListener('pointerdown',e=>{if(!active)return;setAim(e);shoot()});
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.style.opacity=1;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.style.opacity=0,1100)}
+function win(){showOverlay('LEVEL COMPLETE!','You cleared every bubble. Ready for the next challenge?','NEXT LEVEL')}
+function lose(){showOverlay('TRY AGAIN','The bubbles reached the danger line. Give it another shot!','RETRY')}
+function showOverlay(h,p,b){const o=document.getElementById('overlay');o.style.display='grid';o.querySelector('h1').innerHTML=h;o.querySelector('p').textContent=p;o.querySelector('button').textContent=b}
+function start(){const h=document.querySelector('.dialog h1').textContent;if(h.includes('COMPLETE'))level++;setup();active=true;document.getElementById('overlay').style.display='none';showDefaultTitle()}
+function showDefaultTitle(){const d=document.querySelector('.dialog');d.querySelector('h1').innerHTML='Y JORKIE<br><span style="color:#ffe18a">3D BUBBLE SHOOTER</span>';d.querySelector('p').textContent='Aim the cannon, shoot shiny 3D bubbles and match three or more of the same colour. Clear the board to unlock the next level!'}
+document.getElementById('play').onclick=start;
+function adjustAim(amount){
+ if(!active)return;
+ const d=aim.clone().sub(shooter.position);d.z=0;
+ const angle=Math.atan2(d.x,d.y)+amount;
+ const length=Math.max(4,d.length());
+ d.set(Math.sin(angle)*length,Math.cos(angle)*length,0);
+ if(d.y<.35)d.y=.35;
+ d.normalize();aim.copy(shooter.position).add(d.clone().multiplyScalar(6));shooter.rotation.z=Math.atan2(d.x,d.y);drawGuide();
+}
+document.getElementById('leftBtn').onclick=()=>adjustAim(-.10);
+document.getElementById('rightBtn').onclick=()=>adjustAim(.10);
+document.getElementById('shootBtn').onclick=shoot;
+document.getElementById('changeBtn').onclick=()=>{
+ if(!active||projectile)return;
+ if(coins<5){toast('Match bubbles to earn 5 coins');return}
+ const remaining=availableBoardColors();
+ const options=remaining.filter(c=>c!==current);
+ if(!options.length){toast('Only one bubble colour remains');return}
+ coins-=5;current=options[Math.floor(Math.random()*options.length)];
+ setHolder(currentHolder,current,0,-7,0);updateHud();toast('Bubble colour changed!');
+};
+function animate(){
+ requestAnimationFrame(animate);
+ if(projectile){projectile.position.add(projectile.userData.v);if(projectile.position.x<-5.2||projectile.position.x>5.2){projectile.userData.v.x*=-1;projectile.position.x=Math.max(-5.2,Math.min(5.2,projectile.position.x))}
+  let hit=projectile.position.y>7.1;
+  for(const b of bubbles)if(b.position.distanceTo(projectile.position)<.88){hit=true;break}
+  if(hit)landShot();
+ }
+ for(let i=effects.length-1;i>=0;i--){const e=effects[i];e.life-=.016;e.m.position.addScaledVector(e.v,.016);e.v.y-=.06;e.m.scale.multiplyScalar(.97);if(e.life<=0){scene.remove(e.m);effects.splice(i,1)}}
+ renderer.render(scene,camera);
+}
+function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);drawGuide()}
+addEventListener('resize',resize);
+setup();animate();
+</script>
+</body>
+</html>
