@@ -1,11 +1,13 @@
-const CACHE_NAME = "yjorkie-bubble-v2";
+
+const CACHE_NAME = "yjorkie-bubble-v3";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./game-screenshot.png"
 ];
 
 self.addEventListener("install", event => {
@@ -31,11 +33,13 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-  if (event.request.method === "GET") {
-    event.respondWith(
-      caches.match(event.request).then(cached =>
-        cached || fetch(event.request)
-      )
-    );
-  }
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+
+      return fetch(event.request);
+    })
+  );
 });
