@@ -4,6 +4,14 @@
   "short_name": "Y Jorkie",
   "description": "Play and enjoy 3D Bubble Shooter!",
 "categories": ["games", "entertainment"],
+"screenshots": [
+  {
+    "src": "./game-screenshot.png",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "Y Jorkie Bubble Shooter gameplay"
+  }
+],
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
