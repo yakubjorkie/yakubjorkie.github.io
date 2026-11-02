@@ -2,38 +2,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="manifest" href="./manifest.webmanifest">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#07152d">
-<title>Y Jorkie Bubble Shooter</title>
+<meta name="description" content="Play Y Jorkie Bubble Shooter. Aim, shoot and match colourful bubbles!">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>Y Jorkie 3D Bubble Shooter</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#07152d;color:white;font-family:Arial,sans-serif}
-header{padding:18px;text-align:center;background:#102c52}
-h1{margin:0;color:#55d9ff;font-size:25px}
+body{
+ margin:0;background:#07152d;color:white;
+ font-family:Arial,sans-serif
+}
+header{
+ padding:20px;text-align:center;
+ background:linear-gradient(120deg,#102c52,#174b78)
+}
+h1{margin:0;color:#55d9ff;font-size:27px}
 h2{color:#55d9ff}
-nav{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:12px;background:#0b2040}
-button{border:0;border-radius:12px;padding:12px 16px;background:#168bd0;color:white;font-weight:bold;cursor:pointer}
+nav{
+ display:flex;justify-content:center;gap:7px;
+ flex-wrap:wrap;padding:12px;background:#0b2040
+}
+button{
+ border:0;border-radius:12px;padding:12px 16px;
+ background:linear-gradient(135deg,#168bd0,#1260a7);
+ color:white;font-weight:bold;cursor:pointer
+}
 button:active{transform:scale(.97)}
-main{max-width:650px;margin:auto;padding:15px}
-.panel{background:#10294a;border:1px solid #24517c;border-radius:18px;padding:18px;margin:12px 0}
-.hidden{display:none}
+button:disabled{opacity:.5;cursor:not-allowed}
+main{max-width:680px;margin:auto;padding:15px}
+.panel{
+ background:#10294a;border:1px solid #24517c;
+ border-radius:18px;padding:18px;margin:12px 0;
+ box-shadow:0 8px 25px #0003
+}
+.hidden{display:none!important}
 .big{font-size:34px;font-weight:bold;color:#ffd45a}
 .muted{color:#b8cce2}
-input{width:100%;padding:13px;margin:8px 0;border-radius:9px;border:1px solid #47749d;background:#071a32;color:white}
-canvas{width:100%;background:linear-gradient(#142f58,#07152d);border-radius:15px;touch-action:manipulation}
-.stats{display:flex;justify-content:space-around;text-align:center;gap:10px}
-.stat{background:#19395e;border-radius:12px;padding:12px;flex:1}
-.actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-.reward{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #315071}
-footer{text-align:center;color:#8daac8;padding:25px;font-size:12px}
+input{
+ width:100%;padding:13px;margin:8px 0;
+ border-radius:9px;border:1px solid #47749d;
+ background:#071a32;color:white
+}
+canvas{
+ display:block;width:100%;height:auto;
+ background:#07152d;border-radius:15px;
+ touch-action:none;border:1px solid #315b87
+}
+.stats{
+ display:flex;justify-content:space-around;
+ text-align:center;gap:10px;margin-bottom:12px
+}
+.stat{
+ background:#19395e;border-radius:12px;
+ padding:12px;flex:1;min-width:0
+}
+.actions{
+ display:flex;gap:8px;justify-content:center;
+ flex-wrap:wrap;margin-top:12px
+}
+.reward{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:12px;
+ border-bottom:1px solid #315071;gap:10px
+}
+footer{
+ text-align:center;color:#8daac8;
+ padding:25px;font-size:12px
+}
+.game-hint{text-align:center;color:#b8cce2;font-size:13px}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>🎯 Y JORKIE</h1>
-<p>3D BUBBLE SHOOTER</p>
+<p>🌈 BUBBLE SHOOTER</p>
 </header>
 
 <nav>
@@ -44,37 +91,48 @@ footer{text-align:center;color:#8daac8;padding:25px;font-size:12px}
 </nav>
 
 <main>
+
 <section id="home" class="page">
 <div class="panel" style="text-align:center">
 <h2>Welcome to Y Jorkie!</h2>
 <p class="muted">Aim, shoot and match colourful bubbles.</p>
 <div class="big">🪙 <span id="homeCoins">0</span></div>
-<p>Your coin balance</p>
+<p>Your virtual game coins</p>
 <button onclick="show('game')">▶ PLAY GAME</button>
 </div>
+
 <div class="stats">
 <div class="stat">🏆<br>Level<br><b id="homeLevel">1</b></div>
 <div class="stat">⭐<br>Best score<br><b id="homeScore">0</b></div>
 </div>
+
 <div class="panel">
 <h3>How to play</h3>
-<p>Tap the game board to aim. Match three or more bubbles of the same colour to clear them.</p>
+<p>Tap the board to aim and shoot.</p>
+<p>Match three or more bubbles of the same colour to pop them.</p>
+<p>The next bubble will use a colour that is still on the board.</p>
 </div>
 </section>
 
 <section id="game" class="page hidden">
 <div class="panel">
+
 <div class="stats">
 <div class="stat">Level<br><b id="level">1</b></div>
 <div class="stat">Score<br><b id="score">0</b></div>
 <div class="stat">Coins<br>🪙 <b id="gameCoins">0</b></div>
 </div>
+
 <canvas id="board" width="600" height="650"></canvas>
+
+<p class="game-hint">
+🎯 Tap anywhere above the shooter to aim and fire.
+</p>
+
 <div class="actions">
-<button onclick="newGame()">New Game</button>
-<button onclick="show('home')">Home</button>
+<button onclick="newGame()">🔄 New Game</button>
+<button onclick="show('home')">🏠 Home</button>
 </div>
-<p class="muted" style="text-align:center">Tap the board to aim and shoot.</p>
 </div>
 </section>
 
@@ -83,14 +141,17 @@ footer{text-align:center;color:#8daac8;padding:25px;font-size:12px}
 <h2>🎁 Rewards Centre</h2>
 <div class="big">🪙 <span id="rewardCoins">0</span></div>
 <p class="muted">Your virtual game coins</p>
+
 <div class="reward">
 <div><b>Daily reward</b><br><small>Come back each day</small></div>
 <button id="dailyButton" onclick="dailyReward()">Collect 50 🪙</button>
 </div>
+
 <div class="reward">
-<div><b>Complete a level</b><br><small>Earn 20 coins</small></div>
+<div><b>Complete a level</b><br><small>Earn 20 virtual coins</small></div>
 <span>🎯</span>
 </div>
+
 <div class="reward">
 <div><b>Play the game</b><br><small>Improve your score</small></div>
 <span>⭐</span>
@@ -101,11 +162,13 @@ footer{text-align:center;color:#8daac8;padding:25px;font-size:12px}
 <section id="profile" class="page hidden">
 <div class="panel">
 <h2>👤 Player Profile</h2>
+
 <div id="loggedOut">
 <p>Enter your email to create a local demo profile.</p>
 <input id="email" type="email" placeholder="Your email address">
 <button onclick="login()">Continue</button>
 </div>
+
 <div id="loggedIn" class="hidden">
 <p>Player email:</p>
 <b id="playerEmail"></b>
@@ -113,145 +176,489 @@ footer{text-align:center;color:#8daac8;padding:25px;font-size:12px}
 <button onclick="logout()">Log out</button>
 </div>
 </div>
+
 <div class="panel">
 <h2>🏆 Leaderboard</h2>
 <p class="muted">Your local demonstration score</p>
 <div id="leaderboard">No scores yet.</div>
 </div>
 </section>
+
 </main>
 
 <footer>© 2026 Y Jorkie Games · Play fair and have fun!</footer>
 
 <script>
-const $=id=>document.getElementById(id);
-let data=JSON.parse(localStorage.getItem("yjorkieData")||"{}");
-data.coins=data.coins||0;
-data.level=data.level||1;
-data.score=data.score||0;
+const $ = id => document.getElementById(id);
+
+let data;
+try{
+ data=JSON.parse(localStorage.getItem("yjorkieData")||"{}");
+}catch(e){
+ data={};
+}
+
+data.coins=Number(data.coins)||0;
+data.level=Number(data.level)||1;
+data.score=Number(data.score)||0;
 data.email=data.email||"";
+
 function save(){
  localStorage.setItem("yjorkieData",JSON.stringify(data));
  update();
 }
+
 function update(){
- ["homeCoins","gameCoins","rewardCoins","profileCoins"].forEach(id=>$(id).textContent=data.coins);
- ["homeLevel","level"].forEach(id=>$(id).textContent=data.level);
+ ["homeCoins","gameCoins","rewardCoins","profileCoins"]
+ .forEach(id=>$(id).textContent=data.coins);
+
+ ["homeLevel","level"]
+ .forEach(id=>$(id).textContent=data.level);
+
  $("homeScore").textContent=data.score;
  $("playerEmail").textContent=data.email;
+
  $("loggedOut").classList.toggle("hidden",!!data.email);
  $("loggedIn").classList.toggle("hidden",!data.email);
- $("leaderboard").textContent=data.score+" points — "+(data.email||"Guest player");
+
+ $("leaderboard").textContent=
+ data.score+" points — "+(data.email||"Guest player");
+
  const today=new Date().toDateString();
  $("dailyButton").disabled=data.daily===today;
- $("dailyButton").textContent=data.daily===today?"Collected today":"Collect 50 🪙";
+ $("dailyButton").textContent=
+ data.daily===today?"Collected today":"Collect 50 🪙";
 }
+
 function show(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.querySelectorAll(".page")
+ .forEach(p=>p.classList.add("hidden"));
+
  $(id).classList.remove("hidden");
+
  if(id==="game"&&!started)newGame();
  update();
 }
+
 function login(){
  let email=$("email").value.trim();
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert("Enter a valid email.");return}
- data.email=email;save();alert("Local demo profile created!");
-}
-function logout(){data.email="";save()}
-function dailyReward(){
- if(data.daily===new Date().toDateString())return;
- data.daily=new Date().toDateString();
- data.coins+=50;save();
- alert("You received 50 game coins!");
+
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+  alert("Enter a valid email.");
+  return;
+ }
+
+ data.email=email;
+ save();
+ alert("Local demo profile created!");
 }
 
-const canvas=$("board"),ctx=canvas.getContext("2d");
-const colors=["#ff4d68","#ffd447","#39d5a1","#55aaff","#bd72ff"];
-let bubbles=[],shot=colors[0],score=0,started=false,projectile=null;
+function logout(){
+ data.email="";
+ save();
+}
+
+function dailyReward(){
+ if(data.daily===new Date().toDateString())return;
+
+ data.daily=new Date().toDateString();
+ data.coins+=50;
+ save();
+
+ alert("You received 50 virtual game coins!");
+}
+
+// GAME ENGINE
+
+const canvas=$("board");
+const ctx=canvas.getContext("2d");
+
+const colors=[
+ "#ff405f",
+ "#ffd43b",
+ "#25d99b",
+ "#42a5ff",
+ "#b56bff"
+];
+
 const R=19;
+const shooterX=300;
+const shooterY=610;
+
+let bubbles=[];
+let shot=colors[0];
+let nextShot=colors[1];
+let score=0;
+let started=false;
+let projectile=null;
+let animationId=null;
+let aimPoint={x:300,y:200};
+let particles=[];
+let shotsTaken=0;
+
+function availableColors(){
+ return [...new Set(bubbles.map(b=>b.c))];
+}
+
+// IMPORTANT: Choose only colours still on the board.
+function chooseAvailableColor(){
+ const available=availableColors();
+
+ if(available.length===0)return colors[0];
+
+ return available[Math.floor(Math.random()*available.length)];
+}
+
 function newGame(){
- bubbles=[];score=0;projectile=null;started=true;
+ if(animationId)cancelAnimationFrame(animationId);
+
+ bubbles=[];
+ particles=[];
+ projectile=null;
+ score=0;
+ shotsTaken=0;
+ started=true;
+
  for(let row=0;row<7;row++){
   for(let col=0;col<13;col++){
-   if(Math.random()>.12)bubbles.push({x:30+col*45+(row%2)*22,y:30+row*42,c:colors[Math.floor(Math.random()*5)]});
-  }
- }
- shot=colors[Math.floor(Math.random()*5)];
- draw();
-}
-function drawBubble(b){
- ctx.beginPath();ctx.arc(b.x,b.y,R,0,Math.PI*2);
- ctx.fillStyle=b.c;ctx.fill();
- ctx.strokeStyle="rgba(255,255,255,.6)";ctx.lineWidth=2;ctx.stroke();
- ctx.beginPath();ctx.arc(b.x-6,b.y-7,5,0,Math.PI*2);
- ctx.fillStyle="rgba(255,255,255,.45)";ctx.fill();
-}
-function draw(){
- ctx.clearRect(0,0,600,650);
- bubbles.forEach(drawBubble);
- if(projectile)drawBubble(projectile);
- drawBubble({x:300,y:610,c:shot});
- $("score").textContent=score;
-}
-function shoot(event){
- if(!started||projectile)return;
- const rect=canvas.getBoundingClientRect();
- const x=(event.clientX-rect.left)*600/rect.width;
- const y=(event.clientY-rect.top)*650/rect.height;
- const dx=x-300,dy=y-610;
- if(dy>=-5)return;
- let vx=dx/Math.hypot(dx,dy)*11;
- let vy=dy/Math.hypot(dx,dy)*11;
- projectile={x:300,y:610,c:shot,vx,vy};
- animate();
-}
-function animate(){
- if(!projectile)return;
- projectile.x+=projectile.vx;projectile.y+=projectile.vy;
- if(projectile.x<R||projectile.x>600-R)projectile.vx*=-1;
- let hit=projectile.y<R+15;
- for(const b of bubbles){
-  if(Math.hypot(b.x-projectile.x,b.y-projectile.y)<R*2){hit=true;break}
- }
- if(hit){
-  projectile.x=Math.max(R,Math.min(600-R,projectile.x));
-  bubbles.push({x:projectile.x,y:Math.max(30,projectile.y),c:projectile.c});
-  let connected=[bubbles.length-1],group=new Set(connected);
-  for(let i=0;i<connected.length;i++){
-   const a=bubbles[connected[i]];
-   bubbles.forEach((b,j)=>{
-    if(!group.has(j)&&b.c===a.c&&Math.hypot(a.x-b.x,a.y-b.y)<R*2.25){
-     group.add(j);connected.push(j);
-    }
-   });
-  }
-  if(group.size>=3){
-   bubbles=bubbles.filter((b,i)=>!group.has(i));
-   score+=group.size*10;
-   data.score=Math.max(data.score,score);
-   if(bubbles.length===0){
-    data.level++;data.coins+=20;
-    save();alert("Level completed! You earned 20 coins.");
-    newGame();return;
+   if(Math.random()>.12){
+    bubbles.push({
+     x:30+col*45+(row%2)*22,
+     y:30+row*42,
+     c:colors[Math.floor(Math.random()*colors.length)]
+    });
    }
   }
-  projectile=null;shot=colors[Math.floor(Math.random()*5)];
-  draw();save();return;
  }
- draw();requestAnimationFrame(animate);
+
+ shot=chooseAvailableColor();
+ nextShot=chooseAvailableColor();
+
+ draw();
+ update();
 }
+
+// Glossy bubble design
+function drawBubble(b){
+ const gradient=ctx.createRadialGradient(
+  b.x-7,b.y-9,2,b.x,b.y,R+3
+ );
+
+ gradient.addColorStop(0,"#ffffff");
+ gradient.addColorStop(.15,b.c);
+ gradient.addColorStop(.75,b.c);
+ gradient.addColorStop(1,"#17213b");
+
+ ctx.beginPath();
+ ctx.arc(b.x,b.y,R,0,Math.PI*2);
+ ctx.fillStyle=gradient;
+ ctx.fill();
+
+ ctx.lineWidth=2;
+ ctx.strokeStyle="rgba(255,255,255,.75)";
+ ctx.stroke();
+
+ ctx.beginPath();
+ ctx.ellipse(
+  b.x-6,b.y-8,6,3,-.5,0,Math.PI*2
+ );
+ ctx.fillStyle="rgba(255,255,255,.65)";
+ ctx.fill();
+
+ ctx.beginPath();
+ ctx.arc(b.x+7,b.y+8,2,0,Math.PI*2);
+ ctx.fillStyle="rgba(255,255,255,.25)";
+ ctx.fill();
+}
+
+function drawBackground(){
+ const gradient=ctx.createLinearGradient(0,0,0,650);
+
+ gradient.addColorStop(0,"#153c68");
+ gradient.addColorStop(1,"#061329");
+
+ ctx.fillStyle=gradient;
+ ctx.fillRect(0,0,600,650);
+
+ // Decorative stars
+ for(let i=0;i<35;i++){
+  const x=(i*97)%600;
+  const y=(i*67)%580;
+
+  ctx.beginPath();
+  ctx.arc(x,y,1.2,0,Math.PI*2);
+  ctx.fillStyle="rgba(255,255,255,.25)";
+  ctx.fill();
+ }
+}
+
+function drawAim(){
+ const dx=aimPoint.x-shooterX;
+ const dy=aimPoint.y-shooterY;
+
+ if(dy>=-5)return;
+
+ const length=Math.hypot(dx,dy);
+ if(!length)return;
+
+ const vx=dx/length;
+ const vy=dy/length;
+
+ ctx.save();
+ ctx.setLineDash([7,9]);
+ ctx.strokeStyle="rgba(255,255,255,.65)";
+ ctx.lineWidth=3;
+
+ ctx.beginPath();
+ ctx.moveTo(shooterX,shooterY);
+ ctx.lineTo(
+  shooterX+vx*250,
+  shooterY+vy*250
+ );
+ ctx.stroke();
+ ctx.restore();
+}
+
+function drawShooter(){
+ // Shooter base
+ ctx.beginPath();
+ ctx.arc(shooterX,shooterY,29,0,Math.PI*2);
+ ctx.fillStyle="#214c78";
+ ctx.fill();
+ ctx.strokeStyle="#8bdcff";
+ ctx.lineWidth=3;
+ ctx.stroke();
+
+ drawBubble({x:shooterX,y:shooterY,c:shot});
+
+ // Next bubble preview
+ ctx.fillStyle="white";
+ ctx.font="bold 13px Arial";
+ ctx.fillText("NEXT",375,603);
+
+ drawBubble({
+  x:410,y:620,c:nextShot
+ });
+}
+
+function draw(){
+ drawBackground();
+
+ bubbles.forEach(drawBubble);
+
+ particles.forEach(p=>{
+  ctx.beginPath();
+  ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  ctx.fillStyle=p.c;
+  ctx.fill();
+ });
+
+ if(projectile)drawBubble(projectile);
+
+ drawAim();
+ drawShooter();
+
+ $("score").textContent=score;
+}
+
+function updateAim(event){
+ const rect=canvas.getBoundingClientRect();
+
+ aimPoint.x=(event.clientX-rect.left)*600/rect.width;
+ aimPoint.y=(event.clientY-rect.top)*650/rect.height;
+
+ draw();
+}
+
+function shoot(event){
+ if(!started||projectile)return;
+
+ const rect=canvas.getBoundingClientRect();
+
+ const x=(event.clientX-rect.left)*600/rect.width;
+ const y=(event.clientY-rect.top)*650/rect.height;
+
+ if(y>=shooterY-5)return;
+
+ aimPoint={x,y};
+
+ const dx=x-shooterX;
+ const dy=y-shooterY;
+ const distance=Math.hypot(dx,dy);
+
+ if(!distance)return;
+
+ projectile={
+  x:shooterX,
+  y:shooterY,
+  c:shot,
+  vx:dx/distance*11,
+  vy:dy/distance*11
+ };
+
+ animate();
+}
+
+// Find all connected bubbles of the same colour.
+function findMatchingGroup(startIndex){
+ const target=bubbles[startIndex].c;
+ const group=new Set([startIndex]);
+ const queue=[startIndex];
+
+ while(queue.length){
+  const current=queue.shift();
+  const a=bubbles[current];
+
+  bubbles.forEach((b,i)=>{
+   if(group.has(i))return;
+
+   if(b.c===target &&
+      Math.hypot(a.x-b.x,a.y-b.y)<R*2.25){
+    group.add(i);
+    queue.push(i);
+   }
+  });
+ }
+
+ return group;
+}
+
+function createParticles(x,y,c){
+ for(let i=0;i<9;i++){
+  const angle=Math.random()*Math.PI*2;
+  const speed=1+Math.random()*3;
+
+  particles.push({
+   x,y,c,
+   vx:Math.cos(angle)*speed,
+   vy:Math.sin(angle)*speed,
+   r:2+Math.random()*3,
+   life:1
+  });
+ }
+}
+
+function updateParticles(){
+ particles.forEach(p=>{
+  p.x+=p.vx;
+  p.y+=p.vy;
+  p.life-=.045;
+  p.r*=.98;
+ });
+
+ particles=particles.filter(p=>p.life>0);
+}
+
+function placeBubble(){
+ if(!projectile)return;
+
+ const placed={
+  x:Math.max(R,Math.min(600-R,projectile.x)),
+  y:Math.max(25,Math.min(580,projectile.y)),
+  c:projectile.c
+ };
+
+ bubbles.push(placed);
+ projectile=null;
+
+ const index=bubbles.length-1;
+ const group=findMatchingGroup(index);
+
+ if(group.size>=3){
+  group.forEach(i=>{
+   const b=bubbles[i];
+   createParticles(b.x,b.y,b.c);
+  });
+
+  bubbles=bubbles.filter((b,i)=>!group.has(i));
+
+  score+=group.size*10;
+  data.score=Math.max(data.score,score);
+ }
+
+ shotsTaken++;
+
+ if(bubbles.length===0){
+  data.level++;
+  data.coins+=20;
+  save();
+
+  alert("🎉 Level completed! You earned 20 virtual coins.");
+  newGame();
+  return;
+ }
+
+ // The next bubble can only be a colour still on the board.
+ shot=nextShot;
+
+ const available=availableColors();
+
+ if(available.length>0){
+  nextShot=chooseAvailableColor();
+ }else{
+  nextShot=shot;
+ }
+
+ save();
+ draw();
+}
+
+function animate(){
+ if(!projectile)return;
+
+ projectile.x+=projectile.vx;
+ projectile.y+=projectile.vy;
+
+ // Wall bounce
+ if(projectile.x<R){
+  projectile.x=R;
+  projectile.vx=Math.abs(projectile.vx);
+ }
+
+ if(projectile.x>600-R){
+  projectile.x=600-R;
+  projectile.vx=-Math.abs(projectile.vx);
+ }
+
+ let hit=projectile.y<R+15;
+
+ for(const b of bubbles){
+  if(Math.hypot(
+   b.x-projectile.x,
+   b.y-projectile.y
+  )<R*2){
+   hit=true;
+   break;
+  }
+ }
+
+ if(hit){
+  placeBubble();
+  updateParticles();
+  draw();
+  return;
+ }
+
+ updateParticles();
+ draw();
+
+ animationId=requestAnimationFrame(animate);
+}
+
+canvas.addEventListener("pointermove",updateAim);
 canvas.addEventListener("pointerdown",shoot);
+
 update();
 newGame();
 </script>
 
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .then(() => console.log("Service worker registered"))
-      .catch(error => console.error("Service worker error:", error));
-  });
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./sw.js")
+   .then(()=>console.log("Service worker registered"))
+   .catch(error=>console.error("Service worker error:",error));
+ });
 }
 </script>
 
