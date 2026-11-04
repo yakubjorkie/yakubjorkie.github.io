@@ -1,597 +1,113 @@
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#07152d">
-<title>Y Jorkie Bubble Shooter - Classic</title>
+<title>Y Jorkie Bubble Shooter</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#07152d;color:white;font-family:Arial,sans-serif;overflow-x:hidden}
-header{padding:14px;text-align:center;background:linear-gradient(120deg,#0a2a6b,#102c52);border-bottom:2px solid #fbbf24}
-header h1{font-size:24px;margin-bottom:2px}
-header p{font-size:13px;opacity:0.9}
-nav{display:flex;justify-content:center;gap:6px;padding:10px;background:#0b2040;flex-wrap:wrap}
-button{border:0;border-radius:10px;padding:10px 14px;background:linear-gradient(135deg,#168bd0,#1260a7);color:white;font-weight:bold;cursor:pointer;font-size:14px}
-button:active{transform:scale(0.96)}
-main{max-width:420px;margin:auto;padding:10px}
-.panel{background:#10294a;border:2px solid #24517c;border-radius:16px;padding:14px;margin:10px 0}
-.hidden{display:none!important}
-.big{font-size:32px;color:#ffd45a;font-weight:bold}
-.stats{display:flex;gap:6px;text-align:center;margin-bottom:8px}
-.stat{flex:1;background:linear-gradient(#1e3a8a,#0f1e5a);border:2px solid #fbbf24;border-radius:10px;padding:8px;font-size:13px}
-canvas{display:block;width:100%;height:auto;background:#87ceeb;border-radius:12px;touch-action:none;border:3px solid #fbbf24;box-shadow:0 4px 15px rgba(0,0,0,0.4)}
+*{box-sizing:border-box}
+:root{--gold:#ffd45a;--navy:#07152d;--panel:#10294a}
+body{margin:0;background:radial-gradient(circle at 50% 0,#173d70,#07152d 65%);color:#fff;font-family:Arial,sans-serif}
+header{padding:13px;text-align:center;background:linear-gradient(120deg,#0a2a6b,#102c52);border-bottom:2px solid var(--gold)}
+header h1{margin:2px;font-size:25px;letter-spacing:2px}header p{margin:4px;font-size:12px;letter-spacing:2px;color:#d5e8ff}
+nav{display:flex;justify-content:center;gap:6px;padding:9px;background:#0b2040;flex-wrap:wrap}
+button{border:1px solid #65baff;border-radius:10px;padding:10px 13px;background:linear-gradient(135deg,#168bd0,#1260a7);color:white;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 #083d70}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 #083d70}
+button:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:720px;margin:auto;padding:10px}
+.panel{background:linear-gradient(145deg,#14365d,#0b203c);border:1px solid #3670a5;border-radius:16px;padding:12px;margin:9px 0;box-shadow:0 8px 22px #0004}
+.hidden{display:none!important}.big{font-size:30px;color:var(--gold);font-weight:bold}.muted{color:#b8cce2}
+.stats{display:flex;gap:6px;text-align:center;margin-bottom:8px}.stat{flex:1;background:linear-gradient(#244b9a,#101e55);border:1px solid var(--gold);border-radius:10px;padding:7px;font-size:13px}.stat b{font-size:18px}
+canvas{display:block;width:100%;height:auto;background:#8ccfff;border-radius:12px;touch-action:none;border:2px solid var(--gold);box-shadow:inset 0 0 25px #174d83}
+.game-actions{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:9px}
+.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.item{background:#0a1c36;border:1px solid #315d88;border-radius:12px;padding:11px;text-align:center}.item .emoji{font-size:30px}
+#notice{min-height:20px;text-align:center;color:#ffe18b;font-weight:bold;font-size:13px;margin:5px}
+.overlay{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;padding:20px;z-index:5}.modal{max-width:340px;width:100%;background:linear-gradient(145deg,#194777,#081a32);border:2px solid var(--gold);border-radius:18px;padding:22px;text-align:center;box-shadow:0 15px 50px #0009}.modal h2{color:var(--gold)}
+input{padding:10px;border-radius:8px;border:1px solid #70a8d5;max-width:100%}
+@media(max-width:390px){button{padding:9px 10px;font-size:12px}.stat{padding:6px 3px}}
 </style>
 </head>
 <body>
-<header>
-  <h1>🎯 Y JORKIE</h1>
-  <p>CLASSIC BUBBLE SHOOTER</p>
-</header>
-
+<header><h1>🎯 Y JORKIE</h1><p>CLASSIC BUBBLE SHOOTER</p></header>
 <nav>
-  <button onclick="show('home')">🏠 Home</button>
-  <button onclick="show('game')">🎮 Play</button>
-  <button onclick="show('rewards')">🎁 Rewards</button>
-  <button onclick="show('profile')">👤 Profile</button>
+<button onclick="show('home')">🏠 Home</button><button onclick="show('game')">🎮 Play</button>
+<button onclick="show('shop')">🛒 Shop</button><button onclick="show('rewards')">🎁 Rewards</button><button onclick="show('profile')">👤 Profile</button>
 </nav>
-
 <main>
-  <section id="home" class="page">
-    <div class="panel" style="text-align:center">
-      <h2>Welcome!</h2>
-      <div class="big">🪙 <span id="homeCoins">0</span></div>
-      <button onclick="show('game')" style="margin-top:12px;padding:12px 28px;font-size:16px">▶ PLAY</button>
-    </div>
-    <div class="stats">
-      <div class="stat">Level<br><b id="homeLevel">1</b></div>
-      <div class="stat">Best<br><b id="homeScore">0</b></div>
-    </div>
-  </section>
-
-  <section id="game" class="page hidden">
-    <div class="panel">
-      <div class="stats">
-        <div class="stat">Level<br><b id="level">1</b></div>
-        <div class="stat">Score<br><b id="score">0</b></div>
-        <div class="stat">Coins<br><b id="gameCoins">0</b></div>
-      </div>
-      <canvas id="board" width="360" height="640"></canvas>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
-        <button onclick="newGame()">🔄 New</button>
-        <button onclick="show('home')">🏠 Home</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="rewards" class="page hidden">
-    <div class="panel">
-      <h2>🎁 Rewards</h2>
-      <div class="big">🪙 <span id="rewardCoins">0</span></div>
-      <div style="margin-top:12px"><button id="dailyButton" onclick="dailyReward()">Collect 50 🪙</button></div>
-    </div>
-  </section>
-
-  <section id="profile" class="page hidden">
-    <div class="panel">
-      <h2>👤 Profile</h2>
-      <div id="loggedOut">
-        <input id="email" type="email" placeholder="email" style="width:100%;padding:10px;border-radius:8px;border:none;margin-bottom:8px">
-        <button onclick="login()">Continue</button>
-      </div>
-      <div id="loggedIn" class="hidden">
-        <p id="playerEmail"></p>
-        <p>Coins: <span id="profileCoins"></span></p>
-        <button onclick="logout()">Logout</button>
-      </div>
-    </div>
-    <div class="panel">
-      <h2>Leaderboard</h2>
-      <div id="leaderboard"></div>
-    </div>
-  </section>
+<section id="home" class="page">
+ <div class="panel" style="text-align:center"><h2>Welcome to the Bubble Arena!</h2><div class="big">🪙 <span id="homeCoins">0</span></div><p class="muted">Match 3 or more bubbles. Clear the board before the bubbles reach the danger line.</p><button onclick="show('game')">▶ PLAY NOW</button></div>
+ <div class="stats"><div class="stat">Level<br><b id="homeLevel">1</b></div><div class="stat">Best score<br><b id="homeScore">0</b></div><div class="stat">Wins<br><b id="homeWins">0</b></div></div>
+</section>
+<section id="game" class="page hidden">
+ <div class="panel">
+  <div class="stats"><div class="stat">Level<br><b id="level">1</b></div><div class="stat">Score<br><b id="score">0</b></div><div class="stat">Coins<br><b id="gameCoins">0</b></div><div class="stat">Shots<br><b id="shots">0</b></div></div>
+  <canvas id="board" width="360" height="640"></canvas>
+  <div id="notice">Tap the board to aim and shoot.</div>
+  <div class="game-actions"><button onclick="swapBubble()">🔄 Swap colour</button><button onclick="usePower('fire')">🔥 Fire (<span id="fireCount">0</span>)</button><button onclick="usePower('bump')">💥 Bump (<span id="bumpCount">0</span>)</button></div>
+  <div class="game-actions"><button onclick="newGame()">↻ Restart level</button><button onclick="toggleSound()" id="soundBtn">🔊 Sound on</button><button onclick="show('home')">🏠 Home</button></div>
+ </div>
+</section>
+<section id="shop" class="page hidden"><div class="panel"><h2>🛒 Power-up shop</h2><p>Coins: <b class="big">🪙 <span id="shopCoins">0</span></b></p><div class="shop-grid">
+ <div class="item"><div class="emoji">🔥</div><b>Fire shot</b><p class="muted">Burns through a line of bubbles.</p><p>80 coins</p><button onclick="buy('fire',80)">Buy fire</button></div>
+ <div class="item"><div class="emoji">💥</div><b>Bump bomb</b><p class="muted">Blasts a small group around impact.</p><p>100 coins</p><button onclick="buy('bump',100)">Buy bump</button></div>
+ <div class="item"><div class="emoji">🌈</div><b>Rainbow bubble</b><p class="muted">Matches any bubble colour.</p><p>120 coins</p><button onclick="buy('rainbow',120)">Buy rainbow</button></div>
+ <div class="item"><div class="emoji">➕</div><b>Extra life</b><p class="muted">Adds 3 more shots before the ceiling drops.</p><p>70 coins</p><button onclick="buy('life',70)">Buy extra life</button></div>
+ </div><p class="muted">Power-ups are stored in your game inventory.</p></div></section>
+<section id="rewards" class="page hidden"><div class="panel"><h2>🎁 Daily rewards</h2><div class="big">🪙 <span id="rewardCoins">0</span></div><button id="dailyButton" onclick="dailyReward()">Collect 50 coins</button><p class="muted">Come back each day for another reward.</p></div></section>
+<section id="profile" class="page hidden"><div class="panel"><h2>👤 Player profile</h2><div id="loggedOut"><input id="email" type="email" placeholder="Email address"><button onclick="login()">Continue</button></div><div id="loggedIn" class="hidden"><p id="playerEmail"></p><p>Coins: <b id="profileCoins"></b></p><button onclick="logout()">Logout</button></div></div><div class="panel"><h2>Statistics</h2><p>Wins: <b id="profileWins">0</b> · Losses: <b id="profileLosses">0</b></p><p>Fire: <b id="profileFire">0</b> · Bump: <b id="profileBump">0</b> · Rainbow: <b id="profileRainbow">0</b> · Extra shots: <b id="profileLife">0</b></p></div></section>
 </main>
-
+<div id="result" class="overlay hidden"><div class="modal"><h2 id="resultTitle">Level complete!</h2><p id="resultText"></p><button id="resultButton" onclick="continueAfterResult()">Continue</button></div></div>
 <script>
-const $ = id => document.getElementById(id);
-let data;
-try { data = JSON.parse(localStorage.getItem("yjorkieData") || "{}"); } catch(e) { data = {}; }
-data.coins = Number(data.coins) || 0;
-data.level = Number(data.level) || 1;
-data.score = Number(data.score) || 0;
-data.email = data.email || "";
-
-function save() {
-  localStorage.setItem("yjorkieData", JSON.stringify(data));
-  update();
-}
-
-function update() {
-  ["homeCoins","gameCoins","rewardCoins","profileCoins"].forEach(i => {
-    let el = $(i); if (el) el.textContent = data.coins;
-  });
-  ["homeLevel","level"].forEach(i => {
-    let el = $(i); if (el) el.textContent = data.level;
-  });
-  $("homeScore").textContent = data.score;
-  $("playerEmail").textContent = data.email;
-  $("loggedOut").classList.toggle("hidden", !!data.email);
-  $("loggedIn").classList.toggle("hidden", !data.email);
-  $("leaderboard").textContent = data.score + " pts — " + (data.email || "Guest");
-  let t = new Date().toDateString();
-  $("dailyButton").disabled = data.daily === t;
-}
-
-function show(id) {
-  document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
-  $(id).classList.remove("hidden");
-  if (id === "game" && !started) newGame();
-  update();
-}
-
-function login() {
-  let e = $("email").value.trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) { alert("Please enter a valid email"); return; }
-  data.email = e;
-  save();
-}
-function logout() { data.email = ""; save(); }
-function dailyReward() {
-  if (data.daily === new Date().toDateString()) return;
-  data.daily = new Date().toDateString();
-  data.coins += 50;
-  save();
-  alert("You received 50 coins!");
-}
-
-// ==================== GAME ====================
-const canvas = $("board");
-const ctx = canvas.getContext("2d");
-
-// Classic bubble colors
-const colors = [
-  "#e63946", // Red
-  "#2a9d8f", // Teal/Green
-  "#1d4ed8", // Blue
-  "#f59e0b", // Orange/Yellow
-  "#8b5cf6", // Purple
-  "#06b6d4"  // Cyan
-];
-
-const R = 15;
-const SX = 180, SY = 600;
-const OVER_Y = 540;
-
-let bubbles = [], shot, nextShot, score = 0, started = false;
-let projectile = null, anim = null, aim = {x:180, y:200};
-let particles = [], falling = [];
-
-function available() {
-  return [...new Set(bubbles.map(b => b.c))];
-}
-function pickColor() {
-  let a = available();
-  return a.length ? a[Math.floor(Math.random() * a.length)] : colors[0];
-}
-
-// Level patterns
-function makeStar() {
-  let list = [];
-  let cx = 180, cy = 140;
-  for (let row = -5; row <= 5; row++) {
-    let w = 5 - Math.abs(row);
-    for (let col = -w; col <= w; col++) {
-      list.push({x: cx + col * 30 + (row % 2 ? 15 : 0), y: cy + row * 26});
-    }
-  }
-  return list;
-}
-function makeV() {
-  let list = [];
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j <= i; j++) {
-      list.push({
-        x: 90 + j * 30 + (i % 2 ? 15 : 0) + (8 - i) * 15,
-        y: 40 + i * 26
-      });
-    }
-  }
-  return list;
-}
-function makeDiamond() {
-  let list = [];
-  for (let row = 0; row < 10; row++) {
-    let w = row < 5 ? row : 9 - row;
-    for (let col = -w; col <= w; col++) {
-      list.push({
-        x: 180 + col * 30 + (row % 2 ? 15 : 0),
-        y: 50 + row * 26
-      });
-    }
-  }
-  return list;
-}
-function getPattern(lvl) {
-  if (lvl % 3 === 1) return makeStar();
-  if (lvl % 3 === 2) return makeV();
-  return makeDiamond();
-}
-
-function newGame() {
-  if (anim) cancelAnimationFrame(anim);
-  bubbles = []; particles = []; falling = [];
-  projectile = null; score = 0; started = true;
-
-  let pattern = getPattern(data.level);
-  pattern.forEach(p => {
-    if (Math.random() > 0.12) {
-      bubbles.push({
-        x: p.x,
-        y: p.y,
-        c: colors[Math.floor(Math.random() * colors.length)]
-      });
-    }
-  });
-  shot = pickColor();
-  nextShot = pickColor();
-  draw();
-}
-
-// ========== REALISTIC BUBBLE DRAWING ==========
-function drawBubble(b, radius = R) {
-  // Soft shadow
-  ctx.beginPath();
-  ctx.arc(b.x + 2.5, b.y + 3.5, radius, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(0,0,0,0.22)";
-  ctx.fill();
-
-  // Main glossy bubble
-  const grad = ctx.createRadialGradient(
-    b.x - radius * 0.35,
-    b.y - radius * 0.4,
-    radius * 0.05,
-    b.x,
-    b.y,
-    radius * 1.05
-  );
-  grad.addColorStop(0, "#ffffff");
-  grad.addColorStop(0.12, lighten(b.c, 55));
-  grad.addColorStop(0.45, b.c);
-  grad.addColorStop(0.8, darken(b.c, 25));
-  grad.addColorStop(1, darken(b.c, 45));
-
-  ctx.beginPath();
-  ctx.arc(b.x, b.y, radius, 0, Math.PI * 2);
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Strong specular highlight
-  ctx.beginPath();
-  ctx.arc(b.x - radius * 0.32, b.y - radius * 0.38, radius * 0.32, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(255,255,255,0.75)";
-  ctx.fill();
-
-  // Small secondary highlight
-  ctx.beginPath();
-  ctx.arc(b.x - radius * 0.15, b.y - radius * 0.5, radius * 0.12, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(255,255,255,0.5)";
-  ctx.fill();
-
-  // Subtle dark edge
-  ctx.beginPath();
-  ctx.arc(b.x, b.y, radius, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(0,0,0,0.25)";
-  ctx.lineWidth = 1.2;
-  ctx.stroke();
-}
-
-function lighten(hex, percent) {
-  const num = parseInt(hex.slice(1), 16);
-  const r = Math.min(255, (num >> 16) + percent);
-  const g = Math.min(255, ((num >> 8) & 0x00FF) + percent);
-  const b = Math.min(255, (num & 0x0000FF) + percent);
-  return `rgb(\( {r}, \){g},${b})`;
-}
-function darken(hex, percent) {
-  const num = parseInt(hex.slice(1), 16);
-  const r = Math.max(0, (num >> 16) - percent);
-  const g = Math.max(0, ((num >> 8) & 0x00FF) - percent);
-  const b = Math.max(0, (num & 0x0000FF) - percent);
-  return `rgb(\( {r}, \){g},${b})`;
-}
-
-function drawBG() {
-  // Sky gradient
-  const sky = ctx.createLinearGradient(0, 0, 0, 640);
-  sky.addColorStop(0, "#7dd3fc");
-  sky.addColorStop(0.6, "#a5f3fc");
-  sky.addColorStop(1, "#e0f2fe");
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, 360, 640);
-
-  // Soft clouds
-  ctx.fillStyle = "rgba(255,255,255,0.35)";
-  for (let i = 0; i < 8; i++) {
-    ctx.beginPath();
-    ctx.arc((i * 55 + 20) % 360, 40 + (i % 3) * 30, 18 + (i % 4) * 4, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // Danger line
-  ctx.setLineDash([8, 6]);
-  ctx.strokeStyle = "rgba(239,68,68,0.55)";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(0, OVER_Y);
-  ctx.lineTo(360, OVER_Y);
-  ctx.stroke();
-  ctx.setLineDash([]);
-}
-
-function drawAim() {
-  let dx = aim.x - SX;
-  let dy = aim.y - SY;
-  if (dy > -8) return;
-  let len = Math.hypot(dx, dy);
-  if (!len) return;
-  let vx = dx / len, vy = dy / len;
-
-  ctx.save();
-  ctx.setLineDash([6, 7]);
-  ctx.strokeStyle = "rgba(34,197,94,0.85)";
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.moveTo(SX, SY - 12);
-  ctx.lineTo(SX + vx * 420, SY + vy * 420);
-  ctx.stroke();
-  ctx.restore();
-
-  // Dots along the line
-  for (let i = 1; i < 9; i++) {
-    ctx.beginPath();
-    ctx.arc(SX + vx * i * 32, SY + vy * i * 32, 2.2, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(34,197,94,0.9)";
-    ctx.fill();
-  }
-}
-
-function drawShooter() {
-  // Base
-  ctx.beginPath();
-  ctx.arc(SX, SY + 8, 22, 0, Math.PI * 2);
-  ctx.fillStyle = "#1e3a8a";
-  ctx.fill();
-  ctx.strokeStyle = "#fbbf24";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Current bubble
-  drawBubble({x: SX, y: SY - 2, c: shot}, 16);
-
-  // Next bubble
-  drawBubble({x: 275, y: 612, c: nextShot}, 13);
-  ctx.fillStyle = "#1e293b";
-  ctx.font = "bold 11px Arial";
-  ctx.fillText("NEXT", 258, 590);
-}
-
-function draw() {
-  drawBG();
-  bubbles.forEach(b => drawBubble(b));
-  falling.forEach(b => drawBubble(b));
-  
-  // Particles
-  particles.forEach(p => {
-    ctx.globalAlpha = p.life;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = p.c;
-    ctx.fill();
-  });
-  ctx.globalAlpha = 1;
-
-  if (projectile) drawBubble(projectile);
-  drawAim();
-  drawShooter();
-  $("score").textContent = score;
-}
-
-function getTopConnected() {
-  if (!bubbles.length) return new Set();
-  let conn = new Set(), q = [];
-  bubbles.forEach((b, i) => {
-    if (b.y < 45) { conn.add(i); q.push(i); }
-  });
-  while (q.length) {
-    let cur = q.shift(), a = bubbles[cur];
-    bubbles.forEach((b, i) => {
-      if (conn.has(i)) return;
-      if (Math.hypot(a.x - b.x, a.y - b.y) < R * 2.25) {
-        conn.add(i); q.push(i);
-      }
-    });
-  }
-  return conn;
-}
-
-function findGroup(s) {
-  let t = bubbles[s].c, g = new Set([s]), q = [s];
-  while (q.length) {
-    let cur = q.shift(), a = bubbles[cur];
-    bubbles.forEach((b, i) => {
-      if (g.has(i)) return;
-      if (b.c === t && Math.hypot(a.x - b.x, a.y - b.y) < R * 2.25) {
-        g.add(i); q.push(i);
-      }
-    });
-  }
-  return g;
-}
-
-function createParticles(x, y, color, count = 8) {
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x, y,
-      vx: (Math.random() - 0.5) * 6,
-      vy: (Math.random() - 0.5) * 6 - 2,
-      r: 2 + Math.random() * 3,
-      c: color,
-      life: 1
-    });
-  }
-}
-
-function popFall() {
-  let conn = getTopConnected(), float = [];
-  bubbles.forEach((b, i) => { if (!conn.has(i)) float.push(i); });
-
-  if (float.length) {
-    float.sort((a, b) => b - a).forEach(i => {
-      let b = bubbles[i];
-      createParticles(b.x, b.y, b.c, 6);
-      falling.push({
-        x: b.x, y: b.y, c: b.c,
-        vx: (Math.random() - 0.5) * 5,
-        vy: -3 - Math.random() * 2
-      });
-      bubbles.splice(i, 1);
-      score += 15;
-      data.coins += 1;
-    });
-  }
-
-  if (bubbles.length === 0) {
-    data.level++;
-    data.coins += 25;
-    save();
-    alert("Level Cleared! +25 coins");
-    newGame();
-    return true;
-  }
-  if (bubbles.some(b => b.y > OVER_Y)) {
-    started = false;
-    alert("Game Over! Score: " + score);
-    newGame();
-    return true;
-  }
-  return false;
-}
-
-function place() {
-  if (!projectile) return;
-  let p = {
-    x: Math.max(R, Math.min(360 - R, projectile.x)),
-    y: Math.max(20, Math.min(OVER_Y - 10, projectile.y)),
-    c: projectile.c
-  };
-  bubbles.push(p);
-  projectile = null;
-
-  let idx = bubbles.length - 1;
-  let grp = findGroup(idx);
-
-  if (grp.size >= 3) {
-    [...grp].sort((a, b) => b - a).forEach(i => {
-      createParticles(bubbles[i].x, bubbles[i].y, bubbles[i].c, 10);
-      bubbles.splice(i, 1);
-    });
-    score += grp.size * 12;
-    data.score = Math.max(data.score, score);
-    if (!popFall()) {
-      shot = nextShot;
-      nextShot = pickColor();
-      save();
-      draw();
-    }
-  } else {
-    if (!popFall()) {
-      shot = nextShot;
-      nextShot = pickColor();
-      save();
-      draw();
-    }
-  }
-}
-
-function aimMove(e) {
-  let r = canvas.getBoundingClientRect();
-  aim.x = (e.clientX - r.left) * 360 / r.width;
-  aim.y = (e.clientY - r.top) * 640 / r.height;
-  draw();
-}
-
-function shoot(e) {
-  if (!started || projectile) return;
-  let r = canvas.getBoundingClientRect();
-  let x = (e.clientX - r.left) * 360 / r.width;
-  let y = (e.clientY - r.top) * 640 / r.height;
-  if (y > SY - 15) return;
-
-  aim = {x, y};
-  let dx = x - SX, dy = y - SY;
-  let d = Math.hypot(dx, dy);
-  if (!d) return;
-
-  projectile = {
-    x: SX, y: SY - 12,
-    c: shot,
-    vx: dx / d * 9,
-    vy: dy / d * 9
-  };
-  animate();
-}
-
-function animate() {
-  if (!projectile) return;
-
-  projectile.x += projectile.vx;
-  projectile.y += projectile.vy;
-
-  // Wall bounce
-  if (projectile.x < R || projectile.x > 360 - R) {
-    projectile.vx *= -1;
-    projectile.x = Math.max(R, Math.min(360 - R, projectile.x));
-  }
-
-  let hit = projectile.y < R + 8;
-  for (let b of bubbles) {
-    if (Math.hypot(b.x - projectile.x, b.y - projectile.y) < R * 2.05) {
-      hit = true;
-      break;
-    }
-  }
-
-  if (hit) {
-    place();
-    return;
-  }
-
-  // Update falling bubbles
-  falling.forEach(b => {
-    b.x += b.vx;
-    b.y += b.vy;
-    b.vy += 0.35;
-  });
-  falling = falling.filter(b => b.y < 680);
-
-  // Update particles
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.vy += 0.15;
-    p.life -= 0.035;
-  });
-  particles = particles.filter(p => p.life > 0);
-
-  draw();
-  anim = requestAnimationFrame(animate);
-}
-
-canvas.addEventListener("pointermove", aimMove);
-canvas.addEventListener("pointerdown", shoot);
-
-update();
-newGame();
+const $=id=>document.getElementById(id);
+let data;try{data=JSON.parse(localStorage.getItem("yjorkieData")||"{}")}catch(e){data={}}
+data.coins=Number(data.coins)||0;data.level=Number(data.level)||1;data.score=Number(data.score)||0;data.email=data.email||"";data.wins=Number(data.wins)||0;data.losses=Number(data.losses)||0;data.inventory=Object.assign({fire:0,bump:0,rainbow:0,life:0},data.inventory||{});
+let soundOn=true,audioCtx=null;
+function sound(type){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();let now=audioCtx.currentTime,osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);let f={shoot:420,pop:650,win:880,lose:150,buy:560,swap:500,fire:220,bump:110}[type]||440;osc.type=type==="bump"?"sawtooth":"sine";osc.frequency.setValueAtTime(f,now);osc.frequency.exponentialRampToValueAtTime(Math.max(60,f*.55),now+.14);gain.gain.setValueAtTime(.12,now);gain.gain.exponentialRampToValueAtTime(.001,now+.18);osc.start(now);osc.stop(now+.19)}catch(e){}}
+function save(){localStorage.setItem("yjorkieData",JSON.stringify(data));update()}
+function update(){["homeCoins","gameCoins","rewardCoins","profileCoins","shopCoins"].forEach(i=>{if($(i))$(i).textContent=data.coins});["homeLevel","level"].forEach(i=>{if($(i))$(i).textContent=data.level});$("homeScore").textContent=data.score;$("homeWins").textContent=data.wins;$("profileWins").textContent=data.wins;$("profileLosses").textContent=data.losses;$("playerEmail").textContent=data.email;$("loggedOut").classList.toggle("hidden",!!data.email);$("loggedIn").classList.toggle("hidden",!data.email);$("dailyButton").disabled=data.daily===new Date().toDateString();["fire","bump","rainbow","life"].forEach(k=>{if($("profile"+k[0].toUpperCase()+k.slice(1)))$("profile"+k[0].toUpperCase()+k.slice(1)).textContent=data.inventory[k]});$("fireCount").textContent=data.inventory.fire;$("bumpCount").textContent=data.inventory.bump}
+function show(id){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));$(id).classList.remove("hidden");if(id==="game"&&!started)newGame();update()}
+function login(){let e=$("email").value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){alert("Enter a valid email.");return}data.email=e;save()}
+function logout(){data.email="";save()}
+function dailyReward(){if(data.daily===new Date().toDateString())return;data.daily=new Date().toDateString();data.coins+=50;save();sound("buy")}
+function buy(item,cost){if(data.coins<cost){$("notice").textContent="Not enough coins. Play levels or collect your daily reward.";return}data.coins-=cost;data.inventory[item]++;save();sound("buy");alert("Purchased! Your "+item+" power-up is ready.")}
+const canvas=$("board"),ctx=canvas.getContext("2d"),R=14,SX=180,SY=594,OVER_Y=520;
+const colors=["#f44336","#25bd65","#2679f4","#ffcf27","#b34be8","#18cde0"];
+let bubbles=[],shot,nextShot,score=0,started=false,projectile=null,anim=null,aim={x:180,y:180},falling=[],shots=0,extraShots=0,activePower="normal",resultPending=false;
+function available(){return [...new Set(bubbles.map(b=>b.c))]}
+function pickColor(){let a=available();return a.length?a[Math.floor(Math.random()*a.length)]:colors[Math.floor(Math.random()*colors.length)]}
+function makePattern(){let a=[];let rows=Math.min(7+Math.floor(data.level/2),11),cols=11;for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){if(data.level%3===1&&Math.abs(c-5)>Math.max(1,5-r))continue;if(data.level%3===2&&c<Math.floor(r/2))continue;if(Math.random()>.07)a.push({x:20+c*32+(r%2?16:0),y:35+r*27,c:colors[Math.floor(Math.random()*colors.length)]})}return a}
+function newGame(){if(anim)cancelAnimationFrame(anim);bubbles=makePattern();falling=[];projectile=null;score=0;shots=0;extraShots=0;activePower="normal";started=true;resultPending=false;shot=pickColor();nextShot=pickColor();$("notice").textContent="Aim and tap to shoot. Match 3 or more!";$("shots").textContent=shots;draw()}
+function bubbleGradient(b){let g=ctx.createRadialGradient(b.x-R*.38,b.y-R*.48,1,b.x,b.y,R*1.12);g.addColorStop(0,"#ffffff");g.addColorStop(.12,lighten(b.c,.72));g.addColorStop(.42,b.c);g.addColorStop(.78,shade(b.c,.72));g.addColorStop(1,"#15243a");return g}
+function drawBubble(b){ctx.save();ctx.shadowColor="#17395e88";ctx.shadowBlur=5;ctx.shadowOffsetY=2;ctx.fillStyle=bubbleGradient(b);ctx.beginPath();ctx.arc(b.x,b.y,R,0,Math.PI*2);ctx.fill();ctx.shadowColor="transparent";ctx.fillStyle="#ffffff99";ctx.beginPath();ctx.ellipse(b.x-5,b.y-6,4,2.4,-.6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#ffffff35";ctx.beginPath();ctx.arc(b.x+5,b.y+6,2.5,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#ffffff55";ctx.lineWidth=1;ctx.stroke();ctx.restore()}
+function lighten(hex,a){let n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return `rgb(${Math.round(r+(255-r)*a)},${Math.round(g+(255-g)*a)},${Math.round(b+(255-b)*a)})`}
+function shade(hex,a){let n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return `rgb(${Math.round(r*a)},${Math.round(g*a)},${Math.round(b*a)})`}
+function drawBG(){let g=ctx.createLinearGradient(0,0,0,640);g.addColorStop(0,"#b9e5ff");g.addColorStop(1,"#5ca9e8");ctx.fillStyle=g;ctx.fillRect(0,0,360,640);ctx.fillStyle="#ffffff55";for(let i=0;i<26;i++){ctx.beginPath();ctx.arc((i*71)%360,(i*47)%490,1.3,0,6.28);ctx.fill()}ctx.setLineDash([6,5]);ctx.strokeStyle="#ed3c3caa";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,OVER_Y);ctx.lineTo(360,OVER_Y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#8a1f2a";ctx.font="bold 9px Arial";ctx.fillText("DANGER LINE",8,OVER_Y-6)}
+function drawShooter(){ctx.save();ctx.translate(SX,SY);ctx.fillStyle="#173d68";ctx.strokeStyle="#f8d66d";ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,7,25,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.rotate(Math.atan2(aim.y-SY,aim.x-SX)+Math.PI/2);let tube=ctx.createLinearGradient(-12,0,12,0);tube.addColorStop(0,"#254f79");tube.addColorStop(.5,"#e9f7ff");tube.addColorStop(1,"#254f79");ctx.fillStyle=tube;ctx.beginPath();ctx.roundRect(-12,-45,24,52,8);ctx.fill();ctx.strokeStyle="#f5d36b";ctx.stroke();ctx.restore();drawBubble({x:SX,y:SY-29,c:shot});drawBubble({x:276,y:612,c:nextShot});ctx.fillStyle="#173d68";ctx.font="bold 10px Arial";ctx.fillText("NEXT",261,589)}
+function drawAim(){if(projectile)return;let dx=aim.x-SX,dy=aim.y-SY;if(dy>-5)return;let d=Math.hypot(dx,dy);if(!d)return;let vx=dx/d,vy=dy/d;ctx.save();ctx.setLineDash([4,7]);ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(SX,SY-30);ctx.lineTo(SX+vx*330,SY+vy*330);ctx.stroke();ctx.restore()}
+function draw(){drawBG();bubbles.forEach(drawBubble);falling.forEach(drawBubble);if(projectile)drawBubble(projectile);drawAim();drawShooter();$("score").textContent=score;$("shots").textContent=shots}
+function groupAt(idx,anyColor=false){let target=bubbles[idx].c,g=new Set([idx]),q=[idx];while(q.length){let a=bubbles[q.shift()];bubbles.forEach((b,i)=>{if(g.has(i))return;if((anyColor||b.c===target)&&Math.hypot(a.x-b.x,a.y-b.y)<R*2.25){g.add(i);q.push(i)}})}return g}
+function connectedToTop(){let seen=new Set(),q=[];bubbles.forEach((b,i)=>{if(b.y<48){seen.add(i);q.push(i)}});while(q.length){let a=bubbles[q.shift()];bubbles.forEach((b,i)=>{if(!seen.has(i)&&Math.hypot(a.x-b.x,a.y-b.y)<R*2.25){seen.add(i);q.push(i)}})}return seen}
+function settle(){let connected=connectedToTop(),drop=[];bubbles.forEach((b,i)=>{if(!connected.has(i))drop.push(i)});drop.sort((a,b)=>b-a).forEach(i=>{let b=bubbles.splice(i,1)[0];falling.push({...b,y:b.y,vy:1.5});score+=15;data.coins+=1});if(bubbles.length===0){winLevel();return true}if(bubbles.some(b=>b.y+R>=OVER_Y)){loseLevel();return true}return false}
+function removeGroup(group){[...group].sort((a,b)=>b-a).forEach(i=>bubbles.splice(i,1));score+=group.size*10;data.coins+=Math.max(1,Math.floor(group.size/3));sound("pop")}
+function place(){if(!projectile)return;let p={x:Math.max(R,Math.min(360-R,projectile.x)),y:Math.max(24,Math.min(OVER_Y-20,projectile.y)),c:projectile.c};projectile=null;if(activePower==="fire"){let near=bubbles.filter(b=>Math.hypot(b.x-p.x,b.y-p.y)<R*3.5);near.sort((a,b)=>Math.hypot(a.x-p.x,a.y-p.y)-Math.hypot(b.x-p.x,b.y-p.y));near.slice(0,5).forEach(b=>{let i=bubbles.indexOf(b);if(i>=0)bubbles.splice(i,1)});score+=near.slice(0,5).length*12;sound("fire")}else if(activePower==="bump"){let removed=0;bubbles=bubbles.filter(b=>{let hit=Math.hypot(b.x-p.x,b.y-p.y)<R*3.2;if(hit)removed++;return !hit});score+=removed*12;sound("bump")}else{bubbles.push(p);let idx=bubbles.length-1,g=groupAt(idx,activePower==="rainbow");if(g.size>=3)removeGroup(g)}
+activePower="normal";shots++;if(settle()){draw();return}if(shots>=7+extraShots){shots=0;extraShots=0;bubbles.forEach(b=>b.y+=22);if(bubbles.some(b=>b.y+R>=OVER_Y)){loseLevel();draw();return}}
+shot=nextShot;nextShot=pickColor();save();draw()}
+function animate(){if(!projectile)return;projectile.x+=projectile.vx;projectile.y+=projectile.vy;if(projectile.x<R||projectile.x>360-R)projectile.vx*=-1;let hit=projectile.y<R+15||bubbles.some(b=>Math.hypot(b.x-projectile.x,b.y-projectile.y)<R*2);if(hit){place();return}falling.forEach(b=>{b.y+=b.vy;b.vy+=.35});falling=falling.filter(b=>b.y<670);draw();anim=requestAnimationFrame(animate)}
+function aimPoint(e){let r=canvas.getBoundingClientRect();aim.x=(e.clientX-r.left)*360/r.width;aim.y=(e.clientY-r.top)*640/r.height;draw()}
+function shoot(e){if(!started||projectile||$("result").classList.contains("hidden")===false)return;let r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)*360/r.width,y=(e.clientY-r.top)*640/r.height;if(y>SY-30)return;aim={x,y};let dx=x-SX,dy=y-SY,d=Math.hypot(dx,dy);if(!d)return;projectile={x:SX,y:SY-30,c:shot,vx:dx/d*9,vy:dy/d*9};sound("shoot");animate()}
+canvas.addEventListener("pointermove",aimPoint);canvas.addEventListener("pointerdown",shoot);
+function swapBubble(){if(!started||projectile)return;[shot,nextShot]=[nextShot,shot];sound("swap");draw()}
+function usePower(type){if(!started||projectile)return;if(type==="fire"&&data.inventory.fire>0){data.inventory.fire--;activePower="fire"}else if(type==="bump"&&data.inventory.bump>0){data.inventory.bump--;activePower="bump"}else{alert("Buy this power-up in the Shop first.");return}save();$("notice").textContent=type==="fire"?"🔥 Fire shot selected!":"💥 Bump bomb selected!";draw()}
+function winLevel(){started=false;data.wins++;data.level++;data.coins+=30;data.score=Math.max(data.score,score);save();sound("win");resultPending=true;$("resultTitle").textContent="🏆 LEVEL COMPLETE!";$("resultText").textContent="Excellent shooting! You scored "+score+" points and earned 30 bonus coins."; $("resultButton").textContent="Next level";$("result").classList.remove("hidden")}
+function loseLevel(){started=false;data.losses++;data.score=Math.max(data.score,score);save();sound("lose");resultPending=true;$("resultTitle").textContent="💔 GAME OVER";$("resultText").textContent="The bubbles reached the danger line. Score: "+score+". Try again and clear the board!";$("resultButton").textContent="Try again";$("result").classList.remove("hidden")}
+function continueAfterResult(){$("result").classList.add("hidden");newGame()}
+function toggleSound(){soundOn=!soundOn;$("soundBtn").textContent=soundOn?"🔊 Sound on":"🔇 Sound off";if(soundOn)sound("buy")}
+update();newGame();
 </script>
-</body>
-</html>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}</script>
+</body></html>'''
+path = "/mnt/data/y_jorkie_bubble_shooter_upgrade.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(html)
+print(path, len(html))
